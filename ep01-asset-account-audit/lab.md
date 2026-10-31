@@ -26,9 +26,14 @@ Use your analyst toolbox and the shared target stack (see `environment/README.md
 `systemctl`** (containers don't run systemd) — use `ps`/`ss` for services; `systemctl` and
 `lastlog` are available on the Vagrant VM if you use it.
 
+**Which host do I run things on?** Two shells, two jobs:
+- **`analyst`** (`docker compose exec analyst bash`) — your scanning toolbox. Use it **only** for Step 1 (nmap across the network).
+- **`wallet-api`** (`docker compose exec wallet-api bash`) — the server you're auditing. Run **Steps 2–4 here** (services, packages, accounts, sudo, files). The account/sudo/roster data lives only on this host — running those on `analyst` returns nothing.
+
 ## Guided investigation
-1. **Map the network.** `ip addr`, then `nmap -sn -n <your-lab-subnet>` to find live hosts (the
-   lab subnet is `172.28.0.0/24`), then `sudo ss -tulpn` for listening services. Tip: a `/24`
+1. **Map the network** (from the **analyst** toolbox — `docker compose exec analyst bash`). `ip addr` to see your own network, then `nmap -sn -n <your-lab-subnet>` to find live hosts
+   (the lab subnet is `172.28.0.0/24`). This is the *network* view — you'll capture each host's
+   own listening sockets with `ss -tulpn` in Step 2, on the host itself. Tip: a `/24`
    probes 254 addresses and only a handful exist, so add **`-n`** (skip reverse-DNS, the main
    source of lag) and **`-T4`**, and once you know the live hosts, scan just those:
    `nmap -Pn -n -T4 -p 22,514,8000,8080,8081 <live-ips>`.
@@ -39,10 +44,10 @@ Use your analyst toolbox and the shared target stack (see `environment/README.md
    Vagrant VM you can use `systemctl list-units --type=service --state=running` instead — but
    the container has no systemd, so `ps`/`ss` are how you see services there.)
    - **Decision:** Anything unexpected, unknown, or clearly outdated?
-3. **Enumerate accounts.** `getent passwd` (shells), `getent group sudo`, `sudo cat /etc/sudoers.d/*`, then `chage -l <user>` for password age and compare every account against `/srv/hr/staff-roster.csv` (who *should* have access).
+3. **Enumerate accounts** (**on wallet-api** — you're already in its shell from Step 2). `getent passwd` (shells), `getent group sudo`, `sudo cat /etc/sudoers.d/*`, then `chage -l <user>` for password age and compare every account against `/srv/hr/staff-roster.csv` (who *should* have access).
    - Note: on a freshly built lab `lastlog` shows everyone "Never logged in", so don't rely on it for staleness — use **password age (`chage -l`)** and the **roster** instead. An account on the box but *not* on the roster is your real red flag.
    - **Decision:** Which accounts are orphaned (not on the roster), stale (old password, e.g. untouched since January), shared, or hold sudo they don't need?
-4. **Rate criticality.** Tag each asset (the wallet API is the crown jewel).
+4. **Rate criticality** (your own analysis — no host needed). Tag each asset (the wallet API is the crown jewel).
    - **Decision:** What's your criticality rating per asset, and why?
 
 ### Evidence checkpoints
