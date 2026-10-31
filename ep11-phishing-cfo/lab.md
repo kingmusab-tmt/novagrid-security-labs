@@ -25,6 +25,23 @@ The forwarded message is saved for you at `environment/data/phishing-sample.eml`
   4. Recommend immediate containment and user-facing actions.
   5. Produce a phishing-analysis report an employer would accept.
 
+## Concept Explanation — phishing & email authentication
+
+Phishing is social engineering delivered by email: it tricks a human into clicking, entering
+credentials, or opening a payload. An analyst doesn't "eyeball" it — they read the message from the
+headers down, because the headers reveal whether the sender is forged. Email has three
+authentication checks (**SPF/DKIM/DMARC**) that tell you if the mail really came from who it claims,
+and every nasty artefact (sending IP, lookalike domain, URL, attachment hash) becomes an **IOC** you
+can enrich against threat intelligence and block.
+
+**Key terms**
+- **Phishing** — fraudulent messages that impersonate a trusted party to steal credentials or deliver malware.
+- **SPF / DKIM / DMARC** — email-authentication checks for *is the sending server authorised*, *is the message cryptographically signed and unaltered*, and *what to do if those fail*.
+- **Return-Path / Reply-To vs From** — mismatches between these are a classic spoofing tell.
+- **Lookalike (typosquat) domain** — a domain crafted to resemble a real one (`novag-rid-secure.com`).
+- **IOC (Indicator of Compromise)** — an observable (IP, domain, URL, hash) tied to malicious activity.
+- **Threat-intel enrichment** — checking an IOC against services (VirusTotal, URLhaus, AbuseIPDB) for a reputation verdict.
+
 ## Scope & rules of engagement
 - **In scope:** static analysis of the provided `.eml`, header analysis, URL/domain/hash enrichment via OSINT, and a written report.
 - **Out of scope:** visiting the live phishing URL in a normal browser, entering any credentials, or downloading/running the payload outside an isolated sandbox.
@@ -111,6 +128,16 @@ Save each into `evidence/` with a clear filename:
 - [ ] Screenshot of **at least one enrichment** result (VirusTotal / URLhaus / AbuseIPDB)
 - [ ] The **`file` + `sha256sum`** output for the attachment
 - [ ] Your proposed **mail-search / SIEM query** to scope other recipients
+
+## Commands explained
+
+| Command / action | What it does | Why you use it here |
+|---|---|---|
+| open the `.eml` as plain text | shows the true headers, not a mail client's rendering | read `From` / `Reply-To` / `Return-Path` / `Received` |
+| read `Authentication-Results:` | shows the SPF/DKIM/DMARC verdicts | decide whether the sender is forged |
+| `sha256sum data/attachment.*` | hashes the attachment **without opening it** | produce an IOC to enrich |
+| `file data/attachment.*` | reports the real file type vs its extension | catch a script/macro posing as a document |
+| VirusTotal / URLhaus / AbuseIPDB lookups | community & vendor reputation on an IOC | confirm known-bad and identify the campaign |
 
 ## Deliverable
 Fill in `deliverable-template.md` to produce your **Phishing-Analysis Report**: verdict,

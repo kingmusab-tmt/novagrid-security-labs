@@ -19,6 +19,22 @@
   3. Identify weaknesses (old TLS/SSL, weak ciphers, no forward secrecy, cert issues).
   4. Write the **remediation** (what to disable/enable and why).
 
+## Concept Explanation — TLS & certificate assessment
+
+TLS protects data in transit — but only if it's configured well. A weak setup offers obsolete
+protocols or ciphers, lacks **forward secrecy**, or presents a broken certificate, any of which a
+browser (or an attacker) can exploit. Assessing it means enumerating what the server offers, judging
+it against modern baselines (TLS 1.2+ with AEAD ciphers and ECDHE), and checking the certificate is
+valid, trusted and correctly named.
+
+**Key terms**
+- **TLS version** — SSLv3/TLS 1.0/1.1 are obsolete and must be disabled; TLS 1.2+ only.
+- **Cipher suite** — the agreed algorithms for key exchange, encryption and integrity; weak ones (RC4, 3DES, export) must go.
+- **Forward secrecy (ECDHE)** — session keys that aren't recoverable even if the server's private key later leaks.
+- **Certificate chain** — the server cert plus intermediates linking to a trusted root; an incomplete chain breaks trust.
+- **CN / SAN** — the names a certificate is valid for; must match the hostname.
+- **HSTS** — a header forcing HTTPS, preventing downgrade/stripping.
+
 ## Scope & rules of engagement
 - **In scope:** your own TLS endpoint (wallet host) and public teaching endpoints like
   badssl.com (designed for this). Testing is read-only.
@@ -43,6 +59,15 @@ specifically for safe TLS testing. All checks are read-only.
 
 ### Evidence checkpoints
 - [ ] protocol/cipher enumeration output  - [ ] certificate details  - [ ] the weakness list  - [ ] the target "good" config
+
+## Commands explained
+
+| Command | What it does | Why you use it here |
+|---|---|---|
+| `nmap --script ssl-enum-ciphers -p 443 <host>` | lists offered protocols and cipher suites with grades | find obsolete protocols / weak ciphers |
+| `testssl.sh <host>` | a thorough TLS/cert audit in one run | cross-check and catch cert issues, HSTS, etc. |
+| `openssl s_client -connect <host>:443` | opens a raw TLS session and prints the cert chain | inspect expiry, chain, key size, CN/SAN |
+| check signature algorithm / key size | confirm no SHA-1, RSA ≥ 2048 / ECC | judge the certificate's strength |
 
 ## Deliverable
 Fill `deliverable-template.md` → the **crypto-config assessment** + remediation.

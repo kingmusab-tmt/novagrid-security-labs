@@ -22,6 +22,22 @@
   4. **Enrich** the IOCs against real threat intel.
   5. Produce a **network-analysis report** with a timeline and block-list.
 
+## Concept Explanation — network traffic analysis
+
+A packet capture (pcap) is the ground truth of what happened on the wire. Triaging one means
+working from the big picture (who talked to whom) down to the single decisive packet. You're hunting
+the **infected host**, the **delivery** (what it downloaded), and the **command-and-control (C2)**
+channel it calls home to — often visible as regular **beaconing** or odd DNS. The indicators you pull
+become the block-list.
+
+**Key terms**
+- **pcap** — a captured record of network packets you can replay and filter in Wireshark.
+- **Protocol hierarchy / conversations** — Wireshark summaries of which protocols and host-pairs dominate the traffic.
+- **C2 (command and control)** — the channel malware uses to receive orders / exfiltrate data.
+- **Beaconing** — regular, timed check-ins to C2 — a strong behavioural signal.
+- **SNI / JA3** — the server name in a TLS handshake / a fingerprint of the client's TLS stack; used to spot malicious HTTPS without decrypting it.
+- **Follow stream / Export Objects** — Wireshark features to reassemble a conversation and carve a transferred file.
+
 ## Scope & rules of engagement
 - **In scope:** offline analysis of the provided pcap in Wireshark; OSINT enrichment; a report.
 - **Out of scope:** visiting the malicious domains in a normal browser, or running any
@@ -91,6 +107,20 @@ Save to `evidence/`:
 - [ ] The exported payload's `sha256sum` output
 - [ ] One enrichment result (VirusTotal / MalwareBazaar / URLhaus)
 - [ ] Your IOC list and timeline
+
+## Commands explained
+
+Wireshark is GUI-driven; its "commands" are **display filters** and menu actions.
+
+| Filter / action | What it does | Why you use it here |
+|---|---|---|
+| *Statistics → Protocol Hierarchy / Conversations* | summarise protocols and talkers | find the infected internal host |
+| display filter `dns` | show only DNS queries/answers | spot odd/random/failed lookups |
+| display filter `http.request` | show HTTP requests | find the malware download and its `User-Agent` |
+| `tls.handshake.extensions_server_name` | show the TLS SNI | find HTTPS C2 destinations without decrypting |
+| *Follow → HTTP/TCP Stream* | reassemble one conversation | read the C2 exchange |
+| *File → Export Objects → HTTP* | carve a transferred file out of the capture | extract the payload |
+| `sha256sum <object>` | hash the carved file | enrich on VirusTotal / MalwareBazaar (don't run it) |
 
 ## Deliverable
 Fill `deliverable-template.md` → a **Network-Analysis Report**: infected host, infection

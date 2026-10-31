@@ -20,6 +20,22 @@
   3. Identify **compromised accounts** (failure→success, new geo/device).
   4. Design **mitigations** that stop it without harming legitimate users.
 
+## Concept Explanation — credential stuffing & account takeover
+
+Credential stuffing replays *username:password pairs leaked from other breaches* against your login,
+betting that people reuse passwords. Its fingerprint in the logs is distinctive — one source hitting
+**many different accounts** with a **high failure rate** and a **small but real success rate**. You
+confirm it, scope which accounts were taken over, and choose layered mitigations that stop the bots
+without punishing real customers.
+
+**Key terms**
+- **Credential stuffing** — automated login attempts using breach-sourced credential pairs across many accounts.
+- **Brute force vs spraying** — many passwords against one account vs a few common passwords across many accounts.
+- **Credential reuse** — the user habit that makes stuffing work.
+- **Account takeover (ATO)** — successful unauthorised access to a user's account.
+- **Rate limiting / lockout** — throttling attempts per source/account to blunt automation.
+- **Impossible travel / velocity** — logins too far apart in distance/time to be one person — a detection signal.
+
 ## Scope & rules of engagement
 - **In scope:** analysing provided/lab auth logs and writing the detection + mitigation plan.
 - **Out of scope:** actually running any credential attack.
@@ -47,6 +63,18 @@ run — this is detection + planning on recorded data.
 
 ### Evidence checkpoints
 - [ ] the detection query/logic + result  - [ ] list of suspected compromised accounts  - [ ] the attack-type justification  - [ ] the mitigation plan
+
+## Commands explained
+
+The "commands" here are **log queries / signals** (SIEM or `grep`/`awk` over auth logs).
+
+| Query / signal | What it shows | Why you use it here |
+|---|---|---|
+| failures grouped **by source IP** | which sources are hammering logins | find the attacking infrastructure |
+| **distinct accounts** attempted per source | breadth of targeting | stuffing hits many accounts (brute force hits one) |
+| failure-rate per source + **velocity** | speed and success ratio | distinguish stuffing from a busy normal day |
+| a **failure→success** transition from a stuffing source | likely account takeover | scope which accounts to reset |
+| new-country / new-device logins | anomalous access | corroborate takeover |
 
 ## Deliverable
 Fill `deliverable-template.md` → the **detection + mitigation write-up**.

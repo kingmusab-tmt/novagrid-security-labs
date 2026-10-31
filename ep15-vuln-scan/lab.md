@@ -19,6 +19,22 @@
   3. **Prioritise** by risk (CVSS **plus** exposure/exploitability/asset value), not raw severity.
   4. Produce a **remediation-ranked** report.
 
+## Concept Explanation — vulnerability management
+
+Scanning finds known weaknesses; **vulnerability management** is the discipline of scanning,
+removing noise, and fixing the *right* things first. A raw scanner report is long and full of
+false positives, so the skill is **risk-based prioritisation** — weighing severity (CVSS) against
+context (internet-facing? exploited in the wild? on the crown-jewel wallet?) to hand the owner a
+short, defensible fix list.
+
+**Key terms**
+- **Vulnerability vs exploit** — a weakness that *could* be abused vs code/technique that actually abuses it.
+- **Authenticated (credentialed) scan** — scanning with login access; sees patch levels and config, so finds far more than an unauthenticated scan.
+- **False positive** — a finding that isn't really exploitable; must be triaged out.
+- **CVSS** — the 0–10 Common Vulnerability Scoring System severity score.
+- **KEV (Known Exploited Vulnerabilities)** — CISA's list of flaws actively exploited — a strong "fix now" signal.
+- **Risk-based prioritisation** — ranking by severity *and* exposure/exploitability, not CVSS alone.
+
 ## Scope & rules of engagement
 - **In scope:** scanning **your own lab** targets only (wallet containers / a deliberately
   vulnerable target). Authorised testing.
@@ -45,6 +61,15 @@ in Docker) so the scan returns real findings to triage. Never scan systems you d
 
 ### Evidence checkpoints
 - [ ] `nmap -sV` output  - [ ] the scanner report (export)  - [ ] your triaged/prioritised list  - [ ] a manually-verified finding
+
+## Commands explained
+
+| Command / action | What it does | Why you use it here |
+|---|---|---|
+| `nmap -sV <targets>` | detects open services and their versions | first look at what's exposed |
+| authenticated scan (OpenVAS/Greenbone, Nessus) | scans with credentials | find missing patches and misconfig, not just open ports |
+| manual confirm of a finding | reproduce it by hand | separate a real issue from a scanner guess |
+| cross-check against CVSS + KEV | severity + active-exploitation context | prioritise the fixes that actually matter |
 
 ## Deliverable
 Fill `deliverable-template.md` → the **vuln-scan report + prioritisation**.

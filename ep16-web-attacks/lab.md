@@ -19,6 +19,22 @@
   3. Explain the **root cause** of each.
   4. Write the **developer remediation** (parameterised queries, output encoding, validation, headers).
 
+## Concept Explanation — web application attacks (injection & XSS)
+
+Web apps take untrusted input, and when that input is mixed into a command or a page without proper
+handling you get **injection**. **SQL injection** lets an attacker rewrite the database query;
+**cross-site scripting (XSS)** lets them run script in another user's browser. The real lesson is the
+*fix*: don't try to blocklist "bad characters" — separate code from data with **parameterised
+queries** and **output encoding**.
+
+**Key terms**
+- **SQL injection (SQLi)** — forcing the app to run attacker-controlled SQL by breaking out of a string.
+- **XSS (reflected vs stored)** — injecting script that runs in a victim's browser; stored is worse because it persists and hits every visitor.
+- **Input validation vs output encoding** — rejecting bad input at entry vs safely rendering data at output; you need both.
+- **Parameterised queries / prepared statements** — binding user input as data, never as SQL — the correct SQLi fix.
+- **WAF** — a web application firewall; useful defence-in-depth, not a substitute for fixing the code.
+- **OWASP Top 10** — the industry list of the most critical web risks; injection is a perennial entry.
+
 ## Scope & rules of engagement
 - **In scope:** a **deliberately vulnerable app you run locally** (OWASP Juice Shop or DVWA).
 - **Out of scope / ethics:** never test a site you don't own or have written permission for.
@@ -47,6 +63,18 @@ own lab — nothing else.
 
 ### Evidence checkpoints
 - [ ] the vulnerable input identified  - [ ] SQLi PoC (request + result)  - [ ] XSS PoC (payload + result)  - [ ] the fix write-up
+
+## Commands explained
+
+Work against the **lab copy only**, in a proxy such as Burp/ZAP.
+
+| Payload / action | What it does | Why you use it here |
+|---|---|---|
+| `' OR '1'='1` in a login field | makes the WHERE clause always true | proves the query is built by string concatenation |
+| `UNION SELECT ...` / error-based input | extracts extra columns/data | demonstrate real data exposure |
+| `<script>alert(1)</script>` in a reflected field | pops a harmless alert | prove reflected XSS executes |
+| the same stored in a saved field | runs for every later viewer | show stored XSS is worse |
+| intercept with Burp/ZAP | view/modify requests and responses | find which inputs reach the DB or get reflected |
 
 ## Deliverable
 Fill `deliverable-template.md` → **web-vuln findings + developer fixes**.

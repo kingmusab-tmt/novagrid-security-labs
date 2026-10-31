@@ -24,6 +24,22 @@
   4. Prove each one fires on the known BOTSv1 events.
   5. Save them as Splunk alerts and export the pack as your portfolio artifact.
 
+## Concept Explanation — detection engineering
+
+Catching an attack a day late is an autopsy; detection engineering turns each stage of a known
+attack into an **alert that fires while it's happening**. A good detection balances **precision**
+(few false positives) against **recall** (catches the real thing), has a sensible **threshold**, a
+**severity**, and a defined response. You also choose between **signature** detection (fast, but only
+catches *this* actor) and **behavioural** detection (robust, but noisier) — and usually keep both.
+
+**Key terms**
+- **Detection rule** — a saved query + threshold that raises an alert when matched.
+- **True / false positive** — a real detection vs a benign event wrongly flagged.
+- **Threshold & tuning** — the count/window and refinements that keep an alert useful instead of noisy.
+- **Signature vs behavioural detection** — matching a known IOC vs matching suspicious behaviour.
+- **Severity** — how urgent an alert is, driving the response.
+- **Alert fatigue** — when too many false positives train analysts to ignore alerts — the thing tuning prevents.
+
 ## Scope & rules of engagement
 - **In scope:** writing/validating SPL against BOTSv1, saving alerts, documenting the pack.
 - **Out of scope:** acting on any live system.
@@ -81,6 +97,19 @@ Save to `evidence/`:
 - [ ] A screenshot of **each detection returning the known malicious events** (e.g. the scan source, 40.80.148.42)
 - [ ] The **saved-alert configuration** for at least two (schedule, trigger, severity)
 - [ ] Your **false-positive notes** per detection
+
+## Commands explained
+
+Detections are SPL searches saved as alerts. `\|` is the SPL pipe.
+
+| SPL pattern | What it detects | Tuning consideration |
+|---|---|---|
+| `... \| stats dc(uri) by src_ip` | one source hitting many unique URLs fast | scanning — set a sane unique-URL threshold; allowlist monitors/crawlers |
+| `... \| stats count by src_ip` (admin login POSTs, short window) | admin brute force | pick count/window that isn't normal fat-fingering |
+| failure→success transition by source | a *successful* brute force | higher severity; define success by status/size/redirect |
+| search for a served executable (`*.exe`, e.g. `3791.exe`) | malicious file delivery | web-layer vs host-layer source; allowlist legit pushes |
+| match on the defacement IOC **or** new outbound domain | attacker callout | keep both: IOC (fast) + behaviour (strategic) |
+| save as *Settings → Searches, reports, and alerts → New Alert* | schedules the detection | set schedule, throttle, and the fire action |
 
 ## Deliverable
 Fill `deliverable-template.md` → a **Detection Pack**: one entry per detection with SPL,

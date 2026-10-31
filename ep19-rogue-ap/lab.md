@@ -19,6 +19,14 @@
   3. Explain the **risk** (MITM, credential/session theft on open or spoofed Wi-Fi).
   4. Design **detection and prevention** controls.
 
+## Concept Explanation — rogue access points & evil twins
+
+Wireless trust is fragile: a laptop can be tricked into joining an attacker's access point that
+simply *looks* like the real one. A **rogue AP** is any unauthorised AP on your network; an **evil
+twin** is an impostor that clones a legitimate SSID to lure clients, then sits in the middle of their
+traffic. You identify it by comparing a site survey against the list of authorised APs — the SSID may
+match, but the hardware address, vendor, channel or encryption won't.
+
 ## Scope & rules of engagement
 - **In scope:** analysing a provided wireless survey and designing defences.
 - **Out of scope / ethics:** do **not** deauth, jam, or attack any wireless network. This is
@@ -50,6 +58,25 @@ Kismet/airodump-ng (read-only), but it is not required.
 
 ### Evidence checkpoints
 - [ ] rogue vs evil-twin explanation  - [ ] the identified rogue BSSID + reasoning  - [ ] risk assessment  - [ ] the control set
+
+## Key terms & frameworks
+
+**Core terms**
+- **SSID vs BSSID** — the network *name* (easily copied) vs the AP's *MAC address* (the hardware identity). A duplicate SSID with an unfamiliar BSSID is the tell.
+- **Rogue AP** — an unauthorised access point attached to your network (even a well-meaning employee's).
+- **Evil twin** — an impostor AP broadcasting a trusted SSID to harvest credentials or man-in-the-middle clients.
+- **MITM (man-in-the-middle)** — the attacker relays and can read/alter traffic between client and the real service.
+- **Captive-portal harvesting** — a fake "sign-in to Wi-Fi" page that steals credentials.
+
+**How you spot the impostor in the survey** — against the authorised-AP list, look for: a duplicate
+SSID with a **different BSSID/vendor**, an **unexpected channel**, an **odd location or signal
+strength**, or **weaker/open encryption** than the real network uses.
+
+**Defensive frameworks**
+- **WPA2-Personal vs WPA3 / 802.1X (WPA-Enterprise)** — a shared Wi-Fi password lets anyone stand up a convincing twin; **802.1X/EAP** authenticates the *network to the client* (via a server certificate) and each user individually, which is what actually defeats an evil twin.
+- **WIDS/WIPS** — Wireless Intrusion Detection/Prevention Systems that detect and can contain rogue APs.
+- **Client hardening** — don't auto-join open SSIDs, validate the server certificate, forget networks after use.
+- **The single most effective control:** enterprise authentication (802.1X with server-cert validation), because the fake AP can't present the real network's certificate.
 
 ## Deliverable
 Fill `deliverable-template.md` → the **wireless assessment report**.

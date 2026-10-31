@@ -23,6 +23,22 @@
   4. Recommend **containment, eradication and recovery**.
   5. Produce an **incident report** fit for the portfolio.
 
+## Concept Explanation — SIEM investigation & the kill chain
+
+A SIEM collects logs from everywhere into one searchable place; investigating a compromise means
+reconstructing the attacker's **kill chain** — recon → brute force → execution → defacement — one
+query at a time. In Splunk you search an **index** and pivot across **sourcetypes** (web, IDS,
+registry, Windows events), following the attacker's IP and the targeted account through the data to
+build an ordered timeline you can defend.
+
+**Key terms**
+- **SIEM** — Security Information and Event Management: central log search, correlation and alerting.
+- **SPL** — Splunk's Search Processing Language.
+- **Index / sourcetype** — where events are stored / what kind of log each event is (`stream:http`, `wineventlog`, `winregistry`…).
+- **Kill chain** — the ordered stages of an intrusion; mapping evidence to it structures your report.
+- **BOTSv1** — Splunk's "Boss of the SOC" training dataset (real attack telemetry from Aug 2016).
+- **Dwell time** — how long the attacker was active before detection — a key metric in your timeline.
+
 ## Scope & rules of engagement
 - **In scope:** searching and pivoting within the BOTSv1 data in your Splunk instance; a written report.
 - **Out of scope:** interacting with any live host or the real defacement infrastructure.
@@ -108,6 +124,19 @@ Save to `evidence/` (name clearly, e.g. `02-bruteforce.png`):
 - [ ] Your **IOC list** (IPs, domains, tool, file name, hash)
 - [ ] One **enrichment** result (VirusTotal / MalwareBazaar)
 - [ ] Your assembled **timeline**
+
+## Commands explained
+
+Splunk searches are written in SPL. `\|` below is the SPL pipe that chains commands.
+
+| SPL / action | What it does | Why you use it here |
+|---|---|---|
+| `index=botsv1` | searches the BOTSv1 index | the base of every query |
+| `index=botsv1 \| stats count by sourcetype` | counts events per data source | discover what telemetry you have |
+| set the time picker to **All time** | widens the window (data is Aug 2016) | otherwise searches return nothing |
+| `... \| stats count by src_ip` / `by uri` | aggregate by attacker IP or URL | surface scanning and brute force |
+| `... \| stats count by http_user_agent` | group by user-agent | fingerprint the scanner |
+| `... \| sort _time` / `\| table _time, ...` | order and shape results | assemble the timeline |
 
 ## Deliverable
 Fill `deliverable-template.md` → an **Incident Report** with timeline, IOCs, ATT&CK
