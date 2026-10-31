@@ -14,3 +14,6 @@ desktop.ini
 *.swp
 .idea/
 .vscode/
+
+# Generated per-student samples
+**/generator/out/

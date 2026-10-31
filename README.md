@@ -15,8 +15,11 @@ write-up, the evidence, and the framework mapping an employer can read.
 | # | Episode | Security+ domain | Status | Artifact |
 |---|---------|------------------|--------|----------|
 | 11 | [Phishing to the CFO](ep11-phishing-cfo/) | 2.0 Threats / 5.0 Awareness | ✅ built (pilot) | Phishing-analysis report + IOCs |
+| 13 | [Host Compromise in Splunk](ep13-host-compromise/) | 4.0 Security Operations | ✅ built | Incident report + ATT&CK mapping |
 
 *(Episodes 1–30 are defined in the [blueprint](docs/BLUEPRINT.md); more land here as they are built.)*
+
+> Episode 11 ships a per-student sample generator (`ep11-phishing-cfo/generator/`) so every student's phishing email — and its hash — is unique.
 
 ## How to use a lab
 1. Open the episode's `lab.md` and read the brief.
