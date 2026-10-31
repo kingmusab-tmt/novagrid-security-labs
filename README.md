@@ -34,9 +34,18 @@ write-up, the evidence, and the framework mapping an employer can read.
 | 18 | [Credential Stuffing](ep18-credential-stuffing/) | 2.0 Threats | ✅ built | Detection + mitigation write-up |
 | 19 | [Rogue Access Point](ep19-rogue-ap/) | 2.0 / 3.0 | ✅ built | Wireless assessment report |
 | 20 | [Author SIEM Detections](ep20-siem-detections/) | 4.0 Security Operations | ✅ built | Detection pack (SPL + ATT&CK) |
+| 21 | [Contain & Eradicate](ep21-contain-eradicate/) | 4.0 Operations | ✅ built | Containment/eradication runbook |
+| 22 | [Recover & Test BCP/DR](ep22-recovery-dr/) | 3.0 / 4.0 | ✅ built | Recovery runbook + DR test |
+| 23 | [Digital Forensics](ep23-forensics/) | 4.0 Operations | ✅ built | Forensic report + chain of custody |
+| 24 | [Threat Hunting](ep24-threat-hunting/) | 4.0 Operations | ✅ built | Threat-hunt report |
+| 25 | [Segmentation & Zero Trust](ep25-segmentation-zerotrust/) | 3.0 Architecture | ✅ built | Architecture diagram + control mapping |
+| 26 | [Secure Cloud Architecture](ep26-cloud-security/) | 3.0 Architecture | ✅ built | Cloud security design |
+| 27 | [Risk Assessment & Register](ep27-risk-assessment/) | 5.0 Governance | ✅ built | Risk register + treatment plan |
+| 28 | [Third-Party Vendor Assessment](ep28-vendor-assessment/) | 5.0 Governance | ✅ built | Vendor risk assessment |
+| 29 | [Compliance & Privacy Gap Analysis](ep29-compliance-gap/) | 5.0 Governance | ✅ built | Compliance brief + gap analysis |
 | 30 | [Tabletop & Board Report](ep30-tabletop-board-report/) | 4.0 Operations / 5.0 Governance | ✅ built | After-action report + board brief |
 
-*(Episodes 1–30 are defined in the [blueprint](docs/BLUEPRINT.md); more land here as they are built.)*
+*(All 30 episodes across 3 seasons are built — see the [blueprint](docs/BLUEPRINT.md) for the design.)*
 
 > Episode 11 ships a per-student sample generator (`ep11-phishing-cfo/generator/`) so every student's phishing email — and its hash — is unique.
 
