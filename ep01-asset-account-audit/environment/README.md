@@ -1,7 +1,8 @@
 # Environment — Episode 1
-Use the shared lab: the analyst VM + the target containers (wallet API, logging, a victim
-host). Start the target stack per the blueprint's Environment baseline. Everything here is
-read-only enumeration — no changes. Find your lab subnet with `ip addr` (e.g. `ip -br a`).
+Use the shared NovaGrid lab (`lab-env`): your **analyst** toolbox plus three targets — the
+**wallet-api** server, the **logging** collector, and **legacy-billing**, a forgotten box
+nobody recorded. Start it as shown below. Everything in Episode 1 is **read-only
+enumeration** — you make no changes. The lab network is `172.28.0.0/24`.
 
 ## Using the NovaGrid lab (lab-env)
 - Start the lab from the repo root: `cd lab-env && docker compose up -d --build`, then `bash scripts/check-lab.sh`. Full guide: [lab-env/README.md](../../lab-env/README.md).
