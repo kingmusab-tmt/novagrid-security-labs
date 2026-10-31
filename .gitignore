@@ -20,3 +20,15 @@ desktop.ini
 
 # Student-facing build output
 student-build/
+
+# Portfolio safety: never commit malware or forensic images
+*.exe
+*.dll
+*.scr
+*.bin
+*.raw
+*.vmem
+*.mem
+*.dd
+*.img
+*.E01

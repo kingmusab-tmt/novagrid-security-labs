@@ -58,6 +58,7 @@ Season 1 (and some later episodes) run on a shared, intentionally vulnerable Doc
 3. Work the investigation, capturing evidence into `evidence/` as you go.
 4. Fill in `deliverable-template.md` → your finished report.
 5. Self-check against `rubric.md`.
+6. Publish it: update your case-file README and post using the episode's `linkedin-post.md` — see the [portfolio guide](docs/portfolio/PORTFOLIO-GUIDE.md).
 
 ## About
 Author: Musab Mubaraq Mburaimoh · Instructor-built training series.

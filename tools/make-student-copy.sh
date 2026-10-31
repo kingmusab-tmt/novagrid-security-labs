@@ -53,20 +53,30 @@ if [ -n "$STUDENT" ]; then
   fi
 fi
 
-# 4) Student-facing note
+# 4) Portfolio front page: the case-file template becomes README.md
+mv "$OUT/README.md" "$OUT/EPISODES.md"
+cp "$SRC/docs/portfolio/CASEFILE-README-TEMPLATE.md" "$OUT/README.md"
+
+# 5) Student-facing note
 cat > "$OUT/STUDENT.md" <<'TXT'
 # Your NovaGrid Security Labs
 
-This is your working copy. Each episode folder has the lab, the environment setup, a
-deliverable template to fill in, and a rubric. Do the work, drop your screenshots/exports
-into each episode's `evidence/` folder, and fill the report template — that becomes your
-portfolio. Answer keys are not included (ask your instructor if you're stuck).
+This is your working copy — and your portfolio.
+
+- `README.md` is your **case-file front page**. Put your name on it and update a row as you finish each case.
+- `EPISODES.md` is the episode index; each `epNN-*/` folder has the lab, environment setup,
+  a deliverable template, a rubric and a `linkedin-post.md` draft.
+- For every case: save screenshots/exports into `evidence/`, copy `deliverable-template.md`
+  to `report.md` and fill it in, self-grade with `rubric.md`, then post using `linkedin-post.md`.
+- Read `docs/portfolio/PORTFOLIO-GUIDE.md` before your first push (what not to commit, honesty, interviews).
+
+Answer keys are not included (ask your instructor if you're stuck).
 TXT
 
 echo "Done. Episodes in the student copy:"
 ls -d "$OUT"/ep*/ 2>/dev/null | sed 's|.*/\(ep[^/]*\)/|  \1|'
 
-# 5) Optional: make it a ready-to-push repo
+# 6) Optional: make it a ready-to-push repo
 if [ "$INIT" -eq 1 ]; then
   ( cd "$OUT" && git init -q -b main && git add -A && \
     git -c user.name="NovaGrid Labs" -c user.email="labs@example.com" commit -q -m "Student copy of NovaGrid Security Labs" )
