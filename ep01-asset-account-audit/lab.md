@@ -61,31 +61,101 @@ bash scripts/check-lab.sh          # every service should say OK
 - **`wallet-api`** → `docker compose exec wallet-api bash`. The server you're auditing. Run **Steps 2–4 here** (services, packages, accounts, sudo, files). The account/sudo/roster data lives only on this host — running those on `analyst` returns nothing.
 
 **Tools:** `ip`, `ss`, `nmap`, `ps`, `dpkg`, `getent`, `sudo`, `chage`. The Docker containers have
-**no `systemctl`** (no systemd) — use `ps`/`ss` for services; `systemctl` and `lastlog` only exist
-if you run the optional Vagrant VM.
+**no `systemctl`** (no systemd) — use `ps`/`ss` for services. `systemctl` and `lastlog` work on a
+normal, non-container system (a regular VM or server).
 
 **Key reference files on wallet-api:** `/srv/hr/asset-register.csv` (the official inventory) and
 `/srv/hr/staff-roster.csv` (who should have access).
 
 ## Guided investigation
-1. **Map the network** (from the **analyst** toolbox — `docker compose exec analyst bash`). `ip addr` to see your own network, then `nmap -sn -n <your-lab-subnet>` to find live hosts
-   (the lab subnet is `172.28.0.0/24`). This is the *network* view — you'll capture each host's
-   own listening sockets with `ss -tulpn` in Step 2, on the host itself. Tip: a `/24`
-   probes 254 addresses and only a handful exist, so add **`-n`** (skip reverse-DNS, the main
-   source of lag) and **`-T4`**, and once you know the live hosts, scan just those:
-   `nmap -Pn -n -T4 -p 22,514,8000,8080,8081 <live-ips>`.
-   - **Decision:** Which services are listening, and are any of them ones that shouldn't be exposed?
-2. **Inventory software/services** (run these **on wallet-api**, the server you're auditing —
-   `docker compose exec wallet-api bash`). List what's actually running with `ps -ef` and the
-   listening services with `sudo ss -tulpn`; list installed packages with `dpkg -l`. (On the
-   Vagrant VM you can use `systemctl list-units --type=service --state=running` instead — but
-   the container has no systemd, so `ps`/`ss` are how you see services there.)
-   - **Decision:** Anything unexpected, unknown, or clearly outdated?
-3. **Enumerate accounts** (**on wallet-api** — you're already in its shell from Step 2). `getent passwd` (shells), `getent group sudo`, `sudo cat /etc/sudoers.d/*`, then `chage -l <user>` for password age and compare every account against `/srv/hr/staff-roster.csv` (who *should* have access).
-   - Note: on a freshly built lab `lastlog` shows everyone "Never logged in", so don't rely on it for staleness — use **password age (`chage -l`)** and the **roster** instead. An account on the box but *not* on the roster is your real red flag.
-   - **Decision:** Which accounts are orphaned (not on the roster), stale (old password, e.g. untouched since January), shared, or hold sudo they don't need?
-4. **Rate criticality** (your own analysis — no host needed). Tag each asset (the wallet API is the crown jewel).
-   - **Decision:** What's your criticality rating per asset, and why?
+
+Follow the steps in order. Each sub-step is one command; read the note, then answer the **Decision**.
+
+### Step 1 — Map the network *(from the analyst toolbox)*
+
+**a.** Open a shell on the analyst box (your scanning toolbox):
+```bash
+docker compose exec analyst bash
+```
+
+**b.** Discover the live hosts and the services they expose:
+```bash
+nmap -sV 172.28.0.0/24
+```
+> **Question:** this scan takes a while to finish. Why do you think it's slow, and what could you
+> change to make it faster? *(Hint: a `/24` is 254 addresses and almost all are empty; think about
+> DNS lookups and timing. Faster: `nmap -sV -n -T4 172.28.0.0/24`, or once you know the live hosts,
+> scan only those.)*
+
+**c.** Look at what a host is listening on, using the current host's own sockets:
+```bash
+ss -tulpn
+```
+> From the analyst box this shows almost nothing (it runs no services) — the `nmap` result above is
+> your network-wide view. You'll inventory the *server's* listening services in Step 2 on wallet-api.
+
+**Decision:** Which hosts are alive, which services are listening, and are any of them services that
+shouldn't be exposed?
+
+### Step 2 — Inventory software & services *(on the wallet-api server)*
+
+**a.** Leave the analyst shell:
+```bash
+exit
+```
+
+**b.** Open a shell on the wallet-api server:
+```bash
+docker compose exec wallet-api bash
+```
+
+**c.** Inventory what's **running**, what's **listening**, and what's **installed**:
+```bash
+ps -ef            # running processes / services
+sudo ss -tulpn    # listening services + the process behind each port
+dpkg -l           # installed packages
+```
+> These containers have no `systemctl`. On a normal, non-container system (a regular VM or server)
+> you'd list running services with `systemctl list-units --type=service --state=running` instead —
+> the same information, just via systemd.
+
+**Decision:** Anything unexpected, unknown, or clearly outdated?
+
+### Step 3 — Enumerate accounts *(on wallet-api — you're still in its shell)*
+
+**a.** List the accounts and their login shells:
+```bash
+getent passwd
+```
+
+**b.** See who holds administrator rights:
+```bash
+getent group sudo
+sudo cat /etc/sudoers.d/*
+```
+
+**c.** Check password age and compare every account against the staff roster:
+```bash
+chage -l webadmin
+cat /srv/hr/staff-roster.csv
+```
+> On a freshly built lab `lastlog` shows everyone "Never logged in", so judge staleness by **password
+> age (`chage -l`)** and the **roster**, not `lastlog`. An account on the box but *not* on the roster
+> is your red flag.
+
+**Decision:** Which accounts are orphaned (not on the roster), stale (old password), shared, or hold
+sudo they don't need?
+
+### Step 4 — Rate criticality *(your analysis — no host needed)*
+
+**a.** Compare the live hosts from Step 1 against the official inventory:
+```bash
+cat /srv/hr/asset-register.csv
+```
+
+**b.** Tag each asset with a criticality rating; the wallet API is the crown jewel.
+
+**Decision:** What's your criticality rating per asset, and why?
 
 ### Evidence checkpoints
 - [ ] `nmap -sn` + `ss -tulpn` output  - [ ] running-services + package list  - [ ] accounts + sudo + `chage -l` + roster comparison  - [ ] the finished inventory table
@@ -97,8 +167,8 @@ You'll understand your findings far better if you know what each command actuall
 | Command | What it does | Why you run it here |
 |---|---|---|
 | `ip addr` (`ip -br a`) | shows your host's network interfaces and IP addresses | learn your own address and which subnet to scan |
-| `nmap -sn -n <subnet>` | host-discovery sweep — no port scan (`-sn`), no DNS lookups (`-n`) | find which hosts are alive on the lab network |
-| `nmap -Pn -n -p <ports> <ips>` | scans specific TCP ports on the named hosts | see which services each live host exposes |
+| `nmap -sV <subnet>` | finds live hosts and the service + version on each | your first network inventory (thorough, but slow across a /24) |
+| `nmap -sV -n -T4 <subnet>` (or scan only live IPs) | same scan with no DNS (`-n`) and faster timing (`-T4`) | cut the scan time dramatically |
 | `ss -tulpn` | lists listening **t**cp/**u**dp sockets with the **p**rocess and port **n**umbers | inventory the services a host is actually running |
 | `ps -ef` | lists every running process | see running services (the container has no `systemctl`) |
 | `dpkg -l` | lists installed Debian/Ubuntu packages | inventory installed software and spot outdated packages |
