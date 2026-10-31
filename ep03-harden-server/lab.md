@@ -26,14 +26,24 @@ Ubuntu VM). See `environment/README.md`. Tool: **Lynis** (free) for before/after
 ## Guided investigation
 1. **Baseline.** Install and run `sudo lynis audit system`; record the **Hardening index**.
    - **Decision:** What are the top weaknesses Lynis flags?
-2. **SSH.** In `/etc/ssh/sshd_config`: `PermitRootLogin no`, `PasswordAuthentication no` (keys),
-   limit users, disable unused auth. Reload sshd.
+2. **SSH.** Set `PermitRootLogin no`, `PasswordAuthentication no` (keys), limit users, disable
+   unused auth. Then **reload and verify the effective config with `sudo sshd -T`** (reload via
+   `lab-restart ssh`, which refuses a broken config so you can't lock yourself out).
    - **Decision:** Which settings reduce the most risk, and what could lock you out if careless?
-3. **Firewall.** `ufw default deny incoming`, allow only 443 (+22 from admin): enable ufw.
-   - **Decision:** What's the minimum set of allowed inbound ports for a wallet API?
+   - **If `sshd -T` still shows the old value**, something is overriding your edit — Ubuntu reads
+     `/etc/ssh/sshd_config.d/*.conf` *before* the main file and the first value wins. Find what's
+     there and fix it at the source. (Editing only `sshd_config` when a drop-in overrides it is the
+     single most common way this step silently fails.)
+3. **Firewall.** `ufw default deny incoming`, then allow only what the service needs plus admin SSH,
+   and enable ufw. In this lab the wallet API listens on **8080** (not 443 — there's no TLS yet),
+   so don't blackhole it; `nmap`/`ss` tells you what's actually listening.
+   - **Decision:** What's the minimum set of allowed inbound ports for this wallet API, and would
+     putting TLS (443) in front of 8080 change your answer?
 4. **Attack surface + updates.** Disable/remove services you don't need; enable `unattended-upgrades`.
    - **Decision:** What did you remove, and how did you decide it was safe to?
-5. **Auditing.** Enable `auditd` with a basic ruleset (watch key files, auth).
+5. **Auditing.** Enable `auditd` with a basic ruleset (watch key files, auth). `auditd` needs a real
+   kernel, so do this on the **Vagrant VM** (`lab-env/vagrant/`); on the Docker container it won't
+   run — note that in your report and cover it on the VM.
 6. **Re-measure.** Re-run Lynis; compare the index.
 
 ### Evidence checkpoints
