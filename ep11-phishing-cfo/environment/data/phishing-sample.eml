@@ -1,0 +1,41 @@
+Return-Path: <bounce@novag-rid-secure.com>
+Delivered-To: chidi.nwosu@novagrid.com
+Received: from mx.novagrid.com (localhost [127.0.0.1])
+    by mx.novagrid.com with ESMTP id 4K2k9a; Tue, 28 Oct 2026 08:14:07 +0100
+Received: from mail.novag-rid-secure.com (unknown [185.220.101.47])
+    by mx.novagrid.com (Postfix) with ESMTPS id A91F2;
+    Tue, 28 Oct 2026 08:14:05 +0100 (WAT)
+Authentication-Results: mx.novagrid.com;
+    spf=fail (sender IP is 185.220.101.47) smtp.mailfrom=it-helpdesk@novagrid.com;
+    dkim=none (message not signed);
+    dmarc=fail (p=quarantine) header.from=novagrid.com
+From: "NovaGrid IT Helpdesk" <it-helpdesk@novagrid.com>
+Reply-To: "IT Helpdesk" <helpdesk.novagrid@consultant-mail.com>
+To: "Chidi Nwosu" <chidi.nwosu@novagrid.com>
+Subject: [Action Required] Unpaid payment advice pending your approval
+Date: Tue, 28 Oct 2026 08:14:04 +0100
+Message-ID: <20261028071404.A91F2@novag-rid-secure.com>
+X-Mailer: PHPMailer 6.1 (https://github.com/PHPMailer/PHPMailer)
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="=_novagrid_boundary_001"
+
+--=_novagrid_boundary_001
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+
+<html><body style="font-family:Arial,sans-serif">
+<p>Dear Chidi,</p>
+<p>A payment advice of <b>NGN 4,250,000</b> is pending your approval and will be
+reversed in <b>12 hours</b> unless authorised. Review the attached advice or sign in
+to the finance portal:</p>
+<p><a href="https://novagrid-m365-login.com/owa/">https://portal.novagrid.com/finance/approve</a></p>
+<p>Regards,<br>NovaGrid IT Helpdesk</p>
+</body></html>
+
+--=_novagrid_boundary_001
+Content-Type: text/html; name="NovaGrid_Payment_Advice.html"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="NovaGrid_Payment_Advice.html"
+
+PCFET0NUWVBFIGh0bWw+CjwhLS0gVFJBSU5JTkcgQVJUSUZBQ1Qg4oCUIGluZXJ0LiBGaWN0aW9uYWwuIERvIG5vdCBkZXBsb3kuIE5vdmFHcmlkIFNlY3VyaXR5IExhYnMgRXAxMS4gLS0+CjxodG1sIGxhbmc9ImVuIj4KPGhlYWQ+PG1ldGEgY2hhcnNldD0idXRmLTgiPjx0aXRsZT5Ob3ZhR3JpZCAzNjUg4oCUIFNpZ24gaW48L3RpdGxlPjwvaGVhZD4KPGJvZHkgc3R5bGU9ImZvbnQtZmFtaWx5OlNlZ29lIFVJLEFyaWFsLHNhbnMtc2VyaWY7YmFja2dyb3VuZDojZjNmMmYxO3RleHQtYWxpZ246Y2VudGVyIj4KICA8ZGl2IHN0eWxlPSJtYXgtd2lkdGg6MzYwcHg7bWFyZ2luOjgwcHggYXV0bztwYWRkaW5nOjMycHg7YmFja2dyb3VuZDojZmZmO2JvcmRlcjoxcHggc29saWQgI2RkZCI+CiAgICA8aDI+Tm92YUdyaWQgMzY1PC9oMj4KICAgIDxwPllvdXIgcGF5bWVudCBhZHZpY2UgaXMgcHJvdGVjdGVkLiBTaWduIGluIHRvIHZpZXcgdGhlIGRvY3VtZW50LjwvcD4KICAgIDwhLS0gQ3JlZGVudGlhbC1oYXJ2ZXN0IGZvcm0gcG9zdGluZyBvZmYgdG8gdGhlIGF0dGFja2VyIGxvb2thbGlrZSBkb21haW4gLS0+CiAgICA8Zm9ybSBhY3Rpb249Imh0dHBzOi8vbm92YWdyaWQtbTM2NS1sb2dpbi5jb20vb3dhL2NvbGxlY3QucGhwIiBtZXRob2Q9InBvc3QiPgogICAgICA8aW5wdXQgbmFtZT0iZW1haWwiIHBsYWNlaG9sZGVyPSJFbWFpbCIgc3R5bGU9IndpZHRoOjkwJTtwYWRkaW5nOjhweDttYXJnaW46NnB4Ij48YnI+CiAgICAgIDxpbnB1dCBuYW1lPSJwYXNzd29yZCIgdHlwZT0icGFzc3dvcmQiIHBsYWNlaG9sZGVyPSJQYXNzd29yZCIgc3R5bGU9IndpZHRoOjkwJTtwYWRkaW5nOjhweDttYXJnaW46NnB4Ij48YnI+CiAgICAgIDxidXR0b24gdHlwZT0ic3VibWl0IiBzdHlsZT0icGFkZGluZzo4cHggMjRweDtiYWNrZ3JvdW5kOiMwMDY3Yjg7Y29sb3I6I2ZmZjtib3JkZXI6MCI+U2lnbiBpbjwvYnV0dG9uPgogICAgPC9mb3JtPgogIDwvZGl2Pgo8L2JvZHk+CjwvaHRtbD4K
+--=_novagrid_boundary_001--

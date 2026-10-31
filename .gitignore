@@ -1,0 +1,16 @@
+# Large datasets & captures are downloaded, never committed
+**/environment/data/datasets/
+*.zip
+*.tar
+*.tar.gz
+*.gz
+*.7z
+# Splunk / BOTS artifacts
+**/botsv*/
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+desktop.ini
+*.swp
+.idea/
+.vscode/

