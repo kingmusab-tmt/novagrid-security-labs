@@ -34,7 +34,7 @@ hardening steps that need a real OS (auditd, kernel settings, systemd).
 From this `lab-env/` folder:
 
 ```bash
-docker compose up -d --build     # first build takes a few minutes
+docker-compose up -d --build     # first build takes a few minutes
 bash scripts/check-lab.sh        # every service should say OK
 docker compose stop              # pause — your changes are kept
 docker compose start             # resume

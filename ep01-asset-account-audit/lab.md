@@ -21,13 +21,23 @@
 - **Out of scope:** scanning anything outside your lab subnet.
 
 ## Environment setup
-Use your analyst VM and the shared target stack (see `environment/README.md`). Tools used:
-`ip`, `ss`, `nmap`, `systemctl`, `dpkg`/`rpm`, `getent`, `sudo`, `lastlog`.
+Use your analyst toolbox and the shared target stack (see `environment/README.md`). Tools used:
+`ip`, `ss`, `nmap`, `ps`, `dpkg`, `getent`, `sudo`, `chage`. On the Docker lab there is **no
+`systemctl`** (containers don't run systemd) — use `ps`/`ss` for services; `systemctl` and
+`lastlog` are available on the Vagrant VM if you use it.
 
 ## Guided investigation
-1. **Map the network.** `ip addr`, then `nmap -sn <your-lab-subnet>` to find live hosts, then `sudo ss -tulpn` for listening services.
+1. **Map the network.** `ip addr`, then `nmap -sn -n <your-lab-subnet>` to find live hosts (the
+   lab subnet is `172.28.0.0/24`), then `sudo ss -tulpn` for listening services. Tip: a `/24`
+   probes 254 addresses and only a handful exist, so add **`-n`** (skip reverse-DNS, the main
+   source of lag) and **`-T4`**, and once you know the live hosts, scan just those:
+   `nmap -Pn -n -T4 -p 22,514,8000,8080,8081 <live-ips>`.
    - **Decision:** Which services are listening, and are any of them ones that shouldn't be exposed?
-2. **Inventory software/services.** `systemctl list-units --type=service --state=running` and `dpkg -l` (or `rpm -qa`).
+2. **Inventory software/services** (run these **on wallet-api**, the server you're auditing —
+   `docker compose exec wallet-api bash`). List what's actually running with `ps -ef` and the
+   listening services with `sudo ss -tulpn`; list installed packages with `dpkg -l`. (On the
+   Vagrant VM you can use `systemctl list-units --type=service --state=running` instead — but
+   the container has no systemd, so `ps`/`ss` are how you see services there.)
    - **Decision:** Anything unexpected, unknown, or clearly outdated?
 3. **Enumerate accounts.** `getent passwd` (shells), `getent group sudo`, `sudo cat /etc/sudoers.d/*`, then `chage -l <user>` for password age and compare every account against `/srv/hr/staff-roster.csv` (who *should* have access).
    - Note: on a freshly built lab `lastlog` shows everyone "Never logged in", so don't rely on it for staleness — use **password age (`chage -l`)** and the **roster** instead. An account on the box but *not* on the roster is your real red flag.
