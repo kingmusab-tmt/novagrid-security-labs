@@ -10,6 +10,52 @@ End-to-end setup: how an **instructor** prepares and hands out the labs, and how
 
 ---
 
+## Distribution model (recommended): one canonical repo, students fork it
+
+The cleanest setup for a class:
+
+1. You keep **one canonical student repo** (public), built from your private master.
+2. Each student clicks **Fork** on GitHub → their own copy, which becomes their portfolio.
+3. When you publish an update to the canonical repo, students pull it into their fork
+   (GitHub's **"Sync fork"**, or `git pull upstream main`).
+
+Why this and not a separate repo per student: a fork keeps a link to the canonical repo, so
+your updates can flow to every student with a pull. Two unrelated repos can't do that.
+
+**It is safe** because students fork the *sanitized* canonical repo — which has no answer keys
+and none of your master's history (it starts from a single "Student copy" commit). They never
+fork your master.
+
+**The one rule that keeps forks working:** never rebuild the canonical repo with `--init`
+again — a fresh `--init` makes a new root history and breaks every fork's ability to sync.
+Create it once with `--init`, then **always update it with `--update`** (continuous history).
+
+```bash
+# once — create and publish the canonical repo
+tools/make-student-copy.sh --out ../novagrid-labs-student --init
+cd ../novagrid-labs-student && gh repo create novagrid-labs-student --public --source=. --push
+
+# every time after — publish changes from the master (students then Sync fork / git pull)
+tools/make-student-copy.sh --update ../novagrid-labs-student
+cd ../novagrid-labs-student && git push
+```
+
+`--update` overwrites the instructor content and keeps the repo's history **and every student
+file** (`evidence/`, `report.md`). Updates land in lab files, student work lives in `evidence/`
+and `report.md`, so a student's `git pull` merges cleanly; the only conflicts are if a student
+edited a lab file you also changed.
+
+**Trade-off:** one shared forkable repo means everyone gets the **same** Episode 11 phishing
+sample — you lose the per-student unique generator (`--student`). If uniqueness matters more
+than easy forking, build a separate copy per student with `--student` instead, and accept that
+updating them all is a per-repo job. Otherwise rely on the "own words" reflections, the
+verification questions, and each student's own lab evidence for authenticity.
+
+**Mid-cohort:** pushing changes while students are working can be disruptive. Many instructors
+freeze the canonical repo during a cohort and only `--update` it between cohorts.
+
+---
+
 ## A. Instructor — prepare and distribute (once per cohort)
 
 The master repo contains answer keys, worked examples and generators. **Never hand students

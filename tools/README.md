@@ -11,12 +11,18 @@ tools/make-student-copy.sh --out ./student-build/generic
 # a named student (unique Ep11 phishing sample injected, no answer sheet)
 tools/make-student-copy.sh --student "Jane Doe"
 
-# ready-to-push repo for the student
-tools/make-student-copy.sh --student "Jane Doe" --init
+# ONE canonical student repo (create once), then publish updates to it
+tools/make-student-copy.sh --out ../novagrid-labs-student --init     # once
+tools/make-student-copy.sh --update ../novagrid-labs-student         # every time after
 ```
 
-Output lands in `student-build/<slug>/` (git-ignored). Give the student that folder (or
-push it as their own private repo). Keep this master private — it holds the answers.
+`--update` refreshes an existing student repo in place: it overwrites the instructor content
+but keeps the repo's `.git` history and every student file (`evidence/`, `report.md`), then
+commits — so student **forks can sync** with `git pull`. Use `--init` only once; re-running
+`--init` makes a new root history and breaks forks. See `docs/SETUP.md` → *Distribution model*.
+
+Output lands in `student-build/<slug>/` (git-ignored) unless you pass `--out`/`--update`. Keep
+this master private — it holds the answers.
 
 Requires `git` (and `python3`/`python` for the per-student Ep11 sample).
 
