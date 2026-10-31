@@ -51,13 +51,50 @@ Any TOTP app works (Google Authenticator, Aegis, FreeOTP).
 - You can't lock yourself out: `docker compose exec wallet-api bash` always gets you back in as root.
 
 ## Guided investigation
-1. **Factors.** Something you **know** / **have** / **are** (+ location/behaviour). MFA = two *different* categories.
-   - **Decision:** Why isn't "password + security question" true MFA?
-2. **Choose methods.** TOTP app vs push vs **FIDO2/WebAuthn** hardware keys; why SMS is the weakest; FIDO2 is phishing-resistant.
-   - **Decision:** Which factor do admins get, and why the strongest for them?
-3. **Demo (TOTP on SSH).** Install `libpam-google-authenticator`, run `google-authenticator`, add it to PAM + `sshd_config` (`KbdInteractiveAuthentication yes`), and log in with password + code.
-   - **Decision:** What recovery option do you keep (scratch codes), and how do you store them safely?
-4. **Plan the rollout.** Order (admins/remote → all), enrolment steps, recovery, and exceptions/break-glass.
+
+You'll enable TOTP for SSH on **wallet-api**. One action per sub-step.
+
+### Step 1 — Understand the factors
+
+Something you **know** / **have** / **are**. MFA means two *different* categories.
+
+**Decision:** Why isn't "password + security question" true MFA?
+
+### Step 2 — Choose the method
+
+TOTP app vs push vs FIDO2/WebAuthn hardware keys; SMS is weakest; FIDO2 is phishing-resistant.
+
+**Decision:** Which factor do admins get, and why the strongest for them?
+
+### Step 3 — Enable TOTP on SSH
+
+**a.** Install the module on wallet-api:
+```bash
+docker compose exec wallet-api bash
+sudo apt-get install -y libpam-google-authenticator
+```
+
+**b.** Enrol a user (generates the secret, QR and scratch codes):
+```bash
+su - amara -c 'google-authenticator'
+```
+
+**c.** Wire it into login and reload SSH:
+```bash
+# add to /etc/pam.d/sshd:            auth required pam_google_authenticator.so
+# set in /etc/ssh/sshd_config:       KbdInteractiveAuthentication yes
+lab-restart ssh
+```
+
+**d.** Log in with password **+** the 6-digit code to confirm.
+
+**Decision:** What recovery option do you keep (scratch codes), and how do you store them safely?
+
+### Step 4 — Plan the rollout
+
+Order (admins/remote first → everyone), enrolment steps, recovery, and break-glass exceptions.
+
+**Decision:** Who goes first, and why phase it rather than flip it on for all at once?
 
 ### Evidence checkpoints
 - [ ] factor explanation  - [ ] PAM/sshd config for TOTP  - [ ] a successful MFA SSH login (screenshot)  - [ ] the rollout plan

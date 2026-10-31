@@ -51,15 +51,50 @@ Tools: `grep -rEI`, `find`. Regex is enough — no special software.
 - All data is synthetic; card numbers are standard test numbers. Still redact anything you put in the repo.
 
 ## Guided investigation
-1. **Define the scheme.** Levels such as Public / Internal / Confidential / Restricted, each with examples and handling rules (who can access, encryption, retention).
-   - **Decision:** What goes in "Restricted/Regulated", and which law drives it (PCI DSS, NDPR)?
-2. **Find PII.** Scan for emails, phone numbers, and national-ID-style patterns.
-   - e.g. `grep -rEI '[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}' data/`
-   - **Decision:** Where does PII live, and is it protected there?
-3. **Find cardholder data.** Scan for card-like number patterns (16-digit) in the **test** data.
-   - e.g. `grep -rEI '([0-9]{4}[ -]?){4}' data/`
-   - **Decision:** Should cardholder data even be stored here? What does PCI DSS say about storing PANs?
-4. **Build the inventory.** Map data type → location → class → controls → owner.
+
+Work on **wallet-api**, where NovaGrid's data lives. One action per sub-step.
+
+### Step 1 — Define the scheme
+
+Set levels (Public / Internal / Confidential / Restricted), each with handling rules (who can access,
+encryption, retention).
+
+**Decision:** What goes in "Restricted/Regulated", and which law drives it (PCI DSS, NDPR)?
+
+### Step 2 — Find PII
+
+**a.** Open a shell and go to the data:
+```bash
+docker compose exec wallet-api bash
+cd /srv
+```
+
+**b.** Search for email-address patterns:
+```bash
+grep -rEI '[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}' /srv
+```
+
+**Decision:** Where does PII live, and is it protected there?
+
+### Step 3 — Find cardholder data
+
+**a.** Search for 16-digit card-like patterns (synthetic test data):
+```bash
+grep -rEI '([0-9]{4}[ -]?){4}' /srv
+```
+
+**b.** Check what the stray debug server exposes to the network:
+```bash
+ls -l /srv/wallet/exports     # and recall port 8000 from Episode 1
+```
+
+**Decision:** Should cardholder data even be stored here? What does PCI DSS say about storing PANs?
+
+### Step 4 — Build the inventory
+
+Map each finding: data type → location → classification → controls → owner.
+
+**Decision:** Which data set is most at risk right now, and what one control would help most?
 
 ### Evidence checkpoints
 - [ ] the classification scheme  - [ ] the scan commands + (redacted) results  - [ ] the data inventory

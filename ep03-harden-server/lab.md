@@ -52,30 +52,79 @@ the VM first if you can, so you can roll back.
 - Target: wallet-api. **SSH settings live in a drop-in**, `/etc/ssh/sshd_config.d/00-novagrid-lab.conf`, which overrides the main file — check what's really active with `sshd -T`.
 - Restart after changes with `lab-restart ssh` (it refuses a broken config). The firewall (`ufw`) works in this container.
 - To remove the debug server: delete or rename `/etc/novagrid/enable-debug-server`, then `lab-restart debug-server`.
-- `auditd` and kernel hardening need a real OS — use the Vagrant VM in `lab-env/vagrant/` for those steps.
+- `auditd` and kernel hardening need a real OS — run those steps on a **non-container system** (a normal Linux VM or server), not the Docker container.
 
 ## Guided investigation
-1. **Baseline.** Install and run `sudo lynis audit system`; record the **Hardening index**.
-   - **Decision:** What are the top weaknesses Lynis flags?
-2. **SSH.** Set `PermitRootLogin no`, `PasswordAuthentication no` (keys), limit users, disable
-   unused auth. Then **reload and verify the effective config with `sudo sshd -T`** (reload via
-   `lab-restart ssh`, which refuses a broken config so you can't lock yourself out).
-   - **Decision:** Which settings reduce the most risk, and what could lock you out if careless?
-   - **If `sshd -T` still shows the old value**, something is overriding your edit — Ubuntu reads
-     `/etc/ssh/sshd_config.d/*.conf` *before* the main file and the first value wins. Find what's
-     there and fix it at the source. (Editing only `sshd_config` when a drop-in overrides it is the
-     single most common way this step silently fails.)
-3. **Firewall.** `ufw default deny incoming`, then allow only what the service needs plus admin SSH,
-   and enable ufw. In this lab the wallet API listens on **8080** (not 443 — there's no TLS yet),
-   so don't blackhole it; `nmap`/`ss` tells you what's actually listening.
-   - **Decision:** What's the minimum set of allowed inbound ports for this wallet API, and would
-     putting TLS (443) in front of 8080 change your answer?
-4. **Attack surface + updates.** Disable/remove services you don't need; enable `unattended-upgrades`.
-   - **Decision:** What did you remove, and how did you decide it was safe to?
-5. **Auditing.** Enable `auditd` with a basic ruleset (watch key files, auth). `auditd` needs a real
-   kernel, so do this on the **Vagrant VM** (`lab-env/vagrant/`); on the Docker container it won't
-   run — note that in your report and cover it on the VM.
-6. **Re-measure.** Re-run Lynis; compare the index.
+
+Work on the **wallet-api** server (`docker compose exec wallet-api bash`). One action per sub-step.
+
+### Step 1 — Baseline the hardening
+
+**a.** Run an audit and record the score:
+```bash
+sudo lynis audit system        # note the Hardening index
+```
+
+**Decision:** What are the top weaknesses Lynis flags?
+
+### Step 2 — Lock down SSH
+
+**a.** Set the safe values (`PermitRootLogin no`, `PasswordAuthentication no`, limit users) in the SSH config.
+
+**b.** Reload SSH safely and verify the *effective* config:
+```bash
+lab-restart ssh        # validates first — refuses a broken config, so you can't lock yourself out
+sudo sshd -T | grep -Ei 'permitrootlogin|passwordauthentication'
+```
+
+**c.** If `sshd -T` still shows the old value, a drop-in is overriding you — Ubuntu reads
+`/etc/ssh/sshd_config.d/*.conf` first and the first value wins. Fix it there:
+```bash
+sudo ls /etc/ssh/sshd_config.d/
+```
+
+**Decision:** Which settings reduce the most risk, and what could lock you out if careless?
+
+### Step 3 — Host firewall
+
+**a.** Set deny-by-default and allow only what's needed, then enable it:
+```bash
+sudo ufw default deny incoming
+sudo ufw allow 8080/tcp        # the wallet API in this lab (not 443 — no TLS yet)
+sudo ufw allow 22/tcp          # admin SSH
+sudo ufw enable
+```
+
+**Decision:** What's the minimum set of allowed inbound ports here, and would putting TLS (443) in front of 8080 change it?
+
+### Step 4 — Attack surface + updates
+
+**a.** Disable or remove services you don't need (e.g. the stray debug server):
+```bash
+sudo rm -f /etc/novagrid/enable-debug-server && lab-restart debug-server
+```
+
+**b.** Turn on automatic security patching:
+```bash
+sudo apt-get install -y unattended-upgrades
+```
+
+**Decision:** What did you remove, and how did you decide it was safe to?
+
+### Step 5 — Auditing
+
+Enable `auditd` with a basic ruleset (watch key files + auth). `auditd` needs a real kernel, so do
+this on a **non-container system** (a normal VM or server); it won't run in the Docker container —
+note that in your report.
+
+### Step 6 — Re-measure
+
+**a.** Re-run the audit and compare:
+```bash
+sudo lynis audit system        # compare the new Hardening index to Step 1
+```
+
+**Decision:** How much did the index improve, and which change moved it most?
 
 ### Evidence checkpoints
 - [ ] Lynis **before** index  - [ ] sshd_config diff  - [ ] `ufw status`  - [ ] `auditd` status/rules  - [ ] Lynis **after** index
@@ -89,7 +138,7 @@ the VM first if you can, so you can roll back.
 | `lab-restart ssh` | validates then reloads sshd in the lab (refuses a broken config) | apply SSH changes without locking yourself out |
 | `ufw default deny incoming` / `ufw allow <port>` | sets a deny-by-default firewall, then allows only needed ports | cut the inbound attack surface |
 | `unattended-upgrades` | enables automatic security patching | close the patch gap |
-| `auditd` + rules | records auth and file-change events | add detective logging (on the Vagrant VM) |
+| `auditd` + rules | records auth and file-change events | add detective logging (on a non-container system) |
 
 ## Deliverable
 Fill `deliverable-template.md` → the **hardening report** with before/after and rationale.

@@ -51,13 +51,45 @@ Capture before/after proof into `evidence/`.
 - The leaver to offboard is `contractor` on wallet-api — still in `sudo` and still holding an SSH key in `/home/contractor/.ssh/authorized_keys`.
 
 ## Guided investigation
-1. **Write the AUP.** Purpose; acceptable & unacceptable use; monitoring/privacy notice; consequences; **acknowledgement/signature**.
-   - **Decision:** Which elements are non-negotiable, and why include a monitoring notice?
-2. **Onboarding procedure.** Create account → grant **least-privilege** role access → enrol **MFA** → issue password manager → **sign the AUP**.
-   - **Decision:** Why is least privilege the key step at joining?
-3. **Offboarding procedure.** **Disable** (not immediately delete) → revoke sudo/SSH keys → rotate any shared secrets they knew → collect devices/badge → retain data per policy.
-   - **Decision:** Why disable before delete, and what do you rotate?
-4. **Execute offboarding.** Run the checklist on the leaver account; capture proof (account locked, sudo removed, key revoked).
+
+You'll offboard the leaver account on **wallet-api**. One action per sub-step.
+
+### Step 1 — Write the AUP
+
+Cover purpose; acceptable/unacceptable use; a monitoring/privacy notice; consequences; and an
+acknowledgement/signature line.
+
+**Decision:** Which elements are non-negotiable, and why include a monitoring notice?
+
+### Step 2 — Onboarding procedure
+
+Create account → grant **least-privilege** role access → enrol **MFA** → issue a password manager → **sign the AUP**.
+
+**Decision:** Why is least privilege the key step at joining?
+
+### Step 3 — Offboarding procedure
+
+Disable (not delete) → revoke sudo/SSH keys → rotate shared secrets they knew → collect devices → retain data per policy.
+
+**Decision:** Why disable before delete, and what exactly do you rotate?
+
+### Step 4 — Execute the offboarding
+
+**a.** Open a shell:
+```bash
+docker compose exec wallet-api bash
+```
+
+**b.** Run the checklist on the leaver (`contractor`), capturing proof as you go:
+```bash
+sudo usermod -L contractor                       # lock the password
+sudo usermod -s /usr/sbin/nologin contractor     # no shell
+sudo gpasswd -d contractor sudo                   # remove admin
+sudo rm -f /home/contractor/.ssh/authorized_keys  # revoke their SSH key
+sudo chage -E 0 contractor                        # expire the account now
+```
+
+**Decision:** How do you prove the leaver can no longer get in — by password *or* by key?
 
 ### Evidence checkpoints
 - [ ] the AUP  - [ ] onboarding checklist  - [ ] offboarding checklist  - [ ] proof offboarding was executed (account disabled, sudo removed)

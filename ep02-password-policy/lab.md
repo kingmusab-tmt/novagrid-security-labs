@@ -53,17 +53,62 @@ production system. Capture `before` and `after` of each setting into `evidence/`
 - Test as a user: `su - chidi` then `passwd`. Tunde's password is `Tunde@2024` — the breached one.
 
 ## Guided investigation
-1. **Assess current.** `cat /etc/login.defs | grep PASS`, check for `libpam-pwquality`.
-   - **Decision:** What does the box enforce today (length, ageing, lockout)?
-2. **Write the standard (modern).** Base it on NIST 800-63B: **long** passwords/passphrases
-   (>=12–14), **screen against breached-password lists**, **no forced periodic rotation**
-   (rotate only on suspicion of compromise), throttle/lockout on repeated failures, and
-   **MFA for all admin/remote access**.
-   - **Decision:** What minimums do you set, and what's your justification vs. old
-     "complexity + 90-day rotation" habits? *(Exam note: SY0-701 still references complexity
-     and age — state the modern stance and note the exam's framing.)*
-3. **Apply basics.** Set `minlen`/`difok` in pwquality; configure `faillock` lockout; document each change.
-4. **IAM checklist.** Unique per-person accounts, least privilege, MFA, approved password manager, ban shared credentials, breached-password screening.
+
+Work on the **wallet-api** server. Each sub-step is one action; read the note, then answer the **Decision**.
+
+### Step 1 — See what's enforced today
+
+**a.** Open a shell on the server:
+```bash
+docker compose exec wallet-api bash
+```
+
+**b.** Check the password-ageing defaults:
+```bash
+grep PASS /etc/login.defs
+```
+
+**c.** Check the strength rules currently in force:
+```bash
+cat /etc/security/pwquality.conf        # look at minlen / difok
+grep -r pwquality /etc/pam.d/            # is pam_pwquality actually wired in?
+```
+
+**Decision:** What does the box enforce right now — length, ageing, lockout? What's missing?
+
+### Step 2 — Set a modern standard
+
+Base it on NIST 800-63B: long passphrases (>= 12–14), screen against breached lists, **no** forced
+periodic rotation, lockout on repeated failures, MFA for admin/remote access. *(Exam note: SY0-701
+still references complexity and 90-day rotation — state the modern stance and note the exam's framing.)*
+
+**a.** Raise the strength rules in `/etc/security/pwquality.conf`:
+```bash
+sudo sed -i 's/^.*minlen.*/minlen = 14/' /etc/security/pwquality.conf
+# add/adjust: difok = 4
+```
+
+**b.** Add lockout with `pam_faillock` in `/etc/pam.d/common-auth` (deny after N failures, unlock after a delay).
+
+**Decision:** What minimums do you set, and how do you justify them against the old "complexity + 90-day rotation" habit?
+
+### Step 3 — Test it
+
+**a.** Try to set a weak password and confirm it's rejected:
+```bash
+su - chidi -c 'passwd'      # try a short/common password — it should be refused
+```
+
+**b.** (Optional) Trigger the lockout with repeated bad logins, then confirm the account locks.
+
+**Decision:** Did the policy actually block a weak password? What did the lockout do?
+
+### Step 4 — IAM checklist
+
+Write the baseline the whole org should follow: unique per-person accounts, least privilege, MFA,
+an approved password manager, no shared credentials, and breached-password screening.
+
+**Decision:** Which of these is the single biggest improvement for NovaGrid, and why?
 
 ### Evidence checkpoints
 - [ ] current `login.defs`/pwquality settings  - [ ] the written standard  - [ ] applied config (before/after)  - [ ] the IAM checklist

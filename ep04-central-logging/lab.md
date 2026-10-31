@@ -53,14 +53,53 @@ in `/etc/logrotate.conf` or per-service. Optional: install `lnav` for nicer log 
 - The wallet API's web log is `/var/log/wallet/access.log` (a file, not syslog). Containers use the analyst VM's clock — check time sync there with `timedatectl`.
 
 ## Guided investigation
-1. **Pick the sources & events.** auth/SSH, sudo, web access, firewall (ufw), auditd.
-   - **Decision:** Which events matter for *detection* and *investigation*, and why those?
-2. **Forward centrally.** Configure the wallet host's `rsyslog` to ship to the logging host (TCP/514); confirm the collector receives.
-   - **Decision:** TCP vs UDP for log shipping — which do you choose and why?
-3. **Time + retention.** Ensure NTP (`chrony`/`timesyncd`) so timestamps align; set `logrotate` retention.
-   - **Decision:** Why does time sync matter for an investigation? What retention do you set?
-4. **Build the "dashboard" queries.** Write saved queries for: failed SSH logins, sudo usage, top source IPs, web 4xx/5xx spikes.
-5. **Validate.** Trigger a failed SSH login; confirm it appears **on the collector**.
+
+Logs are forwarded **from wallet-api to the logging collector**. One action per sub-step.
+
+### Step 1 — Pick the sources & events
+
+Decide which events matter for detection and investigation: auth/SSH, sudo, web access, firewall (ufw).
+
+**Decision:** Which events matter for *detection* and *investigation*, and why those?
+
+### Step 2 — Forward logs centrally
+
+**a.** On wallet-api, point rsyslog at the collector over TCP:
+```bash
+docker compose exec wallet-api bash
+echo '*.* @@logging:514' | sudo tee /etc/rsyslog.d/90-forward.conf   # @@ = TCP
+lab-restart rsyslog
+```
+
+**b.** Generate a test event:
+```bash
+logger "novagrid forwarding test"
+```
+
+**c.** On the collector, confirm it arrived:
+```bash
+exit
+docker compose exec logging bash
+tail -n 20 /var/log/remote/*/*.log
+```
+
+**Decision:** TCP vs UDP for log shipping — which did you choose and why?
+
+### Step 3 — Time + retention
+
+Ensure clocks are synced (so timestamps line up across hosts) and set a retention period with `logrotate`.
+
+**Decision:** Why does time sync matter for an investigation, and what retention do you set?
+
+### Step 4 — Build the "dashboard" queries
+
+Write saved searches for: failed SSH logins, sudo usage, top source IPs, and web 4xx/5xx spikes.
+
+### Step 5 — Validate end-to-end
+
+**a.** Trigger a failed SSH login, then confirm it appears **on the collector**, not just locally.
+
+**Decision:** Did the event reach the collector? How do you know it wasn't only logged locally?
 
 ### Evidence checkpoints
 - [ ] rsyslog client + server config  - [ ] a centrally-collected event (screenshot)  - [ ] your query set + sample output  - [ ] retention + time-sync proof

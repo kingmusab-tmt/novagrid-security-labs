@@ -48,14 +48,57 @@ For the "off-site" copy, a second directory/mounted volume is fine for the lab.
 - Restore-test into `/tmp/restore-test`. `cron` is running for scheduling.
 
 ## Guided investigation
-1. **Scope + strategy.** Decide what must be backed up and how 3-2-1 applies here.
-   - **Decision:** What's your RPO (how much data can you lose) and RTO (how fast must you restore)?
-2. **Script the backup.** `tar` the targets, write a `sha256sum` manifest, store a second copy in another location.
-   - **Decision:** Why keep a checksum manifest at all?
-3. **Schedule it.** Add a `cron` entry; note where the off-site/offline copy goes.
-4. **Restore test.** Delete/rename the original, restore from the backup into a scratch dir, and verify every file's hash matches the manifest.
-   - **Decision:** How do you *prove* the restore is byte-for-byte correct?
-5. **Ransomware angle.** Explain why an **offline/immutable** copy matters (online backups get encrypted too).
+
+Back up on **wallet-api**. One action per sub-step.
+
+### Step 1 — Scope + strategy
+
+Decide what must be backed up and how 3-2-1 applies.
+
+**Decision:** What's your RPO (how much data you can lose) and RTO (how fast you must restore)?
+
+### Step 2 — Make the backup
+
+**a.** Open a shell:
+```bash
+docker compose exec wallet-api bash
+```
+
+**b.** Archive the targets and record a checksum manifest:
+```bash
+tar czf /backup/wallet-$(date +%F).tgz /srv/wallet /etc/wallet
+cd /backup && sha256sum wallet-*.tgz > manifest.sha256
+```
+
+**c.** Put a second copy in another location (the lab gives you `/offsite`):
+```bash
+cp /backup/wallet-*.tgz /offsite/
+```
+
+**Decision:** Why keep a checksum manifest at all?
+
+### Step 3 — Schedule it
+
+**a.** Add a cron entry so it runs automatically:
+```bash
+crontab -e        # e.g. 0 2 * * *  /usr/local/bin/backup.sh
+```
+
+### Step 4 — Restore test
+
+**a.** Restore into a scratch dir (never over live data) and verify every file:
+```bash
+mkdir -p /tmp/restore-test && tar xzf /backup/wallet-*.tgz -C /tmp/restore-test
+cd /backup && sha256sum -c manifest.sha256
+```
+
+**Decision:** How do you *prove* the restore is byte-for-byte correct?
+
+### Step 5 — Ransomware angle
+
+Explain why an **offline/immutable** copy matters — online backups get encrypted too.
+
+**Decision:** Which of your copies would survive ransomware, and why?
 
 ### Evidence checkpoints
 - [ ] the backup script  - [ ] a backup archive + checksum manifest  - [ ] restore-test log showing hashes match  - [ ] cron entry

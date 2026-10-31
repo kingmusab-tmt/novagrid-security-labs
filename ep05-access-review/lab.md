@@ -51,13 +51,50 @@ before/after. No production systems.
 - Target: wallet-api. Reconcile accounts and sudo rights against `/srv/hr/staff-roster.csv` — the roster is the source of truth for who should have access.
 
 ## Guided investigation
-1. **Enumerate entitlements.** Users with shells, membership of `sudo`/`adm`/`wheel`, and sudoers rules.
-   - **Decision:** Who holds admin rights, and does their role need it?
-2. **Map to role.** Build the access matrix and mark each right justified / not.
-   - **Decision:** Which entitlements fail the "need it for the job" test?
-3. **Find the strays.** Orphaned (no owner), shared, and stale (no recent login) accounts.
-   - **Decision:** Disable, delete, or reassign — and why?
-4. **Apply least privilege.** Remove unneeded group/sudo rights; document before/after.
+
+Work on **wallet-api**. One action per sub-step.
+
+### Step 1 — Enumerate entitlements
+
+**a.** Open a shell:
+```bash
+docker compose exec wallet-api bash
+```
+
+**b.** List accounts, privileged-group membership, and sudo rules:
+```bash
+getent passwd                 # accounts + login shells
+getent group sudo             # who has admin
+sudo cat /etc/sudoers.d/*     # granular sudo rules
+```
+
+**Decision:** Who holds admin rights, and does their role actually need it?
+
+### Step 2 — Map to role
+
+**a.** For a specific account, see its full group membership:
+```bash
+id contractor
+```
+
+**b.** Build an access matrix (account → entitlements → justified? y/n) against `/srv/hr/staff-roster.csv`.
+
+**Decision:** Which entitlements fail the "needs it for the job" test?
+
+### Step 3 — Find the strays
+
+Identify orphaned (no roster owner), shared, and stale accounts (use `chage -l <user>` for password age).
+
+**Decision:** For each stray — disable, delete, or reassign, and why?
+
+### Step 4 — Apply least privilege
+
+**a.** Remove an unneeded sudo right (reversible) and record before/after:
+```bash
+sudo gpasswd -d webadmin sudo
+```
+
+**Decision:** What did you remove, and how would you prove the change to an auditor?
 
 ### Evidence checkpoints
 - [ ] users/groups/sudoers listing  - [ ] the access matrix  - [ ] stale/orphaned account list  - [ ] applied before/after
