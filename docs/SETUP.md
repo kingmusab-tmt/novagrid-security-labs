@@ -45,11 +45,23 @@ Container IPs (172.28.0.x) route directly, so students can scan them from the VM
 1. Install **VirtualBox**; create an **Ubuntu 22.04 or 24.04** VM (4 GB RAM, ~4 GB free disk).
 2. Inside that VM:
    ```bash
-   sudo apt-get update && sudo apt-get install -y docker.io docker-compose-v2
+   sudo apt-get update && sudo apt-get install -y docker.io docker-compose-v2 git
    sudo usermod -aG docker $USER      # then log out and back in
    ```
+3. **Put your copy of the repo *inside the VM*** (not on your Windows/macOS host — Docker runs in the VM):
+   ```bash
+   git clone <your-student-repo-url>      # or copy/unzip the folder your instructor gave you
+   cd <repo>/lab-env
+   ```
+   The repo is your working tree: Docker builds the lab from `lab-env/`, and you write your
+   reports and drop evidence into the `epNN-.../` folders. So it lives on the machine where
+   Docker runs, not just somewhere you read it.
 
 ### Path 2 — Docker Desktop on Windows/macOS (simpler, one caveat)
+1. Install **Docker Desktop** and **git** on your Windows/macOS host.
+2. Put your copy of the repo **on the host** (Docker Desktop runs there):
+   `git clone <your-student-repo-url>` (or unzip the folder your instructor gave you), then `cd <repo>/lab-env`.
+
 Works fine, but Docker Desktop **can't route the 172.28.0.x container IPs** from the host. On
 this path, do everything from inside the lab network:
 ```bash
