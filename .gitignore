@@ -17,3 +17,6 @@ desktop.ini
 
 # Generated per-student samples
 **/generator/out/
+
+# Student-facing build output
+student-build/
