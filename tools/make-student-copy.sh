@@ -71,7 +71,7 @@ This is your working copy — and your portfolio.
   a deliverable template, a rubric and a `linkedin-post.md` draft.
 - For every case: save screenshots/exports into `evidence/`, copy `deliverable-template.md`
   to `report.md` and fill it in, self-grade with `rubric.md`, then post using `linkedin-post.md`.
-- Read `docs/portfolio/PORTFOLIO-GUIDE.md` before your first push (what not to commit, honesty, interviews).
+- New here? Read `docs/SETUP.md` to get the lab running, then `docs/portfolio/PORTFOLIO-GUIDE.md` before your first push (what not to commit, honesty, interviews).
 
 Answer keys are not included (ask your instructor if you're stuck).
 TXT

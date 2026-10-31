@@ -52,7 +52,7 @@ write-up, the evidence, and the framework mapping an employer can read.
 > Episode 11 ships a per-student sample generator (`ep11-phishing-cfo/generator/`) so every student's phishing email — and its hash — is unique.
 
 ## Lab environment
-Season 1 (and some later episodes) run on a shared, intentionally vulnerable Docker lab — see [lab-env/README.md](lab-env/README.md).
+Season 1 (and some later episodes) run on a shared, intentionally vulnerable Docker lab. **New here? Start with [docs/SETUP.md](docs/SETUP.md)** — full instructor hand-out + student machine setup. Host details and credentials are in [lab-env/README.md](lab-env/README.md).
 
 ## How to use a lab
 1. Open the episode's `lab.md` and read the brief.
