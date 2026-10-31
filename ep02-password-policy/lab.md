@@ -46,6 +46,7 @@ Fill `deliverable-template.md` → the **password policy** + **IAM checklist**.
 Self-check against `rubric.md`.
 
 ## Framework mapping
+- **MITRE ATT&CK Mitigations:** M1027 Password Policies, M1036 Account Use Policies (lockout), M1032 Multi-factor Authentication
 - **NIST:** SP 800-63B (digital identity / authenticators); CSF PROTECT (PR.AC/PR.AA)
 - **Security+ SY0-701:** identity & access management; password concepts; MFA
 

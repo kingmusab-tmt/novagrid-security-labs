@@ -2,6 +2,8 @@
 
 ## Cold open
 
+*Story so far — In Season 1 you hardened NovaGrid from the inside — accounts, passwords, the wallet server, logging, backups. Season 2 is when the attackers arrive.*
+
 > **From:** Amara Okafor (SOC Lead)
 > **To:** You (Security Analyst)
 > **Subject:** FWD: is this real? — Chidi forwarded this
@@ -92,6 +94,7 @@ Self-check against `rubric.md` before you call it done.
 
 ## Framework mapping
 - **MITRE ATT&CK:** T1566.001/.002 (Phishing: attachment / link), T1598 (Phishing for Information), T1204 (User Execution)
+- **MITRE ATT&CK Mitigations:** M1017 User Training, M1049 Antivirus/Antimalware, M1021 Restrict Web-Based Content, M1054 Software Configuration (SPF/DKIM/DMARC)
 - **NIST CSF:** DETECT (DE.CM, DE.AE) and RESPOND (RS.AN, RS.MI)
 - **Security+ SY0-701:** 2.2/2.4 (social-engineering & attack indicators), 4.6 (alerting/monitoring), 5.6 (security awareness)
 

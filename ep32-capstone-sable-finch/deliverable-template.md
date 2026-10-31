@@ -52,3 +52,6 @@ missing control: [control].
 
 ## 9. NIST CSF mapping
 [Which sections of this case file map to IDENTIFY / PROTECT / DETECT / RESPOND / RECOVER.]
+
+## 10. Reflection (own words)
+*(Pulling the whole campaign together: what was the single biggest lesson? Where did your earlier-episode evidence fall short when you needed it for the case file — and what would you capture differently next time? How would this investigation differ in a real SOC?)*

@@ -43,6 +43,7 @@ Fill `deliverable-template.md` → the **backup plan** + **restore-test evidence
 Self-check against `rubric.md`.
 
 ## Framework mapping
+- **MITRE ATT&CK Mitigations:** M1053 Data Backup (offline/offsite copies defeat T1486 ransomware impact)
 - **NIST CSF:** PROTECT — PR.DS (data security/backups); RECOVER — RC.RP (recovery)
 - **Security+ SY0-701:** 3.x resilience & recovery; backups; 2.x ransomware mitigation
 

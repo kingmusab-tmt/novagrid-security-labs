@@ -1,6 +1,9 @@
 # Episode 15 — Vulnerability Scan of the Wallet Stack
 
 ## Cold open
+
+*Story so far — With the Ep13–14 breach understood, Amara wants to know what *else* is exposed before someone uses it.*
+
 > **From:** Amara Okafor (SOC Lead)
 > **Subject:** Find the holes before they do
 >
@@ -46,6 +49,7 @@ Fill `deliverable-template.md` → the **vuln-scan report + prioritisation**.
 Self-check against `rubric.md`.
 
 ## Framework mapping
+- **MITRE ATT&CK Mitigations:** M1016 Vulnerability Scanning, M1051 Update Software (remediate/patch by priority)
 - **NIST CSF:** IDENTIFY — ID.RA (risk assessment); PROTECT — PR.IP
 - **Security+ SY0-701:** 4.3 vulnerability management; scanning (authenticated/credentialed), CVSS, prioritisation
 

@@ -43,6 +43,7 @@ Fill `deliverable-template.md` → the **access-review report**.
 Self-check against `rubric.md`.
 
 ## Framework mapping
+- **MITRE ATT&CK Mitigations:** M1018 User Account Management, M1026 Privileged Account Management (least privilege)
 - **NIST CSF:** PROTECT — PR.AC/PR.AA (access control, least privilege)
 - **Security+ SY0-701:** 4.x IAM; least privilege; account/identity lifecycle
 

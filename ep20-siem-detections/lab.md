@@ -2,6 +2,8 @@
 
 ## Cold open
 
+*Story so far — You reconstructed the whole Ep13 intrusion. Season 2 closes by turning every stage of it into a detection so it never goes unseen again.*
+
 > **From:** Amara Okafor (SOC Lead)
 > **To:** You (Security Analyst)
 > **Subject:** Never again — I want alerts, not autopsies
@@ -71,6 +73,7 @@ logic, tuning, ATT&CK, severity, response. See `example-deliverable.md` for the 
 Self-check against `rubric.md`.
 
 ## Framework mapping
+- **MITRE ATT&CK Mitigations:** M1047 Audit (detections here drive the follow-on mitigations M1032/M1026/M1030)
 - **MITRE ATT&CK (detections for):** T1595.002, T1110, T1190, T1105, T1491.001
 - **NIST CSF:** DETECT — DE.CM (continuous monitoring), DE.AE (anomalies & events)
 - **Security+ SY0-701:** 4.6 (alerting & monitoring, SIEM), 4.5 (automation/orchestration), 4.1 (IR support)

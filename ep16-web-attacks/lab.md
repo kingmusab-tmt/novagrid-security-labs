@@ -1,6 +1,9 @@
 # Episode 16 — Web Attacks on the Wallet Portal (SQLi & XSS)
 
 ## Cold open
+
+*Story so far — The Ep15 scan flagged the wallet portal — NovaGrid's biggest input surface. Now test it for injection properly.*
+
 > **From:** Amara Okafor (SOC Lead)
 > **Subject:** Can our portal be injected?
 >
@@ -47,6 +50,7 @@ Self-check against `rubric.md`.
 
 ## Framework mapping
 - **MITRE ATT&CK:** T1190 (exploit public-facing app)
+- **MITRE ATT&CK Mitigations:** M1050 Exploit Protection (WAF), M1013 Application Developer Guidance (input validation, parameterised queries), M1026 Privileged Account Management
 - **NIST CSF:** PROTECT — PR.PS (secure development); IDENTIFY — ID.RA
 - **Security+ SY0-701:** 2.3/2.4 application attacks (injection, XSS) & mitigations; input validation; secure coding
 

@@ -47,6 +47,7 @@ Fill `deliverable-template.md` → the **hardening report** with before/after an
 Self-check against `rubric.md`.
 
 ## Framework mapping
+- **MITRE ATT&CK Mitigations:** M1042 Disable/Remove Feature or Program, M1028 OS Configuration, M1037 Filter Network Traffic (host firewall), M1026 Privileged Account Management, M1051 Update Software
 - **NIST CSF:** PROTECT — PR.PS/PR.IP (secure configuration, baselines)
 - **Security+ SY0-701:** 4.1 secure baselines & hardening targets; 2.x reducing the attack surface
 

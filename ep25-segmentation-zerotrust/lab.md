@@ -1,6 +1,9 @@
 # Episode 25 — Network Segmentation & Zero Trust
 
 ## Cold open
+
+*Story so far — The Ep13 breach spread because the network is flat. Redesign it so one foothold isn't game over.*
+
 > **From:** Tunde Bello (Sysadmin)
 > **Subject:** Our network is flat and it scares me
 >
@@ -43,6 +46,7 @@ Fill `deliverable-template.md` → the **architecture diagram + control mapping*
 Self-check against `rubric.md`.
 
 ## Framework mapping
+- **MITRE ATT&CK Mitigations:** M1030 Network Segmentation, M1035 Limit Access to Resource Over Network (zero trust)
 - **NIST CSF:** PROTECT — PR.AC/PR.PT; architecture per NIST SP 800-207 (Zero Trust)
 - **Security+ SY0-701:** 3.1 architecture concepts (segmentation, zero trust, microsegmentation, DMZ)
 

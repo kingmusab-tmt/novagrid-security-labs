@@ -46,6 +46,7 @@ Fill `deliverable-template.md` → the **classification scheme** + **data invent
 Self-check against `rubric.md`.
 
 ## Framework mapping
+- **MITRE ATT&CK Mitigations:** M1057 Data Loss Prevention, M1041 Encrypt Sensitive Information (classification drives both)
 - **NIST CSF:** IDENTIFY — ID.AM-5 (data classified by sensitivity); PROTECT — PR.DS (data security)
 - **Security+ SY0-701:** 1.x data types & classifications (regulated, PII, financial, etc.); 5.x data governance
 

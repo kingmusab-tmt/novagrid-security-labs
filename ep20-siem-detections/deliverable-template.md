@@ -20,3 +20,6 @@ Repeat this block for each of the five detections.
 - **MITRE ATT&CK:** <technique ID>
 - **Validated:** <what known-bad event it returned in BOTSv1>
 ---
+
+## Reflection (own words)
+*(Which detection are you proudest of, and why? Which was hardest to keep from crying wolf? What stage of the attack would you still struggle to detect — and what data source would close that gap?)*

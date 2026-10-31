@@ -1,6 +1,9 @@
 # Episode 19 — Rogue Access Point at a Branch
 
 ## Cold open
+
+*Story so far — The fight moves off the wire and into a branch office — staff connected to a fake 'NovaGrid-WiFi'.*
+
 > **From:** Zainab Idris (Compliance)
 > **Subject:** Staff joined a fake "NovaGrid-WiFi"
 >
@@ -52,6 +55,7 @@ Self-check against `rubric.md`.
 
 ## Framework mapping
 - **MITRE ATT&CK:** T1557 (adversary-in-the-middle), T1200 (hardware additions)
+- **MITRE ATT&CK Mitigations:** M1037 Filter Network Traffic, M1030 Network Segmentation, 802.1X/network access control
 - **NIST CSF:** PROTECT — PR.AC/PR.PT; DETECT — DE.CM
 - **Security+ SY0-701:** 2.x wireless attacks (rogue AP, evil twin); 3.x secure wireless (WPA3, 802.1X, EAP)
 

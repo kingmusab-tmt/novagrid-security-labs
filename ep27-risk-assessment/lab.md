@@ -1,6 +1,9 @@
 # Episode 27 — Risk Assessment & Register
 
 ## Cold open
+
+*Story so far — The technical fight (Eps 21–26) is over. Now leadership needs the risks written down, ranked, and owned.*
+
 > **From:** Zainab Idris (Compliance)
 > **Subject:** How exposed are we, really?
 >

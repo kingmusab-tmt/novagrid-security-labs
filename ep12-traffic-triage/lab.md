@@ -2,6 +2,8 @@
 
 ## Cold open
 
+*Story so far — The phishing attempt in Ep11 was the knock at the door. Now something on a finance workstation is talking back out.*
+
 > **From:** Amara Okafor (SOC Lead)
 > **To:** You (Security Analyst)
 > **Subject:** Weird traffic from a finance workstation — pcap attached
@@ -72,6 +74,7 @@ Self-check against `rubric.md`.
 
 ## Framework mapping
 - **MITRE ATT&CK:** T1566 (phishing delivery), T1105 (ingress tool transfer), T1071.001 (web C2), T1568 (dynamic resolution / DGA, if present)
+- **MITRE ATT&CK Mitigations:** M1031 Network Intrusion Prevention, M1037 Filter Network Traffic, M1021 Restrict Web-Based Content
 - **NIST CSF:** DETECT (DE.AE, DE.CM) · RESPOND (RS.AN, RS.MI)
 - **Security+ SY0-701:** 4.4 (investigate using data sources — packet captures, flow), 4.6 (monitoring), 2.4 (malware/attack indicators)
 

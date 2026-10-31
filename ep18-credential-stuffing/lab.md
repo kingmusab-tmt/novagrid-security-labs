@@ -1,6 +1,9 @@
 # Episode 18 — Credential Stuffing on Customer Accounts
 
 ## Cold open
+
+*Story so far — Unable to break the portal head-on (Ep16), the attackers switch to replaying stolen passwords against the login.*
+
 > **From:** Amara Okafor (SOC Lead)
 > **Subject:** Customers locked out — are we being stuffed?
 >
@@ -49,6 +52,7 @@ Self-check against `rubric.md`.
 
 ## Framework mapping
 - **MITRE ATT&CK:** T1110.004 (credential stuffing), T1078 (valid accounts)
+- **MITRE ATT&CK Mitigations:** M1032 Multi-factor Authentication, M1036 Account Use Policies (lockout/throttle), M1027 Password Policies
 - **NIST CSF:** DETECT (DE.CM, DE.AE) · PROTECT (PR.AA)
 - **Security+ SY0-701:** 2.4 password attacks (stuffing/spraying/brute force); 4.6 detection; MFA & mitigations
 

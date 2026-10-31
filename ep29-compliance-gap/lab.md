@@ -1,6 +1,9 @@
 # Episode 29 — Compliance & Privacy Gap Analysis
 
 ## Cold open
+
+*Story so far — Regulators will ask whether NovaGrid met its obligations through all of this. Find the gaps before they do.*
+
 > **From:** Zainab Idris (Compliance)
 > **Subject:** Where do we stand on PCI DSS and NDPR?
 >

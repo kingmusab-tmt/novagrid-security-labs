@@ -2,6 +2,8 @@
 
 ## Cold open
 
+*Story so far — The odd traffic you triaged in Ep12 led here: a host is compromised and the marketing site has been defaced.*
+
 > **From:** Amara Okafor (SOC Lead)
 > **To:** You (Security Analyst)
 > **Subject:** Marketing site defaced — need the full story
@@ -81,6 +83,7 @@ Self-check against `rubric.md`.
 
 ## Framework mapping
 - **MITRE ATT&CK:** T1595.002 (active scanning: vuln scanning), T1190 (exploit public-facing app),
+- **MITRE ATT&CK Mitigations:** M1051 Update Software, M1050 Exploit Protection, M1042 Disable/Remove Feature, M1030 Network Segmentation
   T1110 (brute force), T1505.003 (web shell), T1105 (ingress tool transfer), T1491.001 (internal/external defacement)
 - **NIST CSF:** DETECT (DE.AE) · RESPOND (RS.AN, RS.MI, RS.RP) · RECOVER (RC.RP)
 - **Security+ SY0-701:** 4.1 (IR process & activities), 4.4/4.6 (investigation using data sources, SIEM), 4.3 (vulnerability/attack response)

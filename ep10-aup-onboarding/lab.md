@@ -44,6 +44,7 @@ Fill `deliverable-template.md` → the **AUP + onboarding/offboarding procedures
 Self-check against `rubric.md`.
 
 ## Framework mapping
+- **MITRE ATT&CK Mitigations:** M1018 User Account Management (joiner/mover/leaver), M1017 User Training (AUP)
 - **NIST CSF:** PROTECT — PR.AC (identity lifecycle); GOVERN (policy)
 - **Security+ SY0-701:** 5.1 governance (policies, procedures); onboarding/offboarding; AUP
 

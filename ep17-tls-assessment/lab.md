@@ -1,6 +1,9 @@
 # Episode 17 — Weak TLS / Certificate Assessment
 
 ## Cold open
+
+*Story so far — Same scan (Ep15), different weakness: the payments site is offering weak TLS. On a wallet, that has to be right.*
+
 > **From:** Tunde Bello (Sysadmin)
 > **Subject:** Is our HTTPS actually secure?
 >
@@ -45,6 +48,7 @@ Fill `deliverable-template.md` → the **crypto-config assessment** + remediatio
 Self-check against `rubric.md`.
 
 ## Framework mapping
+- **MITRE ATT&CK Mitigations:** M1041 Encrypt Sensitive Information (strong TLS), M1035 Limit Access to Resource Over Network (disable weak protocols/ciphers)
 - **NIST CSF:** PROTECT — PR.DS (data-in-transit)
 - **Security+ SY0-701:** 1.4 cryptographic solutions (protocols, ciphers, certificates, PFS); 3.x secure protocols
 

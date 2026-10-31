@@ -43,6 +43,7 @@ Fill `deliverable-template.md` → the **MFA deployment write-up** (plan + demo 
 Self-check against `rubric.md`.
 
 ## Framework mapping
+- **MITRE ATT&CK Mitigations:** M1032 Multi-factor Authentication
 - **NIST:** SP 800-63B authenticator assurance levels (AAL); CSF PR.AA
 - **Security+ SY0-701:** authentication, MFA factors, phishing-resistant authentication
 

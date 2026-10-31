@@ -2,6 +2,8 @@
 
 ## Cold open
 
+*Story so far — The Sable Finch incident is closed. Now prove to the board that the organisation actually learned from it.*
+
 > **From:** Zainab Idris (Compliance) & Amara Okafor (SOC Lead)
 > **To:** You (Security Analyst)
 > **Subject:** Board wants assurance — run the tabletop, write it up

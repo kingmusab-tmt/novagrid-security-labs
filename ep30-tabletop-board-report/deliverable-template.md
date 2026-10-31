@@ -53,3 +53,6 @@
 
 ## The ask
 *(ONE clear decision/assurance you need from the board — budget, policy sign-off, or risk acceptance.)*
+
+## Reflection (own words)
+*(Where did the exercise surprise you — which decision had no clear owner? If you ran it again, what one change to the plan would help most? How did facilitating differ from doing the technical work in earlier episodes?)*

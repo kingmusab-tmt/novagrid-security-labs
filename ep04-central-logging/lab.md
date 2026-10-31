@@ -46,6 +46,7 @@ Fill `deliverable-template.md` → the **logging config** + the **sample dashboa
 Self-check against `rubric.md`.
 
 ## Framework mapping
+- **MITRE ATT&CK Mitigations:** M1047 Audit (centralised logging enables it); the logs feed the detections in Ep20
 - **NIST CSF:** DETECT — DE.CM (monitoring); PROTECT — PR.PT (audit/log)
 - **Security+ SY0-701:** 4.6 logging & monitoring; log aggregation; time synchronization
 

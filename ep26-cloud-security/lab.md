@@ -1,6 +1,9 @@
 # Episode 26 — Secure Cloud Architecture
 
 ## Cold open
+
+*Story so far — NovaGrid is moving services to the cloud — the same defence principles, a new shared-responsibility model.*
+
 > **From:** Amara Okafor (SOC Lead)
 > **Subject:** Wallet is moving to the cloud — design it right
 >
@@ -46,6 +49,7 @@ Fill `deliverable-template.md` → the **cloud security design**.
 Self-check against `rubric.md`.
 
 ## Framework mapping
+- **MITRE ATT&CK Mitigations:** M1032 Multi-factor Authentication, M1041 Encrypt Sensitive Information, M1018 User Account Management, M1047 Audit (cloud logging)
 - **NIST CSF:** PROTECT (PR.AC/PR.DS) · DETECT (DE.CM); cloud per CSA / provider well-architected security pillars
 - **Security+ SY0-701:** 3.1 cloud concepts; shared responsibility; IAM; encryption; 4.x cloud logging
 

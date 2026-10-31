@@ -1,6 +1,9 @@
 # Episode 21 — Contain & Eradicate the Breach
 
 ## Cold open
+
+*Story so far — Season 2 proved NovaGrid can be breached — phishing to compromise to defacement. Season 3 is the response, and it starts with containment.*
+
 > **From:** Amara Okafor (SOC Lead)
 > **Subject:** Confirmed compromise — contain it, then clean it
 >
@@ -46,6 +49,7 @@ Fill `deliverable-template.md` → the **containment & eradication runbook** (+ 
 Self-check against `rubric.md`.
 
 ## Framework mapping
+- **MITRE ATT&CK Mitigations:** M1018 User Account Management, M1042 Disable/Remove Feature, M1026 Privileged Account Management (eradication)
 - **MITRE ATT&CK (undone):** T1505.003 web shell, T1547 persistence, T1078 valid accounts
 - **NIST CSF:** RESPOND — RS.MI (mitigation), RS.AN
 - **Security+ SY0-701:** 4.1 incident response (containment, eradication, recovery)

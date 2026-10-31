@@ -1,6 +1,9 @@
 # Episode 24 — Threat Hunting
 
 ## Cold open
+
+*Story so far — The loud attack is handled. Now assume Sable Finch left something quiet behind and go looking.*
+
 > **From:** Amara Okafor (SOC Lead)
 > **Subject:** Assume they're still here — go hunt
 >
@@ -46,6 +49,7 @@ Self-check against `rubric.md`.
 
 ## Framework mapping
 - **MITRE ATT&CK:** hunter's choice (e.g. T1053 scheduled task, T1021 lateral movement, T1074 data staged)
+- **MITRE ATT&CK Mitigations:** M1047 Audit (hunts drive new detections and the control gaps to close)
 - **NIST CSF:** DETECT — DE.CM, DE.AE
 - **Security+ SY0-701:** 4.x threat hunting; using data sources; intelligence-driven defence
 

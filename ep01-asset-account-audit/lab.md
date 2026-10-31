@@ -44,6 +44,7 @@ Fill `deliverable-template.md` → the **asset inventory** + **findings memo**.
 See `rubric.md`.
 
 ## Framework mapping
+- **MITRE ATT&CK Mitigations:** M1047 Audit (account/asset reconciliation), M1018 User Account Management
 - **NIST CSF:** IDENTIFY — ID.AM (asset management)
 - **Security+ SY0-701:** 1.x asset management & inventory; supports 4.x operations
 

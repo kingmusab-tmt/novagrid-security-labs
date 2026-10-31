@@ -1,6 +1,9 @@
 # Episode 28 — Third-Party Vendor Assessment
 
 ## Cold open
+
+*Story so far — Part of NovaGrid's exposure came in through a third party. Time to assess the vendors themselves.*
+
 > **From:** Zainab Idris (Compliance)
 > **Subject:** New payments vendor — vet them properly
 >

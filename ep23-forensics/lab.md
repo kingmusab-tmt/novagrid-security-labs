@@ -1,6 +1,9 @@
 # Episode 23 — Digital Forensics & Chain of Custody
 
 ## Cold open
+
+*Story so far — The compromised host from Eps 13 and 21 may become evidence. Handle it so it stands up in court.*
+
 > **From:** Zainab Idris (Compliance)
 > **Subject:** Make the evidence court-ready
 >

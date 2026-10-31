@@ -1,6 +1,9 @@
 # Episode 22 — Recover & Test the BCP/DR
 
 ## Cold open
+
+*Story so far — With the threat contained and eradicated (Ep21), the business needs the wallet service back — without re-opening the hole.*
+
 > **From:** Amara Okafor (SOC Lead)
 > **Subject:** Get us back up — safely — and prove we can do it again
 >
@@ -43,6 +46,7 @@ Fill `deliverable-template.md` → the **recovery runbook + DR-test report**.
 Self-check against `rubric.md`.
 
 ## Framework mapping
+- **MITRE ATT&CK Mitigations:** M1053 Data Backup (recovery from known-good)
 - **NIST CSF:** RECOVER — RC.RP (recovery), RC.IM (improvements)
 - **Security+ SY0-701:** 3.x resilience (RTO/RPO, backups, site resilience); 4.1 recovery
 
