@@ -27,6 +27,12 @@ write-up, the evidence, and the framework mapping an employer can read.
 | 11 | [Phishing to the CFO](ep11-phishing-cfo/) | 2.0 Threats / 5.0 Awareness | ✅ built (pilot) | Phishing-analysis report + IOCs |
 | 12 | [Triage Suspicious Traffic (Wireshark)](ep12-traffic-triage/) | 4.0 Security Operations | ✅ built | Network-analysis report + IOCs |
 | 13 | [Host Compromise in Splunk](ep13-host-compromise/) | 4.0 Security Operations | ✅ built | Incident report + ATT&CK mapping |
+| 14 | [Malware Triage in a Sandbox](ep14-malware-analysis/) | 2.0 / 4.0 | ✅ built | Malware-analysis report |
+| 15 | [Vulnerability Scan](ep15-vuln-scan/) | 4.0 Operations | ✅ built | Vuln-scan report + prioritisation |
+| 16 | [Web Attacks (SQLi & XSS)](ep16-web-attacks/) | 2.0 Threats | ✅ built | Web-vuln findings + fixes |
+| 17 | [Weak TLS / Cert Assessment](ep17-tls-assessment/) | 1.0 / 3.0 | ✅ built | Crypto-config assessment |
+| 18 | [Credential Stuffing](ep18-credential-stuffing/) | 2.0 Threats | ✅ built | Detection + mitigation write-up |
+| 19 | [Rogue Access Point](ep19-rogue-ap/) | 2.0 / 3.0 | ✅ built | Wireless assessment report |
 | 20 | [Author SIEM Detections](ep20-siem-detections/) | 4.0 Security Operations | ✅ built | Detection pack (SPL + ATT&CK) |
 | 30 | [Tabletop & Board Report](ep30-tabletop-board-report/) | 4.0 Operations / 5.0 Governance | ✅ built | After-action report + board brief |
 

@@ -1,0 +1,6 @@
+ssid,bssid,vendor_oui,channel,signal_dbm,encryption,notes
+NovaGrid-WiFi,AC:3B:77:10:22:01,Cisco,6,-45,WPA2-Enterprise,authorised branch AP
+NovaGrid-WiFi,AC:3B:77:10:22:02,Cisco,11,-52,WPA2-Enterprise,authorised branch AP
+NovaGrid-WiFi,62:1A:9F:D4:7E:33,(unknown/locally-administered),6,-39,Open,**duplicate SSID, open auth, strong signal, unknown vendor**
+NovaGrid-Guest,AC:3B:77:10:22:03,Cisco,1,-58,WPA2-Personal,authorised guest AP
+Branch-Printer,D8:3A:DD:04:11:aa,HP,1,-70,WPA2-Personal,printer
