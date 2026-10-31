@@ -14,6 +14,16 @@ write-up, the evidence, and the framework mapping an employer can read.
 
 | # | Episode | Security+ domain | Status | Artifact |
 |---|---------|------------------|--------|----------|
+| 1 | [Asset & Account Audit](ep01-asset-account-audit/) | 1.0 General Concepts | ✅ built | Asset inventory + findings memo |
+| 2 | [Password Policy & IAM Baseline](ep02-password-policy/) | 1.0 / 4.0 | ✅ built | Password policy + IAM checklist |
+| 3 | [Harden the Wallet-API Server](ep03-harden-server/) | 4.0 Operations | ✅ built | Hardening report (before/after) |
+| 4 | [Centralized Logging & Baseline](ep04-central-logging/) | 4.0 Operations | ✅ built | Logging config + dashboard |
+| 5 | [Access Review (Least Privilege)](ep05-access-review/) | 4.0 Operations | ✅ built | Access-review report |
+| 6 | [Classify NovaGrid's Data](ep06-data-classification/) | 1.0 / 5.0 | ✅ built | Data classification scheme + inventory |
+| 7 | [Roll Out MFA](ep07-mfa-rollout/) | 1.0 / 4.0 | ✅ built | MFA deployment write-up |
+| 8 | [Backup & Restore (3-2-1)](ep08-backup-restore/) | 3.0 / 4.0 | ✅ built | Backup plan + restore test |
+| 9 | [Map Control Types](ep09-control-types/) | 1.0 General Concepts | ✅ built | Security control inventory |
+| 10 | [AUP + Onboarding/Offboarding](ep10-aup-onboarding/) | 5.0 Governance | ✅ built | Policy + procedure doc |
 | 11 | [Phishing to the CFO](ep11-phishing-cfo/) | 2.0 Threats / 5.0 Awareness | ✅ built (pilot) | Phishing-analysis report + IOCs |
 | 12 | [Triage Suspicious Traffic (Wireshark)](ep12-traffic-triage/) | 4.0 Security Operations | ✅ built | Network-analysis report + IOCs |
 | 13 | [Host Compromise in Splunk](ep13-host-compromise/) | 4.0 Security Operations | ✅ built | Incident report + ATT&CK mapping |
