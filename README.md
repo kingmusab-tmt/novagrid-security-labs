@@ -18,6 +18,7 @@ write-up, the evidence, and the framework mapping an employer can read.
 | 12 | [Triage Suspicious Traffic (Wireshark)](ep12-traffic-triage/) | 4.0 Security Operations | ✅ built | Network-analysis report + IOCs |
 | 13 | [Host Compromise in Splunk](ep13-host-compromise/) | 4.0 Security Operations | ✅ built | Incident report + ATT&CK mapping |
 | 20 | [Author SIEM Detections](ep20-siem-detections/) | 4.0 Security Operations | ✅ built | Detection pack (SPL + ATT&CK) |
+| 30 | [Tabletop & Board Report](ep30-tabletop-board-report/) | 4.0 Operations / 5.0 Governance | ✅ built | After-action report + board brief |
 
 *(Episodes 1–30 are defined in the [blueprint](docs/BLUEPRINT.md); more land here as they are built.)*
 
