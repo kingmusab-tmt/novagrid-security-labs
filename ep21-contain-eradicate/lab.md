@@ -73,6 +73,27 @@ units/timers, `~/.ssh/authorized_keys`, (Windows) Run keys/services. Preserve fi
 | `sudo usermod -L <user>` / `passwd <user>` | locks/rotates the cracked admin account | deny the attacker the credential they stole |
 | `find / -newermt <time> -type f` | lists files changed since the intrusion | discover dropped/modified files |
 
+## On Windows
+
+Contain and eradicate on the **Windows target**, removing the planted persistence.
+
+**a.** Contain — cut the network but keep it powered (RAM evidence):
+```powershell
+Disable-NetAdapter -Name 'Ethernet' -Confirm:$false
+```
+**b.** Eradicate the two inert persistence mechanisms the lab planted:
+```powershell
+Unregister-ScheduledTask -TaskName NovaGridUpdater -Confirm:$false
+Remove-ItemProperty 'HKLM:\Software\Microsoft\Windows\CurrentVersion\Run' -Name NovaGridSync
+```
+**c.** Confirm you got *all* of it — hunt the other autorun locations:
+```powershell
+Get-CimInstance Win32_StartupCommand          # or Sysinternals Autoruns.exe
+Get-ScheduledTask | Where-Object {$_.Author -notlike 'Microsoft*'}
+```
+Then disable/reset the cracked admin account. Windows persistence lives in Run keys, Services,
+Scheduled Tasks and WMI subscriptions — **Autoruns** surfaces them all.
+
 ## Deliverable
 Fill `deliverable-template.md` → the **containment & eradication runbook** (+ executed steps).
 

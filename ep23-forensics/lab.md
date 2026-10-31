@@ -72,6 +72,22 @@ Treat the original as read-only (write-blocker concept).
 | Volatility 3 plugins (`pslist`, `netscan`, …) | parse a RAM capture for processes/connections | place the attacker on the host |
 | `strings` / Autopsy timeline | surface artefacts and order them | build the forensic timeline |
 
+## On Windows
+
+Same order-of-volatility, imaging, hashing and chain-of-custody rules; Windows tools.
+
+**a.** Capture RAM first with **WinPMEM** or **Magnet RAM Capture**; image the disk with **FTK Imager**
+(write-blocked). Prove integrity (cf. `sha256sum`):
+```powershell
+Get-FileHash .\memory.raw -Algorithm SHA256
+Get-FileHash .\disk.e01  -Algorithm SHA256
+```
+**b.** Analyse the memory image in **Volatility 3** (cross-platform):
+`windows.pslist`, `windows.netscan`, `windows.malfind`.
+
+**c.** For fast triage, **KAPE** collects key artifacts (event logs, registry, prefetch, $MFT).
+Chain of custody and admissibility are identical to the Linux version.
+
 ## Deliverable
 Fill `deliverable-template.md` → the **forensic report + chain-of-custody form**.
 

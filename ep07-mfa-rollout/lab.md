@@ -109,6 +109,15 @@ Order (admins/remote first → everyone), enrolment steps, recovery, and break-g
 | `/etc/ssh/sshd_config` (`KbdInteractiveAuthentication yes`) | lets SSH prompt for the code | allow password + TOTP |
 | `lab-restart ssh` | reloads sshd safely | apply the MFA change without lockout |
 
+## On Windows
+
+The concept is identical; the delivery differs. Windows MFA comes from **Windows Hello for
+Business**, **FIDO2 security keys**, or **Entra ID (Azure AD) Conditional Access MFA** — not a PAM
+module. The factor categories (know/have/are) and "admins get the strongest, phishing-resistant
+factor" reasoning are the same, and **FIDO2 / Windows Hello are the phishing-resistant options**
+(the Windows equivalent of a hardware security key on SSH). For a standalone box, smart-card or
+FIDO2 logon + RDP with Network Level Authentication is the hands-on equivalent.
+
 ## Deliverable
 Fill `deliverable-template.md` → the **MFA deployment write-up** (plan + demo evidence).
 

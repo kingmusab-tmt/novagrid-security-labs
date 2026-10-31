@@ -69,6 +69,19 @@ specifically for safe TLS testing. All checks are read-only.
 | `openssl s_client -connect <host>:443` | opens a raw TLS session and prints the cert chain | inspect expiry, chain, key size, CN/SAN |
 | check signature algorithm / key size | confirm no SHA-1, RSA ≥ 2048 / ECC | judge the certificate's strength |
 
+## On Windows
+
+The cross-platform checks work on Windows: `nmap --script ssl-enum-ciphers -p 443 <host>` and **sslscan**
+(Windows build). `testssl.sh` itself needs WSL or Git-Bash. PowerShell can do quick checks:
+```powershell
+Test-NetConnection <host> -Port 443              # reachability
+# inspect the certificate:
+$c = Get-PfxCertificate -FilePath (some)   # or use openssl via Git for Windows:
+#   openssl s_client -connect <host>:443
+```
+The findings (obsolete protocols, weak ciphers, missing forward secrecy, cert problems) and the
+remediation (TLS 1.2+ only, modern AEAD + ECDHE, HSTS) are identical.
+
 ## Deliverable
 Fill `deliverable-template.md` → the **crypto-config assessment** + remediation.
 

@@ -110,6 +110,25 @@ Map each finding: data type → location → classification → controls → own
 
 *(All data here is synthetic; still redact any match before putting it in your report.)*
 
+## On Windows
+
+Find the same sensitive data on the **Windows target** with `Select-String`.
+
+**a.** PII (cf. `grep -rEI`):
+```powershell
+Select-String -Path C:\NovaGrid\ -Pattern '[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}' -Recurse
+```
+**b.** Card-like numbers (synthetic test data):
+```powershell
+Select-String -Path C:\NovaGrid\ -Pattern '([0-9]{4}[ -]?){4}' -Recurse
+```
+**c.** Check where it's exposed — the world-readable config and the open share:
+```powershell
+(Get-Acl C:\NovaGrid\wallet\wallet.conf).Access | Select-Object IdentityReference,FileSystemRights
+Get-SmbShareAccess -Name WalletExports
+```
+Enterprise classification/DLP maps to **Microsoft Purview** (sensitivity labels + DLP policies).
+
 ## Deliverable
 Fill `deliverable-template.md` → the **classification scheme** + **data inventory**.
 

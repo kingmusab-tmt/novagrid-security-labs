@@ -122,6 +122,15 @@ Wireshark is GUI-driven; its "commands" are **display filters** and menu actions
 | *File → Export Objects → HTTP* | carve a transferred file out of the capture | extract the payload |
 | `sha256sum <object>` | hash the carved file | enrich on VirusTotal / MalwareBazaar (don't run it) |
 
+## On Windows
+
+**Wireshark runs natively on Windows** — same capture, same display filters, same *Follow Stream* and
+*Export Objects*. Its CLI, `tshark`, is included. The only swap is hashing a carved payload:
+```powershell
+Get-FileHash .\carved-object.bin -Algorithm SHA256   # cf. sha256sum
+```
+On Windows you capture with the bundled **Npcap** driver. The analysis steps and decisions are identical.
+
 ## Deliverable
 Fill `deliverable-template.md` → a **Network-Analysis Report**: infected host, infection
 chain, IOC table, C2, timeline, and recommended blocks. See `example-deliverable.md`.

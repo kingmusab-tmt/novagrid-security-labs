@@ -113,6 +113,22 @@ Explain why an **offline/immutable** copy matters — online backups get encrypt
 | `crontab -e` / a `cron` entry | schedules the backup to run automatically | automate it (no human to forget) |
 | restore into `/tmp/restore-test` | unpacks the backup to a scratch dir | test recovery without touching live data |
 
+## On Windows
+
+Same 3-2-1 / RPO / RTO thinking; Windows tooling.
+
+**a.** Back up and record hashes (cf. `tar` + `sha256sum`):
+```powershell
+robocopy C:\NovaGrid\wallet D:\backup\wallet /MIR
+Get-ChildItem D:\backup\wallet -Recurse -File | Get-FileHash -Algorithm SHA256 | Export-Csv D:\backup\manifest.csv -NoTypeInformation
+```
+**b.** Or use image-level backup:
+```powershell
+wbadmin start backup -backupTarget:D: -include:C:\NovaGrid -quiet
+```
+**c.** Restore into a scratch folder and re-hash to prove it matches; schedule with **Task Scheduler**
+(`schtasks`). The offline/immutable copy point is identical — ransomware encrypts online backups too.
+
 ## Deliverable
 Fill `deliverable-template.md` → the **backup plan** + **restore-test evidence**.
 

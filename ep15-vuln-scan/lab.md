@@ -71,6 +71,14 @@ in Docker) so the scan returns real findings to triage. Never scan systems you d
 | manual confirm of a finding | reproduce it by hand | separate a real issue from a scanner guess |
 | cross-check against CVSS + KEV | severity + active-exploitation context | prioritise the fixes that actually matter |
 
+## On Windows
+
+**nmap** and the scanners (**Nessus Essentials**, **Greenbone/OpenVAS**) all have Windows builds — run
+the scan from Windows unchanged. For a **credentialed** scan of a Windows target, supply a Windows admin
+account (and enable WMI/remote registry) instead of SSH keys. CVSS, KEV and risk-based prioritisation are
+identical. Windows-native option: **Microsoft Defender Vulnerability Management** / `Get-WindowsUpdate`
+for missing-patch context.
+
 ## Deliverable
 Fill `deliverable-template.md` → the **vuln-scan report + prioritisation**.
 

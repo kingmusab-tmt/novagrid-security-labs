@@ -176,6 +176,29 @@ You'll understand your findings far better if you know what each command actuall
 | `sudo cat /etc/sudoers.d/*` | shows the extra sudo rules dropped in by packages/admins | spot over-privilege, e.g. `NOPASSWD: ALL` on a service account |
 | `chage -l <user>` | shows password-ageing info for an account | find stale accounts (password untouched for months) |
 
+## On Windows
+
+Do the same audit on the **NovaGrid Windows target** (`lab-env/windows/`) with PowerShell (run elevated).
+
+**a.** List listening services on the box (cf. `ss -tulpn`):
+```powershell
+Get-NetTCPConnection -State Listen | Select-Object LocalAddress,LocalPort,OwningProcess
+```
+**b.** Enumerate accounts, admins and installed software (cf. `getent` / `dpkg -l`):
+```powershell
+Get-LocalUser
+Get-LocalGroupMember Administrators
+Get-CimInstance Win32_Product | Select-Object Name,Version
+```
+**c.** Reconcile against the roster and spot the findings:
+```powershell
+Get-LocalUser | Select-Object Name,Enabled,PasswordExpires
+Get-Content C:\NovaGrid\hr\staff-roster.csv
+```
+You should find `svc-backup` in Administrators (over-privileged), `webadmin` with a non-expiring
+password and absent from the roster (stale/orphaned), and `contractor` still enabled (the leaver).
+Same deliverable: inventory + findings memo. Network discovery still uses `nmap` (cross-platform).
+
 ## Deliverable
 Fill `deliverable-template.md` → the **asset inventory** + **findings memo**.
 

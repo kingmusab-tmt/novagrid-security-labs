@@ -110,6 +110,22 @@ sudo gpasswd -d webadmin sudo
 | `chage -l <user>` | password-ageing status | identify stale accounts |
 | `sudo gpasswd -d <user> sudo` | removes a user from the sudo group | apply least privilege (reversible) |
 
+## On Windows
+
+**a.** Enumerate entitlements (cf. `getent group sudo`):
+```powershell
+Get-LocalGroupMember Administrators
+Get-LocalUser | Select-Object Name,Enabled
+```
+**b.** Reconcile against `C:\NovaGrid\hr\staff-roster.csv`; in a domain use
+`Get-ADGroupMember 'Domain Admins'` and `Get-ADUser -Filter * -Properties LastLogonDate`.
+
+**c.** Apply least privilege (reversible):
+```powershell
+Remove-LocalGroupMember -Group Administrators -Member webadmin
+```
+Same decisions: who holds admin, who's stale/orphaned, what to disable vs reassign.
+
 ## Deliverable
 Fill `deliverable-template.md` → the **access-review report**.
 

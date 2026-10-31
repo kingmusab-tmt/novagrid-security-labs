@@ -115,6 +115,23 @@ Write saved searches for: failed SSH logins, sudo usage, top source IPs, and web
 | `logrotate` config | rotates/compresses/expires logs | set retention so disks don't fill |
 | `tail -f /var/log/remote/<host>/...` | watches logs arriving on the collector | confirm the collector is receiving events |
 
+## On Windows
+
+Windows logs to the **Event Log**; you centralise with Windows Event Forwarding (WEF/WEC).
+
+**a.** Read security events (cf. `/var/log/auth.log`):
+```powershell
+Get-WinEvent -LogName Security -MaxEvents 20
+wevtutil el        # list every log
+```
+**b.** Add rich telemetry with **Sysmon** (process/network/registry events), then **forward centrally**:
+```powershell
+# on the collector: wecutil qc   (enable Windows Event Collector), then create a subscription
+# on the sources:   point them at the collector via GPO / winrm
+```
+**c.** Validate by triggering a failed logon (a bad RDP/`runas`) and confirming event **4625** arrives
+on the collector. Time sync comes from the domain / `w32tm`.
+
 ## Deliverable
 Fill `deliverable-template.md` → the **logging config** + the **sample dashboard** (queries + output).
 

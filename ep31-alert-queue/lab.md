@@ -107,6 +107,16 @@ The queue is a CSV/JSONL; triage it in a spreadsheet, with `grep`/`awk`, or in S
 
 *Don't trust the `severity` column* — the SIEM over- and under-rates; that's the exercise.
 
+## On Windows
+
+Triage the same queue in PowerShell instead of a spreadsheet/`grep`:
+```powershell
+Import-Csv .\alert-queue.csv | Group-Object rule | Sort-Object Count -Descending   # noisiest rules
+Import-Csv .\alert-queue.csv | Where-Object {$_.description -match '203.0.113'}      # pivot on an IP
+Import-Csv .\alert-queue.csv | Where-Object {$_.severity -eq 'critical'}            # (but don't trust severity!)
+```
+The skill — precision over escalating everything, correlating related alerts — is identical.
+
 ## Deliverable
 Fill `deliverable-template.md` → a **shift report**: queue stats (counts by verdict),
 your escalations with justification, the correlation read, and your tuning suggestions.

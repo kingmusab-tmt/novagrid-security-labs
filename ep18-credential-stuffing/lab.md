@@ -76,6 +76,18 @@ The "commands" here are **log queries / signals** (SIEM or `grep`/`awk` over aut
 | a **failure→success** transition from a stuffing source | likely account takeover | scope which accounts to reset |
 | new-country / new-device logins | anomalous access | corroborate takeover |
 
+## On Windows
+
+Same detection logic over Windows auth data. For a Windows-hosted portal you analyse **IIS logs** and
+Security events **4625** (failed logon) / **4624** (success) with `Get-WinEvent`, or the same SIEM. Ad-hoc
+triage in PowerShell:
+```powershell
+Get-WinEvent -FilterHashtable @{LogName='Security'; Id=4625} |
+  Group-Object {$_.Properties[19].Value} | Sort-Object Count -Descending   # failures by source IP
+```
+The stuffing signature (many accounts, high failure rate, low success, one source) and the mitigations
+(MFA, lockout, rate-limit) are identical.
+
 ## Deliverable
 Fill `deliverable-template.md` → the **detection + mitigation write-up**.
 

@@ -139,6 +139,17 @@ Save each into `evidence/` with a clear filename:
 | `file data/attachment.*` | reports the real file type vs its extension | catch a script/macro posing as a document |
 | VirusTotal / URLhaus / AbuseIPDB lookups | community & vendor reputation on an IOC | confirm known-bad and identify the campaign |
 
+## On Windows
+
+Phishing analysis is the same discipline on Windows — the enrichment services (VirusTotal,
+URLhaus, AbuseIPDB) are web-based and identical. The local commands map like this:
+```powershell
+Get-Content .\sample.eml           # read the raw headers (cf. opening the .eml as text)
+Get-FileHash .\attachment.* -Algorithm SHA256   # hash the attachment (cf. sha256sum) - do NOT open it
+```
+Use an online/offline header analyzer for SPF/DKIM/DMARC, and **Sysinternals Sigcheck** to inspect a
+suspicious attachment's signature and type. Everything else (the decisions, the IOC list) is unchanged.
+
 ## Deliverable
 Fill in `deliverable-template.md` to produce your **Phishing-Analysis Report**: verdict,
 evidence, IOC table, scope, and recommended actions. This is the artifact that goes in

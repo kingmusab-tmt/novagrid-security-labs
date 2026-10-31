@@ -104,6 +104,20 @@ sudo chage -E 0 contractor                        # expire the account now
 | `rm ~/<user>/.ssh/authorized_keys` | removes their SSH key | cut key-based access (passwords aren't the only way in) |
 | `sudo chage -E 0 <user>` | expires the account immediately | enforce the leaver date |
 
+## On Windows
+
+Run the offboarding checklist on the **Windows target**'s leaver (`contractor`).
+
+**a.** Disable (don't delete) and revoke admin:
+```powershell
+Disable-LocalUser -Name contractor
+Remove-LocalGroupMember -Group Administrators -Member contractor
+```
+**b.** Remove stored access and rotate shared secrets they knew (`cmdkey /list` for saved creds; clear RDP).
+
+**c.** In a domain: `Disable-ADAccount`, move to a disabled OU, reset manager/ownership, and revoke tokens.
+Same decision: disable-before-delete preserves data/evidence; prove they can't log on by password *or* saved credential.
+
 ## Deliverable
 Fill `deliverable-template.md` → the **AUP + onboarding/offboarding procedures** (and the executed offboarding evidence).
 

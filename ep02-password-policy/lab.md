@@ -123,6 +123,27 @@ an approved password manager, no shared credentials, and breached-password scree
 | `passwd <user>` | sets/changes a password | test that your new policy is actually enforced |
 | `chage -l <user>` | shows an account's password-ageing status | confirm ageing settings and spot stale passwords |
 
+## On Windows
+
+On the **Windows target**, the same policy lives in the local/Domain password & lockout policy.
+
+**a.** See what's enforced now (cf. `grep PASS /etc/login.defs`):
+```powershell
+net accounts
+```
+**b.** Set a modern baseline (length over complexity, add lockout):
+```powershell
+net accounts /minpwlen:14 /lockoutthreshold:10 /lockoutduration:15
+# or: secpol.msc -> Account Policies -> Password Policy / Account Lockout Policy
+```
+**c.** Check per-account state:
+```powershell
+Get-LocalUser | Select-Object Name,PasswordRequired,PasswordExpires
+```
+In a domain these are Group Policy settings (`Get-ADDefaultDomainPasswordPolicy`), with
+fine-grained password policies for exceptions. Breached-password screening maps to Entra ID /
+Azure AD Password Protection.
+
 ## Deliverable
 Fill `deliverable-template.md` → the **password policy** + **IAM checklist**.
 

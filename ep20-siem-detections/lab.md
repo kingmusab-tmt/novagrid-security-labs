@@ -111,6 +111,13 @@ Detections are SPL searches saved as alerts. `\|` is the SPL pipe.
 | match on the defacement IOC **or** new outbound domain | attacker callout | keep both: IOC (fast) + behaviour (strategic) |
 | save as *Settings → Searches, reports, and alerts → New Alert* | schedules the detection | set schedule, throttle, and the fire action |
 
+## On Windows
+
+**Splunk runs on Windows** and the SPL detections are identical. The natural extension on Windows is to
+build the same detections over **Windows Security events and Sysmon** (logon 4624/4625, process-create
+Sysmon ID 1, network ID 3, registry ID 13) forwarded via WEF — the detection-engineering method
+(threshold, precision vs recall, signature vs behaviour, severity) is unchanged.
+
 ## Deliverable
 Fill `deliverable-template.md` → a **Detection Pack**: one entry per detection with SPL,
 logic, tuning, ATT&CK, severity, response. See `example-deliverable.md` for the target.

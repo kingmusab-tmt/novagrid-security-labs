@@ -140,6 +140,27 @@ sudo lynis audit system        # compare the new Hardening index to Step 1
 | `unattended-upgrades` | enables automatic security patching | close the patch gap |
 | `auditd` + rules | records auth and file-change events | add detective logging (on a non-container system) |
 
+## On Windows
+
+Harden the **Windows target** with the same ideas; the tools differ.
+
+**a.** Review running services and the firewall (cf. Lynis / `ufw`):
+```powershell
+Get-Service | Where-Object Status -eq Running
+Get-NetFirewallProfile | Select-Object Name,Enabled,DefaultInboundAction
+```
+**b.** Set deny-by-default inbound and allow only what's needed:
+```powershell
+Set-NetFirewallProfile -All -Enabled True -DefaultInboundAction Block
+New-NetFirewallRule -DisplayName "Wallet API" -Direction Inbound -Protocol TCP -LocalPort 8080 -Action Allow
+```
+**c.** Reduce attack surface — turn off the lab's weak RDP exposure once you've set your policy:
+```powershell
+Set-ItemProperty 'HKLM:\System\CurrentControlSet\Control\Terminal Server' fDenyTSConnections 1
+```
+For a measured baseline (the Lynis equivalent) use the **CIS Benchmark / CIS-CAT** or Microsoft's
+**Security Compliance Toolkit** (LGPO). Keep patching current with Windows Update.
+
 ## Deliverable
 Fill `deliverable-template.md` → the **hardening report** with before/after and rationale.
 

@@ -76,6 +76,12 @@ Work against the **lab copy only**, in a proxy such as Burp/ZAP.
 | the same stored in a saved field | runs for every later viewer | show stored XSS is worse |
 | intercept with Burp/ZAP | view/modify requests and responses | find which inputs reach the DB or get reflected |
 
+## On Windows
+
+The web-app tooling is cross-platform — **Burp Suite** and **OWASP ZAP** run on Windows, and the SQLi/XSS
+payloads are identical (the target app, not your OS, is what matters). Point the Windows browser at the
+proxy and proceed exactly as written. Parameterised queries vs blocklisting is the same lesson on any stack.
+
 ## Deliverable
 Fill `deliverable-template.md` → **web-vuln findings + developer fixes**.
 

@@ -67,6 +67,22 @@ done. Time the rebuild+restore to measure RTO; note the backup age to measure RP
 | `sshd -T`, `ss -tulpn`, re-run Lynis | re-verify hardening and exposure | confirm go-live criteria before online |
 | time the recovery; compare to RTO/RPO | measures the DR test | prove (or expose) your recovery capability |
 
+## On Windows
+
+Same recovery discipline; Windows tooling.
+
+**a.** Rebuild from a clean image/snapshot, then restore data from a **pre-intrusion** backup and verify:
+```powershell
+# restore the robocopy/wbadmin set, then:
+Get-ChildItem C:\NovaGrid -Recurse -File | Get-FileHash -Algorithm SHA256   # compare to the manifest
+```
+**b.** Verify go-live criteria:
+```powershell
+Get-HotFix | Select-Object -First 5        # patches applied
+Get-MpComputerStatus | Select-Object AMServiceEnabled,RealTimeProtectionEnabled   # Defender on
+```
+**c.** Confirm no persistence returned (the Ep21 checks), then time the recovery against RTO/RPO.
+
 ## Deliverable
 Fill `deliverable-template.md` → the **recovery runbook + DR-test report**.
 

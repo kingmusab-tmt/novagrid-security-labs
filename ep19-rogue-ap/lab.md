@@ -78,6 +78,18 @@ strength**, or **weaker/open encryption** than the real network uses.
 - **Client hardening** — don't auto-join open SSIDs, validate the server certificate, forget networks after use.
 - **The single most effective control:** enterprise authentication (802.1X with server-cert validation), because the fake AP can't present the real network's certificate.
 
+## On Windows
+
+Windows can run the wireless survey natively:
+```powershell
+netsh wlan show networks mode=bssid     # SSIDs with their BSSIDs, signal, channel, encryption
+netsh wlan show interfaces              # what you're connected to
+```
+Compare the BSSIDs against the authorised-AP list exactly as in the lab — a duplicate SSID with an
+unfamiliar BSSID/vendor, odd channel, or weaker encryption is your evil twin. The defences (WPA3 /
+802.1X enterprise auth, WIDS/WIPS, validating the server certificate, not auto-joining open SSIDs) are
+the same.
+
 ## Deliverable
 Fill `deliverable-template.md` → the **wireless assessment report**.
 

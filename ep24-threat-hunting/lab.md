@@ -71,6 +71,23 @@ The hunt runs as SPL searches (Ep13/20 Splunk). `\|` is the SPL pipe.
 | `... \| table _time, ...` | orders confirming events | document the finding |
 | save the query as an alert | operationalises the hunt | turn a one-off hunt into a standing detection |
 
+## On Windows
+
+Hunt in Windows telemetry (or the same Splunk, over Windows logs).
+
+**a.** Logons and failures (cf. auth.log):
+```powershell
+Get-WinEvent -FilterHashtable @{LogName='Security'; Id=4624,4625} -MaxEvents 50
+```
+**b.** With **Sysmon** installed, the high-value IDs are 1 (process create), 3 (network), 11 (file
+create), 13 (registry). Hunt a hypothesis, e.g. odd persistence:
+```powershell
+Get-ScheduledTask | Where-Object {$_.Author -notlike 'Microsoft*'}
+Get-CimInstance Win32_StartupCommand
+```
+**c.** Operationalise a find as a detection — a `Get-WinEvent` filter, a Sysmon rule, or an SPL
+alert (Ep20 format) over the forwarded Windows logs.
+
 ## Deliverable
 Fill `deliverable-template.md` → the **threat-hunt report**.
 

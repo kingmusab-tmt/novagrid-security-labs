@@ -138,6 +138,13 @@ Splunk searches are written in SPL. `\|` below is the SPL pipe that chains comma
 | `... \| stats count by http_user_agent` | group by user-agent | fingerprint the scanner |
 | `... \| sort _time` / `\| table _time, ...` | order and shape results | assemble the timeline |
 
+## On Windows
+
+**Splunk Enterprise installs on Windows** and the **BOTSv1** dataset and all SPL are identical — do the
+whole investigation exactly as written. The only difference is the installer and that `$SPLUNK_HOME`
+is typically `C:\Program Files\Splunk` (restart with `splunk.exe restart`). Nothing about the kill-chain
+queries changes.
+
 ## Deliverable
 Fill `deliverable-template.md` → an **Incident Report** with timeline, IOCs, ATT&CK
 mapping, and containment/eradication/recovery. See `example-deliverable.md` for the target.
