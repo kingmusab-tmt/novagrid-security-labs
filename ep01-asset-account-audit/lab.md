@@ -16,6 +16,25 @@
   3. Flag unmanaged assets, stale/shared accounts, and over-privilege.
   4. Produce an asset inventory + a findings memo.
 
+## Security+ concept — asset management & least privilege
+
+Before you can defend a network you have to know **what's on it** and **who can touch it**. This
+is the **IDENTIFY** function of the NIST Cybersecurity Framework, and every later control
+(hardening, monitoring, incident response) assumes you've already done it.
+
+- **Asset management** *(SY0-701 obj. 4.2)* — keep an accurate inventory of hardware, software and
+  data. An asset nobody records or owns — like NovaGrid's forgotten `legacy-billing` box — is a
+  *shadow asset*: unpatched, unmonitored, and a favourite way in for attackers.
+- **Account & identity management + least privilege** *(obj. 4.6, 1.2)* — every account should map
+  to a real person or a documented service and hold **only** the rights it needs. Orphaned
+  accounts (a leaver who still has access), shared accounts, and over-privileged service accounts
+  (full `sudo` for a job that only needs backup rights) are classic findings.
+- **The core move is reconciliation** — compare what *is* (live hosts, running services, real
+  accounts) against what *should be* (the asset register and staff roster). **The gaps are your risks.**
+
+*Exam tie-in:* expect questions on why inventory and least privilege matter, the risk of unmanaged
+assets, and spotting over-privileged or stale accounts.
+
 ## Scope & rules of engagement
 - **In scope:** your NovaGrid lab (analyst VM + the shared target containers). Authorised internal audit.
 - **Out of scope:** scanning anything outside your lab subnet.
@@ -67,6 +86,23 @@ if you run the optional Vagrant VM.
 
 ### Evidence checkpoints
 - [ ] `nmap -sn` + `ss -tulpn` output  - [ ] running-services + package list  - [ ] accounts + sudo + `chage -l` + roster comparison  - [ ] the finished inventory table
+
+## Commands explained
+
+You'll understand your findings far better if you know what each command actually does:
+
+| Command | What it does | Why you run it here |
+|---|---|---|
+| `ip addr` (`ip -br a`) | shows your host's network interfaces and IP addresses | learn your own address and which subnet to scan |
+| `nmap -sn -n <subnet>` | host-discovery sweep — no port scan (`-sn`), no DNS lookups (`-n`) | find which hosts are alive on the lab network |
+| `nmap -Pn -n -p <ports> <ips>` | scans specific TCP ports on the named hosts | see which services each live host exposes |
+| `ss -tulpn` | lists listening **t**cp/**u**dp sockets with the **p**rocess and port **n**umbers | inventory the services a host is actually running |
+| `ps -ef` | lists every running process | see running services (the container has no `systemctl`) |
+| `dpkg -l` | lists installed Debian/Ubuntu packages | inventory installed software and spot outdated packages |
+| `getent passwd` | prints the user database (name, UID, login shell) | enumerate accounts; a `/bin/bash` shell means it can log in |
+| `getent group sudo` | shows the members of the `sudo` group | find who holds administrator rights |
+| `sudo cat /etc/sudoers.d/*` | shows the extra sudo rules dropped in by packages/admins | spot over-privilege, e.g. `NOPASSWD: ALL` on a service account |
+| `chage -l <user>` | shows password-ageing info for an account | find stale accounts (password untouched for months) |
 
 ## Deliverable
 Fill `deliverable-template.md` → the **asset inventory** + **findings memo**.
