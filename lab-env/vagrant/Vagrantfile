@@ -1,0 +1,26 @@
+# Optional: the wallet-api target as a FULL Ubuntu VM in VirtualBox.
+# Use it for the hardening steps that don't work in a container (auditd, kernel settings,
+# a real systemd). It runs the SAME setup.sh as the Docker image, so findings are identical.
+#
+#   cd lab-env/vagrant
+#   vagrant up            # first run downloads the Ubuntu 22.04 box (~600 MB)
+#   vagrant ssh           # or: ssh tunde@192.168.56.10 from your analyst VM
+#   vagrant destroy -f    # throw it away and start again
+Vagrant.configure("2") do |config|
+  config.vm.box = "ubuntu/jammy64"
+  config.vm.hostname = "wallet-api"
+  config.vm.network "private_network", ip: "192.168.56.10"   # host-only: never exposed
+  config.vm.synced_folder ".", "/vagrant", disabled: true
+
+  config.vm.provider "virtualbox" do |vb|
+    vb.name   = "novagrid-wallet-api"
+    vb.memory = 1024
+    vb.cpus   = 1
+  end
+
+  config.vm.provision "file", source: "../targets/wallet", destination: "/tmp/novagrid-setup"
+  config.vm.provision "shell", inline: <<-SHELL
+    sed -i 's/\\r$//' /tmp/novagrid-setup/*.sh /tmp/novagrid-setup/app/*.py /tmp/novagrid-setup/seed/*
+    bash /tmp/novagrid-setup/setup.sh /tmp/novagrid-setup
+  SHELL
+end

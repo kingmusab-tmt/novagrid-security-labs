@@ -4,3 +4,7 @@
 - Admins/remote first (highest-risk, highest-value targets); admins ideally get hardware keys.
 - Demo must actually require password + TOTP on SSH; recovery (scratch) codes stored off-host.
 - Verification: (1) three factors + examples; (2) SMS weakness + phishing-resistance; (3) admins/remote first + why.
+
+## Ground truth in the reference lab (lab-env)
+- Expected config: `auth required pam_google_authenticator.so` in `/etc/pam.d/sshd`; `KbdInteractiveAuthentication yes` in the SSH drop-in; `lab-restart ssh`.
+- If Episode 3 already disabled passwords, the strong answer is `AuthenticationMethods publickey,keyboard-interactive` (key + TOTP).

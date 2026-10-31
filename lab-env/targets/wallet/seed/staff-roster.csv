@@ -1,0 +1,6 @@
+username,full_name,role,status,notes
+amara,Amara Okafor,SOC Lead,active,
+tunde,Tunde Bello,Sysadmin,active,
+chidi,Chidi Nwosu,CFO,active,
+contractor,PayBridge Integration,Contractor,leaving 2026-10-31,contract ends today
+svc-backup,(service account),Backup job,active,owner tunde; needs only tar and rsync

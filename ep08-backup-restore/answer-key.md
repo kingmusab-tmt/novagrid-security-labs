@@ -4,3 +4,6 @@
 - RPO = max tolerable data loss (drives backup frequency); RTO = max tolerable downtime (drives restore speed).
 - Offline/immutable copy is the ransomware control — online backups can be encrypted too.
 - Verification: (1) 3-2-1 + how met; (2) hash-verified restore; (3) RPO vs RTO.
+
+## Ground truth in the reference lab (lab-env)
+- `/backup` and `/offsite` are separate volumes (2 media). Neither is truly offline — a strong answer says so and proposes a real offline/immutable copy.

@@ -1,0 +1,48 @@
+# NovaGrid Security Labs — shared lab environment (Season 1 + reused later)
+# INTENTIONALLY vulnerable targets. Run only on your own analyst VM, never on a shared network.
+#   docker compose up -d --build      # start
+#   docker compose down -v            # stop and reset everything
+name: novagrid-lab
+
+services:
+  wallet-api:
+    build: ./targets/wallet
+    image: novagrid/wallet-api:lab
+    hostname: wallet-api
+    cap_add: [NET_ADMIN]          # lets you practise host-firewall rules (Ep3)
+    networks:
+      novagrid: { ipv4_address: 172.28.0.10 }
+    volumes:
+      - wallet-backup:/backup      # second media for 3-2-1 backups (Ep8)
+      - wallet-offsite:/offsite    # "off-site" copy (Ep8)
+
+  logging:
+    build: ./targets/logging
+    image: novagrid/logging:lab
+    hostname: logging
+    networks:
+      novagrid: { ipv4_address: 172.28.0.20 }
+
+  legacy-host:
+    build: ./targets/legacy
+    image: novagrid/legacy-host:lab
+    hostname: legacy-billing
+    networks:
+      novagrid: { ipv4_address: 172.28.0.30 }
+
+  analyst:
+    build: ./targets/analyst
+    image: novagrid/analyst:lab
+    hostname: analyst
+    networks:
+      novagrid: { ipv4_address: 172.28.0.5 }
+
+networks:
+  novagrid:
+    ipam:
+      config:
+        - subnet: 172.28.0.0/24
+
+volumes:
+  wallet-backup: {}
+  wallet-offsite: {}
