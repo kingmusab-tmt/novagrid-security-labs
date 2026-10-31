@@ -43,6 +43,10 @@ log. Optionally query them in **Splunk** (reuse the Ep13 instance). See `environ
 ## Deliverable
 Fill `deliverable-template.md` → the **detection + mitigation write-up**.
 
+## Rubric
+
+Self-check against `rubric.md`.
+
 ## Framework mapping
 - **MITRE ATT&CK:** T1110.004 (credential stuffing), T1078 (valid accounts)
 - **NIST CSF:** DETECT (DE.CM, DE.AE) · PROTECT (PR.AA)

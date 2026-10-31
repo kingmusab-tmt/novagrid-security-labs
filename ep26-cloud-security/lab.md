@@ -41,6 +41,10 @@ relate to **BOTSv3** (cloud/AWS data) you may have from Episode 13's stretch. Se
 ## Deliverable
 Fill `deliverable-template.md` → the **cloud security design**.
 
+## Rubric
+
+Self-check against `rubric.md`.
+
 ## Framework mapping
 - **NIST CSF:** PROTECT (PR.AC/PR.DS) · DETECT (DE.CM); cloud per CSA / provider well-architected security pillars
 - **Security+ SY0-701:** 3.1 cloud concepts; shared responsibility; IAM; encryption; 4.x cloud logging

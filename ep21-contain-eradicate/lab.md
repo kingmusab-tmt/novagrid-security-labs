@@ -41,6 +41,10 @@ See `environment/README.md`.
 ## Deliverable
 Fill `deliverable-template.md` → the **containment & eradication runbook** (+ executed steps).
 
+## Rubric
+
+Self-check against `rubric.md`.
+
 ## Framework mapping
 - **MITRE ATT&CK (undone):** T1505.003 web shell, T1547 persistence, T1078 valid accounts
 - **NIST CSF:** RESPOND — RS.MI (mitigation), RS.AN

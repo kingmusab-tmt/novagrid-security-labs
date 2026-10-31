@@ -38,6 +38,10 @@ No tools required. Draw on Episodes 1–26 for assets, threats, and controls. Se
 ## Deliverable
 Fill `deliverable-template.md` → the **risk register + treatment plan**.
 
+## Rubric
+
+Self-check against `rubric.md`.
+
 ## Framework mapping
 - **NIST CSF:** GOVERN / IDENTIFY — ID.RA, ID.RM (risk assessment & management); NIST SP 800-30
 - **Security+ SY0-701:** 5.2 risk management (qualitative/quantitative, SLE/ALE/ARO, appetite, treatment, register)

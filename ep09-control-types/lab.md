@@ -38,6 +38,10 @@ logging, hardening, backups, access review, auditd, policies). See `environment/
 ## Deliverable
 Fill `deliverable-template.md` → the **control inventory matrix** + gap notes.
 
+## Rubric
+
+Self-check against `rubric.md`.
+
 ## Framework mapping
 - **NIST CSF:** cross-cuts IDENTIFY/PROTECT/DETECT/RESPOND/RECOVER
 - **Security+ SY0-701:** 1.1 security control categories & types

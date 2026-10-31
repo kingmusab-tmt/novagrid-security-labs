@@ -41,6 +41,10 @@ vulnerable web app) so there are real findings. See `environment/README.md`.
 ## Deliverable
 Fill `deliverable-template.md` → the **vuln-scan report + prioritisation**.
 
+## Rubric
+
+Self-check against `rubric.md`.
+
 ## Framework mapping
 - **NIST CSF:** IDENTIFY — ID.RA (risk assessment); PROTECT — PR.IP
 - **Security+ SY0-701:** 4.3 vulnerability management; scanning (authenticated/credentialed), CVSS, prioritisation

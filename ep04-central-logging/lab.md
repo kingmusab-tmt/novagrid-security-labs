@@ -41,6 +41,10 @@ Two hosts from the shared stack: the **wallet-API** (source) and the **logging**
 ## Deliverable
 Fill `deliverable-template.md` → the **logging config** + the **sample dashboard** (queries + output).
 
+## Rubric
+
+Self-check against `rubric.md`.
+
 ## Framework mapping
 - **NIST CSF:** DETECT — DE.CM (monitoring); PROTECT — PR.PT (audit/log)
 - **Security+ SY0-701:** 4.6 logging & monitoring; log aggregation; time synchronization

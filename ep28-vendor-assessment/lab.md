@@ -38,6 +38,10 @@ No tools required. Use the vendor profile in `environment/vendor-profile.md`. Se
 ## Deliverable
 Fill `deliverable-template.md` → the **vendor risk assessment**.
 
+## Rubric
+
+Self-check against `rubric.md`.
+
 ## Framework mapping
 - **NIST CSF:** GOVERN — GV.SC (supply chain); ID.RA
 - **Security+ SY0-701:** 5.3 third-party risk (vendor assessment/selection/monitoring, right-to-audit, SLA, agreements)

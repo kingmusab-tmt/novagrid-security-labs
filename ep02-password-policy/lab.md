@@ -41,6 +41,10 @@ Analyst VM. Inspect `/etc/login.defs`, PAM `pw_quality`/`pam_pwquality`, and `fa
 ## Deliverable
 Fill `deliverable-template.md` → the **password policy** + **IAM checklist**.
 
+## Rubric
+
+Self-check against `rubric.md`.
+
 ## Framework mapping
 - **NIST:** SP 800-63B (digital identity / authenticators); CSF PROTECT (PR.AC/PR.AA)
 - **Security+ SY0-701:** identity & access management; password concepts; MFA

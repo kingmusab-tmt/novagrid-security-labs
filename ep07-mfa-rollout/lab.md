@@ -38,6 +38,10 @@ Analyst VM. Demo uses `libpam-google-authenticator` (TOTP) + any authenticator a
 ## Deliverable
 Fill `deliverable-template.md` → the **MFA deployment write-up** (plan + demo evidence).
 
+## Rubric
+
+Self-check against `rubric.md`.
+
 ## Framework mapping
 - **NIST:** SP 800-63B authenticator assurance levels (AAL); CSF PR.AA
 - **Security+ SY0-701:** authentication, MFA factors, phishing-resistant authentication

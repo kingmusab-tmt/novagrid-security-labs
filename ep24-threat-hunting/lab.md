@@ -40,6 +40,10 @@ pick techniques to hunt. See `environment/README.md`.
 ## Deliverable
 Fill `deliverable-template.md` → the **threat-hunt report**.
 
+## Rubric
+
+Self-check against `rubric.md`.
+
 ## Framework mapping
 - **MITRE ATT&CK:** hunter's choice (e.g. T1053 scheduled task, T1021 lateral movement, T1074 data staged)
 - **NIST CSF:** DETECT — DE.CM, DE.AE

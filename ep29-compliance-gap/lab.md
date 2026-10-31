@@ -38,6 +38,10 @@ No tools required. Draw on the controls and findings from Episodes 1–28. See `
 ## Deliverable
 Fill `deliverable-template.md` → the **compliance brief + gap analysis**.
 
+## Rubric
+
+Self-check against `rubric.md`.
+
 ## Framework mapping
 - **NIST CSF:** GOVERN — GV.OC/GV.PO (compliance obligations, policy)
 - **Security+ SY0-701:** 5.4 compliance (regulations, audits, attestation) & privacy (data roles, right to be forgotten, retention)

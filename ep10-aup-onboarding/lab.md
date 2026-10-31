@@ -39,6 +39,10 @@ Analyst VM with a "leaver" account (e.g. `webadmin`/a contractor account). Tools
 ## Deliverable
 Fill `deliverable-template.md` → the **AUP + onboarding/offboarding procedures** (and the executed offboarding evidence).
 
+## Rubric
+
+Self-check against `rubric.md`.
+
 ## Framework mapping
 - **NIST CSF:** PROTECT — PR.AC (identity lifecycle); GOVERN (policy)
 - **Security+ SY0-701:** 5.1 governance (policies, procedures); onboarding/offboarding; AUP

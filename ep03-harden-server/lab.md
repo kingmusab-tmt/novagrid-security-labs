@@ -42,6 +42,10 @@ Ubuntu VM). See `environment/README.md`. Tool: **Lynis** (free) for before/after
 ## Deliverable
 Fill `deliverable-template.md` → the **hardening report** with before/after and rationale.
 
+## Rubric
+
+Self-check against `rubric.md`.
+
 ## Framework mapping
 - **NIST CSF:** PROTECT — PR.PS/PR.IP (secure configuration, baselines)
 - **Security+ SY0-701:** 4.1 secure baselines & hardening targets; 2.x reducing the attack surface

@@ -46,6 +46,10 @@ with Kismet/airodump-ng — read-only, your own gear only. See `environment/READ
 ## Deliverable
 Fill `deliverable-template.md` → the **wireless assessment report**.
 
+## Rubric
+
+Self-check against `rubric.md`.
+
 ## Framework mapping
 - **MITRE ATT&CK:** T1557 (adversary-in-the-middle), T1200 (hardware additions)
 - **NIST CSF:** PROTECT — PR.AC/PR.PT; DETECT — DE.CM

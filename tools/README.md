@@ -19,3 +19,9 @@ Output lands in `student-build/<slug>/` (git-ignored). Give the student that fol
 push it as their own private repo). Keep this master private — it holds the answers.
 
 Requires `git` (and `python3`/`python` for the per-student Ep11 sample).
+
+## consistency-check.py
+Validates all episodes have the standard files + sections, rubric totals, and intact README links.
+```bash
+python3 tools/consistency-check.py
+```

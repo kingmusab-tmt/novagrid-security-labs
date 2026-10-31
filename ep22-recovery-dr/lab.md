@@ -38,6 +38,10 @@ The rebuilt wallet host/containers + your Ep8 backups. See `environment/README.m
 ## Deliverable
 Fill `deliverable-template.md` → the **recovery runbook + DR-test report**.
 
+## Rubric
+
+Self-check against `rubric.md`.
+
 ## Framework mapping
 - **NIST CSF:** RECOVER — RC.RP (recovery), RC.IM (improvements)
 - **Security+ SY0-701:** 3.x resilience (RTO/RPO, backups, site resilience); 4.1 recovery

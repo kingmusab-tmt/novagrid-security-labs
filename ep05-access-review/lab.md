@@ -38,6 +38,10 @@ Analyst VM + hosts from the shared stack. Tools: `getent passwd`, `getent group`
 ## Deliverable
 Fill `deliverable-template.md` → the **access-review report**.
 
+## Rubric
+
+Self-check against `rubric.md`.
+
 ## Framework mapping
 - **NIST CSF:** PROTECT — PR.AC/PR.AA (access control, least privilege)
 - **Security+ SY0-701:** 4.x IAM; least privilege; account/identity lifecycle

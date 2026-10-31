@@ -38,6 +38,10 @@ choice. See `environment/README.md`.
 ## Deliverable
 Fill `deliverable-template.md` → the **architecture diagram + control mapping**.
 
+## Rubric
+
+Self-check against `rubric.md`.
+
 ## Framework mapping
 - **NIST CSF:** PROTECT — PR.AC/PR.PT; architecture per NIST SP 800-207 (Zero Trust)
 - **Security+ SY0-701:** 3.1 architecture concepts (segmentation, zero trust, microsegmentation, DMZ)

@@ -41,6 +41,10 @@ Use a real practice image: a public **memory sample** (MemLabs / Volatility test
 ## Deliverable
 Fill `deliverable-template.md` → the **forensic report + chain-of-custody form**.
 
+## Rubric
+
+Self-check against `rubric.md`.
+
 ## Framework mapping
 - **NIST CSF:** RESPOND — RS.AN (analysis); evidence handling per NIST SP 800-86
 - **Security+ SY0-701:** 4.x digital forensics (acquisition, order of volatility, hashing, chain of custody, admissibility)

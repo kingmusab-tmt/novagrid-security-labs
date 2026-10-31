@@ -38,6 +38,10 @@ Analyst VM / wallet host. Tools: `tar`, `sha256sum`, `cron`. See `environment/RE
 ## Deliverable
 Fill `deliverable-template.md` → the **backup plan** + **restore-test evidence**.
 
+## Rubric
+
+Self-check against `rubric.md`.
+
 ## Framework mapping
 - **NIST CSF:** PROTECT — PR.DS (data security/backups); RECOVER — RC.RP (recovery)
 - **Security+ SY0-701:** 3.x resilience & recovery; backups; 2.x ransomware mitigation

@@ -40,6 +40,10 @@ See `environment/README.md`.
 ## Deliverable
 Fill `deliverable-template.md` → the **crypto-config assessment** + remediation.
 
+## Rubric
+
+Self-check against `rubric.md`.
+
 ## Framework mapping
 - **NIST CSF:** PROTECT — PR.DS (data-in-transit)
 - **Security+ SY0-701:** 1.4 cryptographic solutions (protocols, ciphers, certificates, PFS); 3.x secure protocols

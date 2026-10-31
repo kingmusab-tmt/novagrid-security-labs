@@ -41,6 +41,10 @@ Community** to intercept requests. See `environment/README.md`.
 ## Deliverable
 Fill `deliverable-template.md` → **web-vuln findings + developer fixes**.
 
+## Rubric
+
+Self-check against `rubric.md`.
+
 ## Framework mapping
 - **MITRE ATT&CK:** T1190 (exploit public-facing app)
 - **NIST CSF:** PROTECT — PR.PS (secure development); IDENTIFY — ID.RA
