@@ -19,6 +19,13 @@
   3. Produce an **architecture diagram** (text/ASCII/Mermaid is fine) with trust boundaries.
   4. **Map the controls** at each boundary (firewall/ACL, NAC/802.1X, identity, inspection, logging).
 
+## Concept Explanation — network segmentation & zero trust
+
+A flat network means one foothold reaches everything — exactly how the Ep13 attacker went from the
+web server to the wallet. **Segmentation** breaks the network into zones with controlled flows so a
+breach is contained; **zero trust** goes further, removing *implicit* trust based on network location
+and authenticating/authorising every request.
+
 ## Scope & rules of engagement
 - **In scope:** a design deliverable (diagram + control mapping). No infrastructure changes required.
 
@@ -41,6 +48,27 @@ logging/SIEM, admin/management, user LAN). Reference NIST SP 800-207 for zero tr
 
 ### Evidence checkpoints
 - [ ] zone definitions + allowed-flows matrix  - [ ] the architecture diagram  - [ ] the control-to-boundary mapping  - [ ] the "how it stops Ep13" note
+
+## Key terms & frameworks
+
+**Core terms**
+- **Segmentation** — dividing the network into zones (by sensitivity) so traffic between them can be controlled, not assumed.
+- **Default deny** — nothing is allowed between zones unless explicitly permitted — the opposite of a flat network.
+- **East-west vs north-south traffic** — movement *between internal systems* vs *in/out of the network*; lateral movement is east-west, and flat networks don't inspect it.
+- **Microsegmentation** — fine-grained segmentation down to individual workloads, limiting east-west movement.
+- **DMZ** — a buffer zone for internet-facing services, isolated from the internal network.
+
+**Zero trust (NIST SP 800-207)**
+- **"Never trust, always verify"** — no request is trusted because of where it came from; identity, device posture and context are checked every time.
+- **Per-request authentication/authorisation** — access is granted to a *resource*, not to the *network*.
+- **Enforcement points** — identity-aware proxy / MFA at the application edge, NAC/802.1X at the network edge, segmentation gateways between zones.
+
+**How it would have stopped Ep13:** with the wallet DB in its own default-deny zone and east-west
+traffic authenticated, a foothold on the web server could not have simply reached the database —
+the lateral move would have been denied and logged.
+
+**Controls to map to each boundary:** firewalls/ACLs, NAC/802.1X, identity-aware proxy + MFA,
+IDS/IPS inspection, and logging at every crossing.
 
 ## Deliverable
 Fill `deliverable-template.md` → the **architecture diagram + control mapping**.

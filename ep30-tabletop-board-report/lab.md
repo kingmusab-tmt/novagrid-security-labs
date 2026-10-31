@@ -22,6 +22,13 @@
   3. Write an **after-action report** (AAR) with prioritised, owned remediation actions.
   4. Write a **one-page board brief** that frames risk and action for non-technical executives.
 
+## Concept Explanation — tabletop exercises & executive communication
+
+A tabletop is a discussion-based rehearsal of your incident response: you walk the team through a
+scenario, inject by inject, and capture every point where *nobody was sure who decides*. Those
+hesitations are the real findings. The output is two documents leaders actually read — a blameless
+**after-action report** and a one-page **board brief** in business language.
+
 ## Scope & rules of engagement
 - **In scope:** facilitating the discussion and writing the two documents.
 - **Out of scope:** no systems, no live data — this is a discussion-based exercise.
@@ -85,6 +92,25 @@ Save to `evidence/`:
 - [ ] The **gap list**, ranked by risk
 - [ ] The finished **after-action report**
 - [ ] The finished **one-page board brief**
+
+## Key terms & frameworks
+
+**Core terms**
+- **Tabletop exercise** — a facilitated, discussion-based test of the IR plan (no live systems), per NIST SP 800-61 guidance on IR testing.
+- **Inject** — a scripted event the facilitator reveals one at a time to drive decisions.
+- **Blameless** — the ground rule that the exercise tests the *plan*, not people, so gaps surface honestly.
+- **Decision owner / RACI** — who is Responsible/Accountable/Consulted/Informed for each decision; missing owners are the top finding.
+- **After-action report (AAR)** — what went well, what didn't, and prioritised, owned, dated remediation.
+- **Board brief** — a one-page executive summary: impact, status, residual risk, and a single clear ask.
+
+**The decisions a good tabletop forces:**
+- Who can **declare an incident**?
+- Who can **authorise taking the service offline** (and what's the trade-off)?
+- Who **approves notifying regulators and customers**, and on what **clock** (ties to NDPR/PCI from Ep29)?
+- Who **speaks to the press**?
+
+**Writing for the board:** lead with business impact and residual risk, drop the jargon, and make
+**one** concrete ask (budget, policy sign-off, or risk acceptance) — a brief with five asks gets none.
 
 ## Deliverable
 Fill `deliverable-template.md` → the **After-Action Report** and the **Board Brief**. See

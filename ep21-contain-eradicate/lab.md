@@ -20,6 +20,22 @@
   3. Decide **rebuild vs clean** and justify.
   4. Capture it all as a reusable **runbook** with the steps actually run.
 
+## Concept Explanation — incident response: containment & eradication
+
+Once a compromise is confirmed, the incident-response lifecycle moves from detection into
+**containment** (stop the bleeding), **eradication** (remove the attacker and every foothold), and
+then recovery (Ep22). Order matters: you isolate the host *without* destroying the volatile evidence
+forensics will need, then you hunt down *all* of the attacker's persistence — not just the obvious
+file — before you trust the box again.
+
+**Key terms**
+- **Containment** — limiting the damage and spread (isolating the host, blocking the C2) while you respond.
+- **Eradication** — removing the malware, accounts, and persistence so the attacker can't simply return.
+- **Isolation** — cutting the host's network access while keeping it powered, so RAM evidence survives.
+- **Persistence** — the mechanisms (cron jobs, services, Run keys, rogue accounts, SSH keys) an attacker plants to regain access.
+- **Rebuild vs clean** — restoring from a known-good image vs attempting to disinfect in place; for a payments host, rebuild is safer.
+- **Blast radius** — how far the compromise could have spread, which sets the scope of eradication.
+
 ## Scope & rules of engagement
 - **In scope:** your lab's compromised host/containers. Preserve evidence *before* you wipe (ties to Ep23).
 
@@ -46,6 +62,16 @@ units/timers, `~/.ssh/authorized_keys`, (Windows) Run keys/services. Preserve fi
 
 ### Evidence checkpoints
 - [ ] isolation action + proof  - [ ] evidence preserved before changes  - [ ] eradication steps (process killed, file + persistence removed, account reset)  - [ ] the runbook
+
+## Commands explained
+
+| Command | What it does | Why you use it here |
+|---|---|---|
+| `docker network disconnect <net> <container>` | cuts the host off the lab network | contain without powering off (preserve RAM) |
+| `ps -ef` / `pkill -f <name>` | finds and kills the malicious process | stop the running malware |
+| `crontab -l` / check `~/.ssh/authorized_keys` / services | surface persistence mechanisms | ensure you removed *all* footholds, not just the file |
+| `sudo usermod -L <user>` / `passwd <user>` | locks/rotates the cracked admin account | deny the attacker the credential they stole |
+| `find / -newermt <time> -type f` | lists files changed since the intrusion | discover dropped/modified files |
 
 ## Deliverable
 Fill `deliverable-template.md` → the **containment & eradication runbook** (+ executed steps).

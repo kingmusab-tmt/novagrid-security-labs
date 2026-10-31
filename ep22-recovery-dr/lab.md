@@ -19,6 +19,21 @@
   3. Run a **DR test** and measure against **RTO/RPO**.
   4. Capture a reusable **recovery runbook**.
 
+## Concept Explanation — recovery & disaster recovery
+
+Recovery is the disciplined return to normal *after* eradication — rebuilt clean, restored from a
+backup that predates the intrusion, verified, and only then brought back online. It's governed by two
+numbers the business cares about: **RTO** (how fast you must be back) and **RPO** (how much data you
+can lose). A **DR test** proves you can actually hit them before a real disaster forces the question.
+
+**Key terms**
+- **Recovery** — restoring systems and data to normal operation after an incident.
+- **Known-good image** — a trusted, clean build you rebuild from, rather than disinfecting the compromised host.
+- **Restore point** — the backup you recover from; it must predate the intrusion so you don't restore the attacker too.
+- **Go-live criteria** — the checklist that must pass before a system returns (patched, creds rotated, monitoring on, no persistence).
+- **RTO / RPO** — Recovery Time / Point Objectives: the downtime and data-loss limits you design to.
+- **DR test** — a rehearsal of recovery that measures actual RTO/RPO against the targets.
+
 ## Scope & rules of engagement
 - **In scope:** your lab. Restore into a rebuilt host; don't reintroduce the compromise.
 
@@ -41,6 +56,16 @@ done. Time the rebuild+restore to measure RTO; note the backup age to measure RP
 
 ### Evidence checkpoints
 - [ ] rebuild steps  - [ ] restore + hash verification  - [ ] go-live checklist signed  - [ ] DR timing vs RTO/RPO
+
+## Commands explained
+
+| Command / action | What it does | Why you use it here |
+|---|---|---|
+| `docker compose up -d --build` from a clean checkout | rebuilds the host from a trusted image | start from known-good, not the tainted host |
+| restore the Ep8 backup + `sha256sum -c manifest` | recovers data and verifies integrity | restore clean data, proven byte-for-byte |
+| choose a pre-intrusion restore point | selects a backup from before the attack | avoid restoring the compromise itself |
+| `sshd -T`, `ss -tulpn`, re-run Lynis | re-verify hardening and exposure | confirm go-live criteria before online |
+| time the recovery; compare to RTO/RPO | measures the DR test | prove (or expose) your recovery capability |
 
 ## Deliverable
 Fill `deliverable-template.md` → the **recovery runbook + DR-test report**.

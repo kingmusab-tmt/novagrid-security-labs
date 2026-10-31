@@ -19,6 +19,13 @@
   3. Produce a **gap analysis** (requirement → status → gap → remediation → owner).
   4. Write a short **leadership brief** with the priorities.
 
+## Concept Explanation — compliance & privacy
+
+Compliance is proving you meet the obligations the law and standards place on you — related to
+security but not the same thing (you can be compliant and still insecure, or secure and
+non-compliant). A **gap analysis** maps each requirement to your actual controls, marks where you
+fall short, and turns the shortfalls into an owned, prioritised remediation plan.
+
 ## Scope & rules of engagement
 - **In scope:** an assessment/documentation deliverable using the NovaGrid scenario.
 
@@ -41,6 +48,28 @@ Regulation) and GDPR (for EU customers). Deliver a gap-analysis table + a one-pa
 
 ### Evidence checkpoints
 - [ ] applicability mapping  - [ ] the gap-analysis table  - [ ] prioritised remediation + owners  - [ ] the leadership brief
+
+## Key terms & frameworks
+
+**Core terms**
+- **Compliance vs security** — meeting required controls/obligations vs actually reducing risk; aim for both.
+- **Gap analysis** — comparing requirements against current state to find and rank shortfalls.
+- **Control evidence / attestation** — the proof (configs, logs, policies from earlier episodes) that a requirement is met.
+
+**The regulations in play:**
+- **PCI DSS** — governs cardholder data: protect stored data, encrypt transmission, restrict access, log, and test regularly.
+- **NDPR** — Nigeria's data-protection regulation: lawful basis for processing, data-subject rights, breach notification, data inventory and retention.
+- **GDPR** — applies to EU residents' data: similar rights (including the **right to be forgotten**), strict breach-notification timelines, and accountability.
+
+**Data-subject rights** — individuals' rights over their personal data (access, correction, erasure,
+portability); your processes must be able to honour them.
+
+**Breach notification** — the legal obligation to notify regulators and/or affected people within a
+set time; each regime sets its own clock, which is why Episode 30's tabletop forces the question of
+*who authorises it and how fast*.
+
+**The deliverable** marks each requirement **compliant / partial / non-compliant** with evidence,
+then leads with the gaps that carry the most legal or financial exposure.
 
 ## Deliverable
 Fill `deliverable-template.md` → the **compliance brief + gap analysis**.

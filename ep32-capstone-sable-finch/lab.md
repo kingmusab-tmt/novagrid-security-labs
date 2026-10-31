@@ -22,6 +22,14 @@
   4. **Write a one-page executive brief** (reuse/extend your Episode 30 board brief).
   5. **Produce a kill-chain diagram** showing Sable Finch's path and where each control stopped (or should have stopped) them.
 
+## Concept Explanation — putting it together: the incident case file
+
+The capstone is synthesis: you turn a year of scattered findings into one coherent story an employer
+or a board can follow end to end. The spine is a **master timeline** anchored at **T0** (the earliest
+confirmed malicious event, not when you first noticed), mapped onto the **MITRE ATT&CK** kill chain
+and the five **NIST CSF** functions, and closed with the single control that would have stopped the
+campaign earliest.
+
 ## Scope & rules of engagement
 - **In scope:** assembling and analysing evidence you already generated; writing the case file, the diagram, and the exec brief.
 - **Out of scope:** no new attacks and no new exploitation — this episode is **synthesis**. If you're missing evidence for a stage, go back and do that episode first, or re-run it against `lab-env`.
@@ -88,6 +96,23 @@ Save to `evidence/`:
 - [ ] The **ATT&CK kill-chain table** (stage · technique · evidence · control/gap)
 - [ ] The **kill-chain diagram**
 - [ ] The finished **case file** and **one-page executive brief**
+
+## Key terms & frameworks
+
+**Core terms**
+- **Incident case file** — one consolidated document: timeline, kill-chain map, analysis, recovery, lessons, and an executive brief.
+- **T0** — the earliest *confirmed malicious* event; distinguishing it from "first detected" is a key analytical point.
+- **Dwell time** — how long the attacker was active before detection; the gap between T0 and detection.
+- **Master timeline** — the chronological backbone, every entry tied to an evidence reference.
+
+**Frameworks you map against:**
+- **MITRE ATT&CK** — present the campaign as a kill-chain table: stage → technique (Txxxx) → your evidence → the control that caught it or the gap → the **mitigation** (Mxxxx) that closes it.
+- **NIST CSF** — show that your case file touches all five functions: **IDENTIFY, PROTECT, DETECT, RESPOND, RECOVER**.
+- **Cyber kill chain** — recon → initial access → execution → persistence → lateral movement → collection → exfiltration → impact; the narrative order of the story.
+
+**The headline:** name the **earliest realistic stop point** and the one control (e.g. MFA on admin
+logins) that would have prevented the most of the campaign — that single insight leads the executive
+brief, the one-page, plain-language summary that makes a single, concrete ask of leadership.
 
 ## Deliverable
 Fill `deliverable-template.md` → **the Sable Finch incident case file** plus the **executive

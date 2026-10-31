@@ -20,6 +20,21 @@
   3. Document findings (confirmed activity, or a defensible "not found").
   4. Convert a finding into a **new detection** (hand to Ep20).
 
+## Concept Explanation — threat hunting
+
+Threat hunting is the proactive search for an attacker your *alerts didn't catch*. It's
+**hypothesis-driven**: you pick a technique (ideally from MITRE ATT&CK) you have no detection for,
+state exactly what evidence it would leave, then go looking in the data — proving or disproving it,
+and turning any find into a new detection so you don't have to hunt it by hand again.
+
+**Key terms**
+- **Threat hunting** — proactively searching telemetry for undetected malicious activity.
+- **Hypothesis** — a specific, testable claim ("if persistence via scheduled task, I'd see X in Y data").
+- **MITRE ATT&CK** — a catalogue of adversary techniques used to structure hunts.
+- **TTPs vs IOCs** — durable attacker *behaviours* vs brittle specific *indicators*; hunts target TTPs.
+- **Pivoting** — following a lead across data sources (web → auth → process → registry) to confirm or clear it.
+- **Confirmation bias** — the trap of seeing only evidence that supports your hypothesis; absence of evidence is also a result.
+
 ## Scope & rules of engagement
 - **In scope:** querying your lab data (Splunk/BOTS from Ep13, Wazuh, host logs).
 
@@ -43,6 +58,18 @@ searching existing data for things no alert flagged. Save your queries + results
 
 ### Evidence checkpoints
 - [ ] the written hypothesis (+ ATT&CK technique)  - [ ] the hunt queries + results  - [ ] confirm/clear conclusion with reasoning  - [ ] the new detection
+
+## Commands explained
+
+The hunt runs as SPL searches (Ep13/20 Splunk). `\|` is the SPL pipe.
+
+| SPL / action | What it does | Why you use it here |
+|---|---|---|
+| `index=botsv1 <technique artefacts>` | searches for the expected evidence of your hypothesis | test whether the technique was used |
+| `... \| stats count by host, process` | aggregates to surface anomalies | spot the odd process/host |
+| pivot on a found value (IP, user, hash) | follows the lead into other sourcetypes | corroborate across data sources |
+| `... \| table _time, ...` | orders confirming events | document the finding |
+| save the query as an alert | operationalises the hunt | turn a one-off hunt into a standing detection |
 
 ## Deliverable
 Fill `deliverable-template.md` → the **threat-hunt report**.

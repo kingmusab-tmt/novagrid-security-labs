@@ -22,6 +22,14 @@
   3. Keep your **false-positive rate low**: don't escalate noise. Precision is the skill here.
   4. Produce a **shift report**: the queue summary, the escalations, and 2–3 tuning suggestions so the noisiest rules stop crying wolf.
 
+## Concept Explanation — SOC triage & alert fatigue
+
+A real SOC console is mostly noise with a few alerts that matter, and the Tier-1 skill is clearing
+it fast *without* escalating everything. The metric that counts is **precision** — escalate the real
+threats and leave the noise — because an analyst who floods Tier-2 with false positives loses their
+trust. You bucket each alert, justify every escalation, and **correlate** related ones into a single
+story.
+
 ## Scope & rules of engagement
 - **In scope:** reading and triaging the provided alert data; writing the report.
 - **Out of scope:** no live systems — this is console work on exported alerts. (Optional: pull the same alerts into Splunk from Ep13/Ep20 to practise in a real SIEM.)
@@ -84,6 +92,20 @@ Save to `evidence/`:
 - [ ] Your **escalation tickets** (the true positives, each with "why real" + "next step")
 - [ ] Your **start/stop time** and alert count (how fast did you clear the queue?)
 - [ ] Your **tuning suggestions**
+
+## Commands explained
+
+The queue is a CSV/JSONL; triage it in a spreadsheet, with `grep`/`awk`, or in Splunk.
+
+| Command / action | What it does | Why you use it here |
+|---|---|---|
+| open `environment/data/alert-queue.csv` in a spreadsheet | view all alerts in a sortable grid | work the queue top to bottom |
+| `column -s, -t < alert-queue.csv \| less -S` | pretty-prints the CSV in the terminal | read it without a spreadsheet |
+| `grep -i "<rule>" alert-queue.csv` | filters to one alert type | batch-handle a noisy rule |
+| sort/count by rule (spreadsheet or `cut`+`sort`+`uniq -c`) | ranks the noisiest rules | pick tuning candidates |
+| (optional) Splunk `\| inputlookup alert-queue.csv \| stats count by rule, severity` | triages in a SIEM | practise on a real console |
+
+*Don't trust the `severity` column* — the SIEM over- and under-rates; that's the exercise.
 
 ## Deliverable
 Fill `deliverable-template.md` → a **shift report**: queue stats (counts by verdict),

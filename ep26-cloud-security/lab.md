@@ -20,6 +20,15 @@
   3. Design **network** (VPC/subnets, security groups, private data tier) and **encryption** (at rest/in transit, KMS).
   4. Design **logging/monitoring** (CloudTrail-style audit, flow logs) and **secrets management**.
 
+## Concept Explanation — cloud security
+
+The cloud changes *who* secures *what*, not whether security matters. Under the **shared
+responsibility model** the provider secures the underlying infrastructure and the customer secures
+their identities, data and configuration — and it's almost always the *customer's* side
+(misconfigured storage, over-broad IAM, exposed databases) that causes cloud breaches. The same
+principles you applied on-prem (least privilege, encryption, network isolation, logging) carry over,
+expressed in cloud primitives.
+
 ## Scope & rules of engagement
 - **In scope:** a design deliverable (provider-agnostic, examples welcome). No live cloud account needed.
 
@@ -44,6 +53,23 @@ Episode 13 BOTSv3 stretch, reuse that cloud context. Deliver a short design + a 
 
 ### Evidence checkpoints
 - [ ] shared-responsibility split  - [ ] IAM design  - [ ] network+encryption design (diagram)  - [ ] logging+secrets design
+
+## Key terms & frameworks
+
+**Core terms**
+- **Shared responsibility model** — the split between what the cloud provider secures (hardware, hypervisor) and what the customer secures (IAM, data, config).
+- **IAM roles & least privilege** — grant scoped, assumable roles rather than long-lived "god-mode" keys; enforce MFA; avoid using the root account.
+- **Security groups / NACLs** — cloud firewalls; keep them default-deny and keep the database in a private subnet, off the public internet.
+- **Public vs private subnet** — internet-reachable vs internal-only network tiers; sensitive data belongs in private tiers.
+- **Encryption at rest & in transit** — KMS-managed keys for stored data, TLS for data on the wire.
+- **Secrets manager** — a managed store for credentials, so secrets aren't hard-coded in code or images.
+- **Audit logging (e.g. CloudTrail) + flow logs** — recording API calls and network flows so you can detect and investigate.
+
+**How you'd catch the cloud version of Ep13:** API audit logs + flow logs would show the anomalous
+access and data movement; detections mirror the Ep20 ones, just over cloud telemetry.
+
+**The recurring lesson:** most cloud incidents trace to **misconfiguration** on the customer side —
+an exposed bucket, an over-broad role — not a provider failure.
 
 ## Deliverable
 Fill `deliverable-template.md` → the **cloud security design**.

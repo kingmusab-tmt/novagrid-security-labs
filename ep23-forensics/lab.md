@@ -19,6 +19,21 @@
   3. Analyse a **copy** (never the original) for the attacker's artifacts/timeline.
   4. Maintain a documented **chain of custody**.
 
+## Concept Explanation — digital forensics
+
+Forensics is evidence handling done so the results would stand up to scrutiny — in court or an
+audit. You collect in **order of volatility** (the most fleeting data first), make a **bit-for-bit
+image** and prove it's unaltered with a **hash**, analyse only a *copy*, and document an unbroken
+**chain of custody**. Skip any of those and the evidence can be challenged.
+
+**Key terms**
+- **Order of volatility** — collect the most ephemeral data first: CPU cache → RAM → swap → disk → logs/archives.
+- **Bit-for-bit image** — an exact sector-level copy of the source (via `dd`/forensic imager), not a file copy.
+- **Hash verification** — matching source and image hashes to prove the image is identical and unaltered.
+- **Write-blocker** — hardware/software that prevents any change to the original evidence during imaging.
+- **Chain of custody** — the documented record of who held the evidence, when, and every handoff.
+- **Admissibility** — whether evidence can be used; broken custody or an unverified image can make it inadmissible.
+
 ## Scope & rules of engagement
 - **In scope:** evidence from the lab incident (a memory/disk sample or triage image). Analysis on copies only.
 
@@ -46,6 +61,16 @@ Treat the original as read-only (write-blocker concept).
 
 ### Evidence checkpoints
 - [ ] order-of-volatility plan  - [ ] image + matching source/image hashes  - [ ] key artifacts/timeline from the copy  - [ ] completed chain-of-custody form
+
+## Commands explained
+
+| Command | What it does | Why you use it here |
+|---|---|---|
+| `dd if=<source> of=image.dd bs=4M` | makes a bit-for-bit image of the source | capture an exact forensic copy |
+| `sha256sum <source>` and `sha256sum image.dd` | hashes both | prove the image matches the original |
+| mount read-only / use a write-blocker | prevents altering the evidence | preserve admissibility |
+| Volatility 3 plugins (`pslist`, `netscan`, …) | parse a RAM capture for processes/connections | place the attacker on the host |
+| `strings` / Autopsy timeline | surface artefacts and order them | build the forensic timeline |
 
 ## Deliverable
 Fill `deliverable-template.md` → the **forensic report + chain-of-custody form**.
