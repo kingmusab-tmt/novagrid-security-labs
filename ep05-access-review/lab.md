@@ -16,6 +16,22 @@
   3. Identify **over-privilege**, **shared** and **orphaned** accounts.
   4. Recommend and apply **least-privilege** changes; document.
 
+## Concept Explanation — least privilege & access reviews
+
+An access review (or recertification) periodically checks that every account still has a legitimate
+owner and only the rights its role needs. Over time, access *accretes* — people change roles, leavers
+linger, service accounts get broad grants "just to make it work". The review reconciles actual
+entitlements against roles and the staff roster, then strips anything that fails the "needs it for the
+job" test.
+
+**Key terms**
+- **Entitlement** — a specific right an account holds (group membership, a sudo rule, file access).
+- **Access matrix** — a table of who has which entitlements, used to spot excess.
+- **Least privilege** — grant only the access a role requires, nothing more.
+- **Segregation of duties (SoD)** — splitting sensitive tasks so no single account can do everything (e.g. request *and* approve).
+- **Orphaned / stale / shared account** — no current owner / no recent use / used by several people — all review red flags.
+- **Recertification** — the periodic sign-off that each access grant is still justified.
+
 ## Scope & rules of engagement
 - **In scope:** your lab hosts. Apply changes reversibly on the VM, not production.
 
@@ -45,6 +61,17 @@ before/after. No production systems.
 
 ### Evidence checkpoints
 - [ ] users/groups/sudoers listing  - [ ] the access matrix  - [ ] stale/orphaned account list  - [ ] applied before/after
+
+## Commands explained
+
+| Command | What it does | Why you use it here |
+|---|---|---|
+| `getent passwd` | lists accounts, UIDs and login shells | enumerate who can log in |
+| `getent group sudo` (and `adm`, `wheel`) | shows members of privileged groups | find who holds admin rights |
+| `id <user>` | shows a user's UID and all group memberships | see a single account's full entitlements |
+| `sudo cat /etc/sudoers.d/*` | shows granular sudo rules | spot over-broad grants (e.g. `NOPASSWD: ALL`) |
+| `chage -l <user>` | password-ageing status | identify stale accounts |
+| `sudo gpasswd -d <user> sudo` | removes a user from the sudo group | apply least privilege (reversible) |
 
 ## Deliverable
 Fill `deliverable-template.md` → the **access-review report**.

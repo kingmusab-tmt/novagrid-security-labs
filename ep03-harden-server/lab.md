@@ -15,6 +15,25 @@
   3. **Reduce attack surface** (remove/disable unneeded services) and enable **automatic updates** + **auditing**.
   4. **Re-measure** and document before/after with justification.
 
+## Concept Explanation — secure baselines & hardening
+
+Hardening means shrinking a system down to only what it needs, so there's less for an attacker to
+use. A **secure baseline** is the documented "known-good" configuration you hold every server to;
+measuring against it (here with Lynis) gives you a before/after you can defend to management. The
+big levers are **reducing attack surface** (remove services, close ports), **securing remote
+access** (SSH), a **host firewall**, and **keeping software patched**.
+
+**Key terms**
+- **Hardening index** — Lynis's 0–100 score of how locked-down a system is; useful as a relative
+  before/after, not an absolute grade.
+- **Attack surface** — everything an attacker could interact with (open ports, running services,
+  accounts); smaller is safer.
+- **Drop-in config** — a `*.conf` file in a `.d` directory (e.g. `/etc/ssh/sshd_config.d/`) that
+  overrides the main file; the *effective* value is what matters, which is why you verify with `sshd -T`.
+- **Host firewall** — per-machine inbound/outbound filtering (here `ufw`), independent of any network firewall.
+- **Unattended-upgrades** — automatic installation of security patches, closing the patch gap.
+- **auditd** — the Linux kernel audit daemon that records security-relevant events (needs a real kernel, so a VM, not a container).
+
 ## Scope & rules of engagement
 - **In scope:** your lab's wallet-API VM/container. **Out of scope:** any production host.
 - Change things reversibly and keep a note of every change.
@@ -60,6 +79,17 @@ the VM first if you can, so you can roll back.
 
 ### Evidence checkpoints
 - [ ] Lynis **before** index  - [ ] sshd_config diff  - [ ] `ufw status`  - [ ] `auditd` status/rules  - [ ] Lynis **after** index
+
+## Commands explained
+
+| Command | What it does | Why you use it here |
+|---|---|---|
+| `sudo lynis audit system` | audits the host and prints a hardening index + findings | baseline before, measure after |
+| `sudo sshd -T` | prints SSH's *effective* configuration | confirm your change actually took (beats a drop-in override) |
+| `lab-restart ssh` | validates then reloads sshd in the lab (refuses a broken config) | apply SSH changes without locking yourself out |
+| `ufw default deny incoming` / `ufw allow <port>` | sets a deny-by-default firewall, then allows only needed ports | cut the inbound attack surface |
+| `unattended-upgrades` | enables automatic security patching | close the patch gap |
+| `auditd` + rules | records auth and file-change events | add detective logging (on the Vagrant VM) |
 
 ## Deliverable
 Fill `deliverable-template.md` → the **hardening report** with before/after and rationale.

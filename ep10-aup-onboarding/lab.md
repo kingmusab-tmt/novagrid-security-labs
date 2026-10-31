@@ -17,6 +17,22 @@
   3. Write an **offboarding** procedure (disable, revoke, collect, rotate).
   4. **Execute** the offboarding checklist on a leaver account on the VM.
 
+## Concept Explanation — governance: AUP & the identity lifecycle
+
+Policies turn good intentions into repeatable practice. An **Acceptable Use Policy (AUP)** sets the
+rules for using company systems and — crucially — is *acknowledged* by signature so it can be
+enforced. The **identity lifecycle** (joiner → mover → leaver) makes sure access is granted correctly
+at the start and, just as importantly, fully removed at the end — the lingering leaver account is a
+classic breach path.
+
+**Key terms**
+- **AUP (Acceptable Use Policy)** — the documented rules for using company systems, including a monitoring notice and a signature line.
+- **Joiner / Mover / Leaver (JML)** — the stages of the identity lifecycle; access should change with each.
+- **Onboarding** — create account, grant least-privilege role access, enrol MFA, sign the AUP.
+- **Offboarding** — disable access, revoke sudo/keys, rotate shared secrets, recover devices.
+- **Disable before delete** — lock an account first (preserving data and evidence) rather than deleting immediately.
+- **Break-glass account** — a tightly controlled emergency admin account, used only when normal access fails.
+
 ## Scope & rules of engagement
 - **In scope:** writing the documents + running offboarding on a *lab* account. Reversible changes.
 
@@ -45,6 +61,16 @@ Capture before/after proof into `evidence/`.
 
 ### Evidence checkpoints
 - [ ] the AUP  - [ ] onboarding checklist  - [ ] offboarding checklist  - [ ] proof offboarding was executed (account disabled, sudo removed)
+
+## Commands explained
+
+| Command | What it does | Why you use it here |
+|---|---|---|
+| `sudo usermod -L <user>` | locks the account's password | disable a leaver (reversible) before deleting |
+| `sudo usermod -s /usr/sbin/nologin <user>` | changes the login shell so they can't get a shell | block interactive login |
+| `sudo gpasswd -d <user> sudo` | removes the user from sudo | revoke admin rights |
+| `rm ~/<user>/.ssh/authorized_keys` | removes their SSH key | cut key-based access (passwords aren't the only way in) |
+| `sudo chage -E 0 <user>` | expires the account immediately | enforce the leaver date |
 
 ## Deliverable
 Fill `deliverable-template.md` → the **AUP + onboarding/offboarding procedures** (and the executed offboarding evidence).

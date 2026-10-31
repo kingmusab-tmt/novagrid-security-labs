@@ -16,6 +16,26 @@
   3. Write an IAM checklist (unique accounts, least privilege, MFA, manager, no shared creds).
   4. Apply the basics on the Linux VM and capture before/after.
 
+## Concept Explanation — authentication & modern password policy
+
+Authentication is how a system proves you are who you claim to be, and the password is still the
+most common (and most attacked) factor. Modern guidance (NIST SP 800-63B) flips the old habits:
+favour **length over complexity**, screen passwords against known-breached lists, and **stop forcing
+periodic rotation** (which just produces `Password1`, `Password2`…). You pair that with **lockout**
+to blunt guessing and **MFA** so a stolen password alone isn't enough.
+
+**Key terms**
+- **pam_pwquality** — the Linux module that enforces password-strength rules (minimum length, how
+  many characters must change) when a password is set.
+- **Password entropy / length** — a measure of how hard a password is to guess; a long passphrase
+  beats a short "complex" one.
+- **Breached-password screening** — rejecting passwords that appear in known breach corpora, so
+  attackers can't reuse leaked credentials.
+- **Account lockout (faillock)** — locking an account after N failed attempts to slow brute-force
+  and credential-guessing.
+- **MFA (multi-factor authentication)** — requiring two factors from *different* categories
+  (know / have / are), so one stolen secret isn't enough.
+
 ## Scope & rules of engagement
 - **In scope:** policy writing + light config on your analyst VM. **Out of scope:** changing production systems.
 
@@ -47,6 +67,16 @@ production system. Capture `before` and `after` of each setting into `evidence/`
 
 ### Evidence checkpoints
 - [ ] current `login.defs`/pwquality settings  - [ ] the written standard  - [ ] applied config (before/after)  - [ ] the IAM checklist
+
+## Commands explained
+
+| Command / file | What it does | Why you use it here |
+|---|---|---|
+| `grep PASS /etc/login.defs` | shows the system's password-ageing defaults (max/min days, warning) | see what the box enforces today |
+| `/etc/security/pwquality.conf` (`minlen`, `difok`) | the rules `pam_pwquality` applies to new passwords | set a sane minimum length and change requirement |
+| `pam_faillock` in `/etc/pam.d/common-auth` | locks an account after repeated failed logins | add brute-force throttling (not configured by default) |
+| `passwd <user>` | sets/changes a password | test that your new policy is actually enforced |
+| `chage -l <user>` | shows an account's password-ageing status | confirm ageing settings and spot stale passwords |
 
 ## Deliverable
 Fill `deliverable-template.md` → the **password policy** + **IAM checklist**.

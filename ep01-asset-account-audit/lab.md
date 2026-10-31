@@ -16,24 +16,27 @@
   3. Flag unmanaged assets, stale/shared accounts, and over-privilege.
   4. Produce an asset inventory + a findings memo.
 
-## Security+ concept — asset management & least privilege
+## Concept Explanation — asset management & least privilege
 
 Before you can defend a network you have to know **what's on it** and **who can touch it**. This
 is the **IDENTIFY** function of the NIST Cybersecurity Framework, and every later control
-(hardening, monitoring, incident response) assumes you've already done it.
+(hardening, monitoring, incident response) assumes you've already done it. The job is
+**reconciliation**: compare what *is* — live hosts, running services, real accounts — against what
+*should be*, recorded in the asset register and the staff roster. The gaps are your risks.
 
-- **Asset management** *(SY0-701 obj. 4.2)* — keep an accurate inventory of hardware, software and
-  data. An asset nobody records or owns — like NovaGrid's forgotten `legacy-billing` box — is a
-  *shadow asset*: unpatched, unmonitored, and a favourite way in for attackers.
-- **Account & identity management + least privilege** *(obj. 4.6, 1.2)* — every account should map
-  to a real person or a documented service and hold **only** the rights it needs. Orphaned
-  accounts (a leaver who still has access), shared accounts, and over-privileged service accounts
-  (full `sudo` for a job that only needs backup rights) are classic findings.
-- **The core move is reconciliation** — compare what *is* (live hosts, running services, real
-  accounts) against what *should be* (the asset register and staff roster). **The gaps are your risks.**
-
-*Exam tie-in:* expect questions on why inventory and least privilege matter, the risk of unmanaged
-assets, and spotting over-privileged or stale accounts.
+**Key terms**
+- **Asset inventory** — a maintained record of every hardware, software and data asset an
+  organisation owns. You can't patch, monitor or protect what you don't know exists.
+- **Shadow asset** — a live system nobody recorded or owns (NovaGrid's forgotten `legacy-billing`
+  box). Unpatched and unmonitored, it's a favourite way in for attackers.
+- **Least privilege** — the principle that every account or process gets *only* the rights it needs
+  to do its job, and no more. It limits the blast radius when an account is misused or compromised.
+- **Orphaned account** — an account no longer tied to a current person or purpose (e.g. a leaver who
+  still has access). A standing door with nobody left to close it.
+- **Over-privileged account** — an account holding more rights than its role needs, such as a backup
+  service account granted full passwordless `sudo`.
+- **Service account** — a non-human account used by software or automation. Because it often runs
+  unattended with elevated rights, it must be tightly scoped and documented.
 
 ## Scope & rules of engagement
 - **In scope:** your NovaGrid lab (analyst VM + the shared target containers). Authorised internal audit.

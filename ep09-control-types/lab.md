@@ -16,6 +16,14 @@
   3. **Inventory** NovaGrid's controls (from Episodes 1–8) and classify each.
   4. Identify **gaps** (e.g. a stage with no detective control).
 
+## Concept Explanation — security control categories & types
+
+Every safeguard can be described two ways: *what kind* of control it is (its **category**) and *what it
+does* (its **type**). Knowing both lets you reason about coverage — e.g. you may have plenty of
+preventive controls but nothing **detective**, so an attacker who gets past the wall is invisible.
+Good security layers controls of different types and categories (defence in depth) so one failure
+isn't fatal.
+
 ## Scope & rules of engagement
 - **In scope:** a documentation/classification exercise over controls already in place.
 
@@ -38,6 +46,28 @@ review, data classification, MFA, backups/restore, plus policies. Classify them 
 
 ### Evidence checkpoints
 - [ ] the control matrix (control → category → type → where)  - [ ] the gap list
+
+## Key terms & frameworks
+
+**The two axes.** A single control is tagged on *both* axes (and can be more than one type).
+
+**Categories — "what kind of control":**
+- **Technical** — enforced by technology: firewalls, encryption, MFA, access controls.
+- **Managerial** — governance and decisions: risk assessments, policies, security planning.
+- **Operational** — carried out by people in day-to-day practice: awareness training, backups, guard rounds.
+- **Physical** — protects the physical world: locks, fences, cameras, access vestibules.
+
+**Types — "what the control does":**
+- **Preventive** — stops an event before it happens (a locked door, an ACL, input validation).
+- **Deterrent** — discourages an attacker (a visible camera, warning banners, "Beware of Dog").
+- **Detective** — identifies an event during/after it happens (IDS, log monitoring, audit review).
+- **Corrective** — fixes/limits damage after an event (restoring from backup, patching the exploited flaw).
+- **Compensating** — an alternative when the ideal control isn't feasible (extra monitoring + network isolation around a legacy box that can't be patched).
+- **Directive** — tells people what to do (a policy, a procedure, a sign-posted standard).
+
+**Why it matters:** mapping NovaGrid's controls onto this grid exposes **gaps** — a missing detective
+control means breaches go unseen; a missing corrective control means you can't recover. Your findings
+feed straight into the risk work in Episode 27.
 
 ## Deliverable
 Fill `deliverable-template.md` → the **control inventory matrix** + gap notes.

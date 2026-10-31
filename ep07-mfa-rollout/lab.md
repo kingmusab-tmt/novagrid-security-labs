@@ -16,6 +16,21 @@
   3. **Demo** MFA by enabling **TOTP on SSH** on the lab VM.
   4. Write a **rollout plan**: scope/order, enrolment, recovery, exceptions.
 
+## Concept Explanation — multi-factor authentication
+
+MFA requires proof from two *different* categories — something you **know**, **have**, or **are** — so a
+stolen password alone can't get in. Not all factors are equal: SMS codes can be intercepted or
+SIM-swapped, TOTP apps are solid, and **FIDO2/WebAuthn** hardware keys are *phishing-resistant* because
+they're cryptographically bound to the real site. Admins and remote access get the strongest factor.
+
+**Key terms**
+- **Factor categories** — *know* (password/PIN), *have* (phone, token, key), *are* (biometric). MFA mixes categories, not two of the same.
+- **TOTP** — Time-based One-Time Password: a 6-digit code from an app (Google Authenticator, Aegis) that rotates every 30s.
+- **FIDO2 / WebAuthn** — a hardware/platform authenticator bound to the site's origin, so a phishing page can't replay it; the gold standard.
+- **Push / SMS OTP** — app-approval prompts / texted codes; SMS is the weakest factor (SIM-swap, interception).
+- **PAM (Pluggable Authentication Modules)** — the Linux framework where you slot the TOTP check into the login flow.
+- **Recovery / scratch codes** — one-time backup codes to get in if the second factor is lost; must be stored safely.
+
 ## Scope & rules of engagement
 - **In scope:** configuring MFA on your lab VM; a written plan. Keep a second session open (lockout risk).
 
@@ -46,6 +61,16 @@ Any TOTP app works (Google Authenticator, Aegis, FreeOTP).
 
 ### Evidence checkpoints
 - [ ] factor explanation  - [ ] PAM/sshd config for TOTP  - [ ] a successful MFA SSH login (screenshot)  - [ ] the rollout plan
+
+## Commands explained
+
+| Command / file | What it does | Why you use it here |
+|---|---|---|
+| `sudo apt-get install -y libpam-google-authenticator` | installs the TOTP PAM module | enable TOTP for SSH |
+| `google-authenticator` | generates a user's TOTP secret + QR + scratch codes | enrol an account |
+| `/etc/pam.d/sshd` (`auth required pam_google_authenticator.so`) | inserts the TOTP check into SSH login | require the second factor |
+| `/etc/ssh/sshd_config` (`KbdInteractiveAuthentication yes`) | lets SSH prompt for the code | allow password + TOTP |
+| `lab-restart ssh` | reloads sshd safely | apply the MFA change without lockout |
 
 ## Deliverable
 Fill `deliverable-template.md` → the **MFA deployment write-up** (plan + demo evidence).

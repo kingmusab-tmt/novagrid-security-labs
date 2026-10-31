@@ -17,6 +17,22 @@
   3. Ensure **time sync** and set **retention**.
   4. Build a small **query set** ("dashboard") for common questions and validate it.
 
+## Concept Explanation — centralized logging & monitoring
+
+You can't investigate what you didn't record, and logs left on a box the attacker controls can be
+wiped. **Central logging** ships events off each host to a collector you trust, giving you one place
+to search and a tamper-resistant copy. For those logs to be usable in an investigation, clocks must
+agree (**time sync**) and you must keep them long enough (**retention**). This is the foundation a
+SIEM later builds on.
+
+**Key terms**
+- **rsyslog** — the Linux logging service; it can both write local logs and forward them over the network.
+- **Log collector** — the central host (here `logging`) that receives and stores logs from many sources.
+- **TCP vs UDP 514** — UDP syslog is fire-and-forget (can drop messages); TCP is reliable (preferred when you can't lose events).
+- **Time synchronisation (NTP / chrony)** — keeping every host's clock aligned so event timestamps can be correlated across systems.
+- **Log retention / logrotate** — how long logs are kept and how they're rotated/compressed so disks don't fill.
+- **Correlation** — combining events from different sources to see one story (a failed-then-successful login across hosts).
+
 ## Scope & rules of engagement
 - **In scope:** your lab's wallet-API host (log source) + logging host (collector).
 
@@ -48,6 +64,17 @@ in `/etc/logrotate.conf` or per-service. Optional: install `lnav` for nicer log 
 
 ### Evidence checkpoints
 - [ ] rsyslog client + server config  - [ ] a centrally-collected event (screenshot)  - [ ] your query set + sample output  - [ ] retention + time-sync proof
+
+## Commands explained
+
+| Command / file | What it does | Why you use it here |
+|---|---|---|
+| `/etc/rsyslog.d/*.conf` (e.g. `*.* @@logging:514`) | tells rsyslog to forward logs to the collector over TCP (`@@`) | centralise the wallet host's logs |
+| `lab-restart rsyslog` | restarts rsyslog in the lab container | apply the forwarding change |
+| `logger "test message"` | injects a test log entry | prove forwarding works end-to-end |
+| `chrony` / `timedatectl` | manage and check time synchronisation | align timestamps for correlation |
+| `logrotate` config | rotates/compresses/expires logs | set retention so disks don't fill |
+| `tail -f /var/log/remote/<host>/...` | watches logs arriving on the collector | confirm the collector is receiving events |
 
 ## Deliverable
 Fill `deliverable-template.md` → the **logging config** + the **sample dashboard** (queries + output).

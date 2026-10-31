@@ -16,6 +16,21 @@
   3. **Restore-test** it (simulate loss, restore, verify hashes match).
   4. Note **RPO/RTO** and an **offline/immutable** copy against ransomware.
 
+## Concept Explanation — backups, resilience & the 3-2-1 rule
+
+Backups are only as good as your last successful *restore* — an untested backup is a guess. The
+**3-2-1 rule** (3 copies, 2 media/locations, 1 off-site) and an **offline/immutable** copy are what
+survive a ransomware event that encrypts everything online. You size backups to the business's
+tolerance for loss and downtime (**RPO** and **RTO**) and prove integrity with checksums.
+
+**Key terms**
+- **3-2-1 rule** — keep **3** copies of data, on **2** different media/locations, with **1** off-site.
+- **RPO (Recovery Point Objective)** — how much data you can afford to lose (how far back the last backup is).
+- **RTO (Recovery Time Objective)** — how quickly you must be back up after an incident.
+- **Checksum manifest** — a file of `sha256` hashes used to prove a restore is byte-for-byte correct.
+- **Immutable / offline backup** — a copy that can't be altered or reached from the live network, so ransomware can't encrypt it.
+- **Restore test** — actually recovering from backup to confirm it works — the step most often skipped.
+
 ## Scope & rules of engagement
 - **In scope:** your lab's wallet data/config. Test restores into a scratch location, not over live data.
 
@@ -44,6 +59,16 @@ For the "off-site" copy, a second directory/mounted volume is fine for the lab.
 
 ### Evidence checkpoints
 - [ ] the backup script  - [ ] a backup archive + checksum manifest  - [ ] restore-test log showing hashes match  - [ ] cron entry
+
+## Commands explained
+
+| Command | What it does | Why you use it here |
+|---|---|---|
+| `tar czf backup.tgz /srv/wallet /etc/wallet` | creates a compressed archive of the targets | make the backup |
+| `sha256sum ... > manifest.sha256` | records a hash of each file | capture integrity evidence |
+| `sha256sum -c manifest.sha256` | re-checks files against the manifest | prove the restore is byte-for-byte correct |
+| `crontab -e` / a `cron` entry | schedules the backup to run automatically | automate it (no human to forget) |
+| restore into `/tmp/restore-test` | unpacks the backup to a scratch dir | test recovery without touching live data |
 
 ## Deliverable
 Fill `deliverable-template.md` → the **backup plan** + **restore-test evidence**.

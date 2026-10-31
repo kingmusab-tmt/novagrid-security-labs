@@ -16,6 +16,22 @@
   3. **Find the data** — scan the lab for PII/cardholder patterns (test data only).
   4. Produce a **data inventory** mapping where each data type lives to its class + controls.
 
+## Concept Explanation — data classification & protection
+
+You protect data according to how sensitive it is — but first you have to find it and label it.
+**Data classification** sorts information into levels (Public → Restricted) each with handling rules,
+so controls like encryption and access limits are applied where they matter. Regulated data (payment
+card numbers under **PCI DSS**, personal data under Nigeria's **NDPR**) carries legal obligations, and
+the first finding is often that sensitive data is sitting somewhere it shouldn't be.
+
+**Key terms**
+- **Data classification** — assigning each piece of data a sensitivity level with defined handling rules.
+- **PII (personally identifiable information)** — data that identifies a person (name, email, phone, national ID).
+- **PAN / cardholder data** — the Primary Account Number on a payment card; PCI DSS restricts storing it at all.
+- **PCI DSS** — the payment-card industry security standard governing cardholder data.
+- **NDPR** — the Nigeria Data Protection Regulation, governing personal-data handling.
+- **Data owner** — the accountable person for a given data set's classification and protection.
+
 ## Scope & rules of engagement
 - **In scope:** scanning the lab's sample data. **Use only synthetic/test data** — never
   put real personal data into the lab or the repo.
@@ -47,6 +63,17 @@ Tools: `grep -rEI`, `find`. Regex is enough — no special software.
 
 ### Evidence checkpoints
 - [ ] the classification scheme  - [ ] the scan commands + (redacted) results  - [ ] the data inventory
+
+## Commands explained
+
+| Command | What it does | Why you use it here |
+|---|---|---|
+| `grep -rEI '<email-regex>' data/` | recursively searches text files for email-address patterns | locate PII |
+| `grep -rEI '([0-9]{4}[ -]?){4}' data/` | searches for 16-digit card-like patterns (in **test** data) | locate cardholder data that shouldn't be stored |
+| `grep -rEI` (the `-r -E -I` flags) | **r**ecursive, **E**xtended-regex, **I**gnore-binary-files | scan a tree of files cleanly without regex escaping pain |
+| `find data/ -type f` | lists every file to scan | know the scope of what you're classifying |
+
+*(All data here is synthetic; still redact any match before putting it in your report.)*
 
 ## Deliverable
 Fill `deliverable-template.md` → the **classification scheme** + **data inventory**.
