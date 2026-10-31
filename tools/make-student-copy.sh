@@ -37,7 +37,10 @@ git -C "$SRC" archive --format=tar HEAD | tar -x -C "$OUT"
 # 2) Strip instructor-only material
 find "$OUT" -type f -name 'answer-key.md' -delete
 find "$OUT" -type f -name 'example-deliverable.md' -delete
-rm -rf "$OUT/ep11-phishing-cfo/generator" "$OUT/tools"
+rm -rf "$OUT/tools"
+# strip every episode generator and any instructor answer files (anti-cheat)
+find "$OUT" -type d -name generator -prune -exec rm -rf {} +
+find "$OUT" -type f -name "_instructor_answers.*" -delete
 
 # 3) Per-student unique Ep11 sample (optional)
 if [ -n "$STUDENT" ]; then

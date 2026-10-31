@@ -84,3 +84,14 @@ Self-check against `rubric.md`.
 1. What is the infected host's IP, and how did you conclude it was the victim (not a peer)?
 2. What domain/URL delivered the payload, and what is the SHA-256 of the extracted file?
 3. What is the C2 channel, and what in the traffic tells you it's C2 rather than normal browsing?
+
+## Time-boxed variant (optional — "triage this capture now")
+An analyst rarely gets an afternoon with a pcap. Run a **25-minute** triage drill:
+
+- **00:00–05:00** — protocol hierarchy + conversations: what's talking to what, and what's unusual by volume.
+- **05:00–15:00** — follow the suspicious stream: extract the indicator (domain, IP, URI, user-agent, file).
+- **15:00–20:00** — decide: benign / suspicious / malicious, and why — one screenshot of the deciding packet.
+- **20:00–25:00** — write the 3-line verdict + IOC list.
+
+Record your start/stop. The goal is a defensible call under time pressure, not a full report.
+Note which Wireshark filter got you there fastest — that filter is a reusable skill.

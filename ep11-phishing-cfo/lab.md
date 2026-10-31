@@ -108,3 +108,16 @@ Self-check against `rubric.md` before you call it done.
 1. What is the true originating IP in `phishing-sample.eml`, and which authentication check(s) fail?
 2. What is the exact lookalike sign-in domain, and how does it differ from the real one?
 3. What is the SHA-256 of the attachment, and what is its real file type?
+
+## Time-boxed variant (optional — "the phish just landed")
+Real phishing triage happens while the user is waiting and the clock is running. Run this
+episode against a **15-minute SLA**: from "report received" to a verdict (phish / safe) and a
+containment recommendation.
+
+- **00:00–05:00** — headers only: From vs Reply-To vs Return-Path, SPF/DKIM/DMARC result, sending IP.
+- **05:00–10:00** — the links and attachment: real destination host vs display, attachment type, hash it (don't open it).
+- **10:00–13:00** — verdict + IOCs (sender host, URL, hash) and the one containment action (block/quarantine).
+- **13:00–15:00** — the one-line user reply ("confirmed phishing, we've removed it, here's what to watch for").
+
+Record your actual time. Beating the SLA with a defensible verdict is the skill — note in your
+report which step you'd automate (SOAR) to go faster, tying back to the Episode 11 story.

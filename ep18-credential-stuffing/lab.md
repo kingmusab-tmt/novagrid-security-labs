@@ -60,3 +60,14 @@ Self-check against `rubric.md`.
 1. How does credential stuffing differ from brute force and from spraying?
 2. What log pattern did you use to detect it, and how did you avoid false positives?
 3. Which single mitigation helps most, and what's its user-experience cost?
+
+## Time-boxed variant (optional — "the portal's under attack right now")
+Credential stuffing is a live, time-critical event. Run a **25-minute** drill:
+
+- **00:00–08:00** — confirm it: the login pattern that proves stuffing (many users, few attempts each, one source / botnet, high failure rate).
+- **08:00–16:00** — scope it: how many accounts tried, how many succeeded, from where.
+- **16:00–22:00** — the mitigation decision: rate-limit / MFA challenge / IP block / forced reset — pick and justify under the clock.
+- **22:00–25:00** — the 3-line incident note + the one detection you'd keep running.
+
+Record your start/stop. Note the trade-off you accepted (e.g. blocking the source IP may hit
+real users behind a NAT) — naming the trade-off under pressure is the senior skill.

@@ -64,6 +64,8 @@ off-grid solar customers (regulated financial data + critical infrastructure).
 | 28 | Third-party vendor assessment | 5.0 | Vendor risk assessment |
 | 29 | Compliance & privacy gap analysis | 5.0 | Compliance brief + gaps |
 | 30 | Tabletop + board report | 4.0/5.0 | After-action + exec report |
+| 31 | Shift at the console: alert-queue triage | 4.0 | Alert-triage shift report |
+| 32 | Capstone: the Sable Finch case file | 1.0–5.0 | Incident case file + exec brief + kill-chain |
 
 ## Real tools & real data
 | Tool | Use | Free source | Episodes |
@@ -84,6 +86,9 @@ Safety: real malware is only detonated in the isolated sandbox VM or Any.Run —
 See [lab-template.md](lab-template.md). Every lab uses the same skeleton:
 cold open → role & objectives → scope → environment → guided investigation (decision
 points) → evidence checkpoints → deliverable → rubric → framework mapping → stretch goals.
+
+### Bonus episodes (31–32)
+Two added in the standards-realism pass: **31** a high-volume alert-queue triage drill (a generator plants ~6 true positives in ~95% noise; the skill is precision under a clock), and **32** the series **capstone**, which consolidates the student's Episode 11–31 findings into one employer-grade Sable Finch incident case file (timeline, ATT&CK kill-chain, diagram, exec brief).
 
 ## Authenticity
 Per-student unique artifacts, a reflection in the student's own words, and verification

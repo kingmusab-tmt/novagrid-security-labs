@@ -1,0 +1,121 @@
+id,timestamp,severity,rule,verdict,why_it_matters,description
+ALRT-1000,2026-10-30 08:00:21,medium,Antivirus signature match,false-positive,,EICAR test string in a user's Downloads — it's the monthly AV self-test
+ALRT-1001,2026-10-30 08:04:25,medium,Port scan detected,false-positive,,sweep across 172.28.0.0/24 from the analyst box — it's the scheduled Nessus/Lynis scan window
+ALRT-1002,2026-10-30 08:08:52,info,Scheduled backup completed,benign,,svc-backup ran the nightly /srv/wallet backup
+ALRT-1003,2026-10-30 08:12:37,medium,Antivirus signature match,false-positive,,EICAR test string in a user's Downloads — it's the monthly AV self-test
+ALRT-1004,2026-10-30 08:16:41,info,Package update installed,benign,,unattended-upgrades patched rsyslog on analyst
+ALRT-1005,2026-10-30 08:20:20,medium,Port scan detected,false-positive,,sweep across 172.28.0.0/24 from the analyst box — it's the scheduled Nessus/Lynis scan window
+ALRT-1006,2026-10-30 08:24:28,low,Service restart,false-positive,,wallet-api restarted — matches the maintenance window in change calendar
+ALRT-1007,2026-10-30 08:28:58,low,Password changed,benign,,chidi changed their password at a console
+ALRT-1008,2026-10-30 08:32:11,info,Package update installed,benign,,unattended-upgrades patched openssh-server on wallet-api
+ALRT-1009,2026-10-30 08:36:36,low,Service restart,false-positive,,wallet-api restarted — matches the maintenance window in change calendar
+ALRT-1010,2026-10-30 08:40:03,low,Service restart,false-positive,,wallet-api restarted — matches the maintenance window in change calendar
+ALRT-1011,2026-10-30 08:44:21,info,Scheduled backup completed,benign,,svc-backup ran the nightly /srv/wallet backup
+ALRT-1012,2026-10-30 08:48:15,info,TLS handshake to payment partner,benign,,outbound TLS to the PayBridge sandbox (allow-listed)
+ALRT-1013,2026-10-30 08:52:40,medium,Large outbound transfer,false-positive,,2.1 GB to offsite — the approved weekly backup replication to /offsite
+ALRT-1014,2026-10-30 08:56:39,low,Service restart,false-positive,,wallet-api restarted — matches the maintenance window in change calendar
+ALRT-1015,2026-10-30 09:00:36,high,New admin account created,false-positive,,useradd for 'intern-aug' — matches the approved onboarding ticket CHG-2041
+ALRT-1016,2026-10-30 09:04:12,critical,Brute force then success,true-positive,Password-guessing that worked. Escalate immediately and check what the session did.,"32 failed admin logins to the finance portal in 90s from 203.0.113.66, then one success"
+ALRT-1017,2026-10-30 09:08:25,medium,Large outbound transfer,false-positive,,2.1 GB to offsite — the approved weekly backup replication to /offsite
+ALRT-1018,2026-10-30 09:12:43,medium,Port scan detected,false-positive,,sweep across 172.28.0.0/24 from the analyst box — it's the scheduled Nessus/Lynis scan window
+ALRT-1019,2026-10-30 09:16:47,medium,Multiple failed logins,false-positive,,3 failed logins for tunde then success — user fat-fingered the new password (confirmed with tunde)
+ALRT-1020,2026-10-30 09:20:50,info,Package update installed,benign,,unattended-upgrades patched rsyslog on logging
+ALRT-1021,2026-10-30 09:24:48,medium,Multiple failed logins,false-positive,,3 failed logins for intern-aug then success — user fat-fingered the new password (confirmed with intern-aug)
+ALRT-1022,2026-10-30 09:28:40,high,Successful admin login from new geo,true-positive,No change ticket; legacy-billing has no business being reached externally; source IP is unknown. Escalate: possible unauthorised access.,"root login to legacy-billing (172.28.0.30) from 203.0.113.66 — a host never seen before, outside the office subnet"
+ALRT-1023,2026-10-30 09:32:25,low,Password changed,benign,,svc-backup changed their password at a console
+ALRT-1024,2026-10-30 09:36:15,medium,Large outbound transfer,false-positive,,2.1 GB to offsite — the approved weekly backup replication to /offsite
+ALRT-1025,2026-10-30 09:40:51,low,Firewall allowed known service,benign,,ufw allowed 8080/tcp to wallet-api (expected)
+ALRT-1026,2026-10-30 09:44:03,medium,Antivirus signature match,false-positive,,EICAR test string in a user's Downloads — it's the monthly AV self-test
+ALRT-1027,2026-10-30 09:48:41,info,Scheduled backup completed,benign,,svc-backup ran the nightly /srv/wallet backup
+ALRT-1028,2026-10-30 09:52:51,info,TLS handshake to payment partner,benign,,outbound TLS to the PayBridge sandbox (allow-listed)
+ALRT-1029,2026-10-30 09:56:01,info,Package update installed,benign,,unattended-upgrades patched python3 on wallet-api
+ALRT-1030,2026-10-30 10:00:37,info,TLS handshake to payment partner,benign,,outbound TLS to the PayBridge sandbox (allow-listed)
+ALRT-1031,2026-10-30 10:04:06,medium,Multiple failed logins,false-positive,,5 failed logins for svc-backup then success — user fat-fingered the new password (confirmed with svc-backup)
+ALRT-1032,2026-10-30 10:08:24,low,Service restart,false-positive,,wallet-api restarted — matches the maintenance window in change calendar
+ALRT-1033,2026-10-30 10:12:16,low,Firewall allowed known service,benign,,ufw allowed 8080/tcp to wallet-api (expected)
+ALRT-1034,2026-10-30 10:16:12,info,Scheduled backup completed,benign,,svc-backup ran the nightly /srv/wallet backup
+ALRT-1035,2026-10-30 10:20:23,medium,Multiple failed logins,false-positive,,5 failed logins for amara then success — user fat-fingered the new password (confirmed with amara)
+ALRT-1036,2026-10-30 10:24:12,low,Successful SSH login,benign,,chidi logged in from the office subnet 172.28.0.0/24
+ALRT-1037,2026-10-30 10:28:23,info,Package update installed,benign,,unattended-upgrades patched rsyslog on wallet-api
+ALRT-1038,2026-10-30 10:32:29,high,Data staged in web root,true-positive,Sensitive data staged where it can be pulled over HTTP — likely exfil prep. Escalate.,customers.csv copied into the public /srv/admin web directory on legacy-billing
+ALRT-1039,2026-10-30 10:36:14,medium,Antivirus signature match,false-positive,,EICAR test string in a user's Downloads — it's the monthly AV self-test
+ALRT-1040,2026-10-30 10:40:32,info,TLS handshake to payment partner,benign,,outbound TLS to the PayBridge sandbox (allow-listed)
+ALRT-1041,2026-10-30 10:44:45,info,TLS handshake to payment partner,benign,,outbound TLS to the PayBridge sandbox (allow-listed)
+ALRT-1042,2026-10-30 10:48:07,low,Firewall allowed known service,benign,,ufw allowed 8080/tcp to wallet-api (expected)
+ALRT-1043,2026-10-30 10:52:43,low,Password changed,benign,,chidi changed their password at a console
+ALRT-1044,2026-10-30 10:56:59,low,Service restart,false-positive,,wallet-api restarted — matches the maintenance window in change calendar
+ALRT-1045,2026-10-30 11:00:29,medium,Antivirus signature match,false-positive,,EICAR test string in a user's Downloads — it's the monthly AV self-test
+ALRT-1046,2026-10-30 11:04:34,low,Firewall allowed known service,benign,,ufw allowed 8080/tcp to wallet-api (expected)
+ALRT-1047,2026-10-30 11:08:17,info,Package update installed,benign,,unattended-upgrades patched rsyslog on analyst
+ALRT-1048,2026-10-30 11:12:44,info,Scheduled backup completed,benign,,svc-backup ran the nightly /srv/wallet backup
+ALRT-1049,2026-10-30 11:16:16,low,Successful SSH login,benign,,tunde logged in from the office subnet 172.28.0.0/24
+ALRT-1050,2026-10-30 11:20:25,low,Password changed,benign,,amara changed their password at a console
+ALRT-1051,2026-10-30 11:24:23,low,Successful SSH login,benign,,webadmin logged in from the office subnet 172.28.0.0/24
+ALRT-1052,2026-10-30 11:28:06,low,Service restart,false-positive,,wallet-api restarted — matches the maintenance window in change calendar
+ALRT-1053,2026-10-30 11:32:10,info,Package update installed,benign,,unattended-upgrades patched python3 on wallet-api
+ALRT-1054,2026-10-30 11:36:20,low,Password changed,benign,,svc-backup changed their password at a console
+ALRT-1055,2026-10-30 11:40:53,info,Package update installed,benign,,unattended-upgrades patched python3 on logging
+ALRT-1056,2026-10-30 11:44:14,low,Successful SSH login,benign,,amara logged in from the office subnet 172.28.0.0/24
+ALRT-1057,2026-10-30 11:48:08,low,Successful SSH login,benign,,intern-aug logged in from the office subnet 172.28.0.0/24
+ALRT-1058,2026-10-30 11:52:06,high,New admin account created,false-positive,,useradd for 'intern-aug' — matches the approved onboarding ticket CHG-2041
+ALRT-1059,2026-10-30 11:56:30,low,Firewall allowed known service,benign,,ufw allowed 8080/tcp to wallet-api (expected)
+ALRT-1060,2026-10-30 12:00:49,medium,Multiple failed logins,false-positive,,5 failed logins for contractor then success — user fat-fingered the new password (confirmed with contractor)
+ALRT-1061,2026-10-30 12:04:51,low,Successful SSH login,benign,,webadmin logged in from the office subnet 172.28.0.0/24
+ALRT-1062,2026-10-30 12:08:57,critical,Rogue account with sudo,true-positive,Unauthorised privileged account — a persistence foothold. Escalate and disable.,new account 'support-svc' added to the sudo group with NO matching change ticket
+ALRT-1063,2026-10-30 12:12:29,low,Password changed,benign,,contractor changed their password at a console
+ALRT-1064,2026-10-30 12:16:32,low,Service restart,false-positive,,wallet-api restarted — matches the maintenance window in change calendar
+ALRT-1065,2026-10-30 12:20:19,info,TLS handshake to payment partner,benign,,outbound TLS to the PayBridge sandbox (allow-listed)
+ALRT-1066,2026-10-30 12:24:05,info,TLS handshake to payment partner,benign,,outbound TLS to the PayBridge sandbox (allow-listed)
+ALRT-1067,2026-10-30 12:28:21,medium,Port scan detected,false-positive,,sweep across 172.28.0.0/24 from the analyst box — it's the scheduled Nessus/Lynis scan window
+ALRT-1068,2026-10-30 12:32:34,info,Package update installed,benign,,unattended-upgrades patched openssl on wallet-api
+ALRT-1069,2026-10-30 12:36:04,low,Password changed,benign,,contractor changed their password at a console
+ALRT-1070,2026-10-30 12:40:16,low,Password changed,benign,,chidi changed their password at a console
+ALRT-1071,2026-10-30 12:44:49,info,Scheduled backup completed,benign,,svc-backup ran the nightly /srv/wallet backup
+ALRT-1072,2026-10-30 12:48:07,info,TLS handshake to payment partner,benign,,outbound TLS to the PayBridge sandbox (allow-listed)
+ALRT-1073,2026-10-30 12:52:43,info,TLS handshake to payment partner,benign,,outbound TLS to the PayBridge sandbox (allow-listed)
+ALRT-1074,2026-10-30 12:56:20,info,Scheduled backup completed,benign,,svc-backup ran the nightly /srv/wallet backup
+ALRT-1075,2026-10-30 13:00:51,low,Firewall allowed known service,benign,,ufw allowed 8080/tcp to wallet-api (expected)
+ALRT-1076,2026-10-30 13:04:57,medium,Antivirus signature match,false-positive,,EICAR test string in a user's Downloads — it's the monthly AV self-test
+ALRT-1077,2026-10-30 13:08:25,info,TLS handshake to payment partner,benign,,outbound TLS to the PayBridge sandbox (allow-listed)
+ALRT-1078,2026-10-30 13:12:05,medium,Antivirus signature match,false-positive,,EICAR test string in a user's Downloads — it's the monthly AV self-test
+ALRT-1079,2026-10-30 13:16:10,medium,Port scan detected,false-positive,,sweep across 172.28.0.0/24 from the analyst box — it's the scheduled Nessus/Lynis scan window
+ALRT-1080,2026-10-30 13:20:26,info,Package update installed,benign,,unattended-upgrades patched curl on legacy-billing
+ALRT-1081,2026-10-30 13:24:55,medium,Multiple failed logins,false-positive,,5 failed logins for webadmin then success — user fat-fingered the new password (confirmed with webadmin)
+ALRT-1082,2026-10-30 13:28:23,medium,Multiple failed logins,false-positive,,5 failed logins for tunde then success — user fat-fingered the new password (confirmed with tunde)
+ALRT-1083,2026-10-30 13:32:59,low,Successful SSH login,benign,,contractor logged in from the office subnet 172.28.0.0/24
+ALRT-1084,2026-10-30 13:36:20,info,Scheduled backup completed,benign,,svc-backup ran the nightly /srv/wallet backup
+ALRT-1085,2026-10-30 13:40:50,low,Service restart,false-positive,,wallet-api restarted — matches the maintenance window in change calendar
+ALRT-1086,2026-10-30 13:44:04,low,Service restart,false-positive,,wallet-api restarted — matches the maintenance window in change calendar
+ALRT-1087,2026-10-30 13:48:55,info,TLS handshake to payment partner,benign,,outbound TLS to the PayBridge sandbox (allow-listed)
+ALRT-1088,2026-10-30 13:52:41,info,TLS handshake to payment partner,benign,,outbound TLS to the PayBridge sandbox (allow-listed)
+ALRT-1089,2026-10-30 13:56:03,medium,Large outbound transfer,false-positive,,2.1 GB to offsite — the approved weekly backup replication to /offsite
+ALRT-1090,2026-10-30 14:00:38,medium,Antivirus signature match,false-positive,,EICAR test string in a user's Downloads — it's the monthly AV self-test
+ALRT-1091,2026-10-30 14:04:55,info,Scheduled backup completed,benign,,svc-backup ran the nightly /srv/wallet backup
+ALRT-1092,2026-10-30 14:08:01,low,Password changed,benign,,webadmin changed their password at a console
+ALRT-1093,2026-10-30 14:12:35,low,Password changed,benign,,chidi changed their password at a console
+ALRT-1094,2026-10-30 14:16:12,high,New admin account created,false-positive,,useradd for 'intern-aug' — matches the approved onboarding ticket CHG-2041
+ALRT-1095,2026-10-30 14:20:23,high,New admin account created,false-positive,,useradd for 'intern-aug' — matches the approved onboarding ticket CHG-2041
+ALRT-1096,2026-10-30 14:24:58,info,Scheduled backup completed,benign,,svc-backup ran the nightly /srv/wallet backup
+ALRT-1097,2026-10-30 14:28:30,info,Scheduled backup completed,benign,,svc-backup ran the nightly /srv/wallet backup
+ALRT-1098,2026-10-30 14:32:52,info,Scheduled backup completed,benign,,svc-backup ran the nightly /srv/wallet backup
+ALRT-1099,2026-10-30 14:36:54,medium,Antivirus signature match,false-positive,,EICAR test string in a user's Downloads — it's the monthly AV self-test
+ALRT-1100,2026-10-30 14:40:52,info,Scheduled backup completed,benign,,svc-backup ran the nightly /srv/wallet backup
+ALRT-1101,2026-10-30 14:44:19,low,Successful SSH login,benign,,tunde logged in from the office subnet 172.28.0.0/24
+ALRT-1102,2026-10-30 14:48:18,medium,Antivirus signature match,false-positive,,EICAR test string in a user's Downloads — it's the monthly AV self-test
+ALRT-1103,2026-10-30 14:52:07,low,Password changed,benign,,contractor changed their password at a console
+ALRT-1104,2026-10-30 14:56:05,high,New admin account created,false-positive,,useradd for 'intern-aug' — matches the approved onboarding ticket CHG-2041
+ALRT-1105,2026-10-30 15:00:41,low,Service restart,false-positive,,wallet-api restarted — matches the maintenance window in change calendar
+ALRT-1106,2026-10-30 15:04:47,medium,Large outbound transfer,false-positive,,2.1 GB to offsite — the approved weekly backup replication to /offsite
+ALRT-1107,2026-10-30 15:08:13,low,Service restart,false-positive,,wallet-api restarted — matches the maintenance window in change calendar
+ALRT-1108,2026-10-30 15:12:00,low,Firewall allowed known service,benign,,ufw allowed 8080/tcp to wallet-api (expected)
+ALRT-1109,2026-10-30 15:16:08,medium,Multiple failed logins,false-positive,,4 failed logins for contractor then success — user fat-fingered the new password (confirmed with contractor)
+ALRT-1110,2026-10-30 15:20:42,medium,Large outbound transfer,false-positive,,2.1 GB to offsite — the approved weekly backup replication to /offsite
+ALRT-1111,2026-10-30 15:24:42,info,Package update installed,benign,,unattended-upgrades patched openssl on analyst
+ALRT-1112,2026-10-30 15:28:45,medium,Antivirus signature match,false-positive,,EICAR test string in a user's Downloads — it's the monthly AV self-test
+ALRT-1113,2026-10-30 15:32:23,medium,Antivirus signature match,false-positive,,EICAR test string in a user's Downloads — it's the monthly AV self-test
+ALRT-1114,2026-10-30 15:36:32,info,Scheduled backup completed,benign,,svc-backup ran the nightly /srv/wallet backup
+ALRT-1115,2026-10-30 15:40:31,medium,Multiple failed logins,false-positive,,4 failed logins for webadmin then success — user fat-fingered the new password (confirmed with webadmin)
+ALRT-1116,2026-10-30 15:44:46,low,Firewall allowed known service,benign,,ufw allowed 8080/tcp to wallet-api (expected)
+ALRT-1117,2026-10-30 15:48:09,medium,Port scan detected,false-positive,,sweep across 172.28.0.0/24 from the analyst box — it's the scheduled Nessus/Lynis scan window
+ALRT-1118,2026-10-30 15:52:15,info,Scheduled backup completed,benign,,svc-backup ran the nightly /srv/wallet backup
+ALRT-1119,2026-10-30 15:56:33,medium,Port scan detected,false-positive,,sweep across 172.28.0.0/24 from the analyst box — it's the scheduled Nessus/Lynis scan window

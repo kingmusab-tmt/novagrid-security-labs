@@ -94,3 +94,14 @@ Self-check against `rubric.md`.
 1. What scanning tool and attacker IP appear first against `192.168.250.70`?
 2. What password eventually worked against the Joomla `admin` account, and how did you confirm success?
 3. What is the name of the malicious executable the attacker placed on the server?
+
+## Time-boxed variant (optional — "45 minutes in Splunk")
+BOTSv1 can swallow a whole day. Box it: pick the **5 core questions** (initial access vector,
+attacker IP, compromised account, what they did, and the ATT&CK techniques) and give yourself
+**45 minutes** to answer all five from SPL, one screenshot of the deciding search per answer.
+
+- Don't boil the ocean — start from the alert, pivot on the attacker IP, follow the account.
+- If you're stuck on one question past 10 minutes, note it as "open" and move on; a timely
+  80% answer beats a late 100% one in a real SOC.
+- Record your start/stop and which 5 searches cracked it — those become reusable detections
+  (feeds Episode 20).

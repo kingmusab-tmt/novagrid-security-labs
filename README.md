@@ -44,8 +44,10 @@ write-up, the evidence, and the framework mapping an employer can read.
 | 28 | [Third-Party Vendor Assessment](ep28-vendor-assessment/) | 5.0 Governance | ✅ built | Vendor risk assessment |
 | 29 | [Compliance & Privacy Gap Analysis](ep29-compliance-gap/) | 5.0 Governance | ✅ built | Compliance brief + gap analysis |
 | 30 | [Tabletop & Board Report](ep30-tabletop-board-report/) | 4.0 Operations / 5.0 Governance | ✅ built | After-action report + board brief |
+| 31 | [Shift at the Console: Alert-Queue Triage](ep31-alert-queue/) | 4.0 Security Operations | ✅ built | Alert-triage shift report |
+| 32 | [Capstone: The Sable Finch Case File](ep32-capstone-sable-finch/) | 1.0–5.0 (capstone) | ✅ built | Incident case file + exec brief + kill-chain |
 
-*(All 30 episodes across 3 seasons are built — see the [blueprint](docs/BLUEPRINT.md) for the design.)*
+*(All 30 core episodes across 3 seasons are built, plus two Season 3 bonus episodes (31–32): a high-volume alert-queue triage drill and the series capstone — see the [blueprint](docs/BLUEPRINT.md) for the design.)*
 
 > Episode 11 ships a per-student sample generator (`ep11-phishing-cfo/generator/`) so every student's phishing email — and its hash — is unique.
 
