@@ -1,0 +1,3 @@
+hostname,ip,role,owner,criticality,approved_services
+wallet-api,172.28.0.10,Payment wallet API,tunde,Critical,ssh(22) wallet-api(8080)
+logging,172.28.0.20,Central log collector,amara,High,syslog(514)

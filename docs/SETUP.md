@@ -173,6 +173,13 @@ docker load -i novagrid-images.tar
 docker compose up -d           # no --build needed; images are already present
 ```
 
+## Optional — Windows target
+
+Many episodes' activities apply to Windows too. An optional Windows target lets students do the
+Windows versions of Episodes 1–8, 10, 21, 23 and 24 with PowerShell and native tooling. The student
+supplies a free Microsoft evaluation VM (we can't bundle Windows), then runs a provisioning script
+that plants the same findings as the Linux wallet-api. Full instructions: `lab-env/windows/README.md`.
+
 ## Optional — full VM target (Vagrant)
 A few hardening steps (auditd, kernel settings, real systemd) want a full OS rather than a
 container. `lab-env/vagrant/` builds the wallet-api as a VirtualBox VM with the **same** setup,

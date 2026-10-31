@@ -94,8 +94,7 @@ ss -tulpn
 > From the analyst box this shows almost nothing (it runs no services) — the `nmap` result above is
 > your network-wide view. You'll inventory the *server's* listening services in Step 2 on wallet-api.
 
-**Decision:** Which hosts are alive, which services are listening, and are any of them services that
-shouldn't be exposed?
+**Decision:** Which hosts are alive, which services are listening, and are any of them services that shouldn't be exposed?
 
 ### Step 2 — Inventory software & services *(on the wallet-api server)*
 

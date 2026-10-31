@@ -54,6 +54,8 @@ write-up, the evidence, and the framework mapping an employer can read.
 ## Lab environment
 Season 1 (and some later episodes) run on a shared, intentionally vulnerable Docker lab. **New here? Start with [docs/SETUP.md](docs/SETUP.md)** — full instructor hand-out + student machine setup. Host details and credentials are in [lab-env/README.md](lab-env/README.md).
 
+An optional **Windows target** mirrors the same findings for the Windows versions of Episodes 1–8, 10, 21, 23 and 24 — see [lab-env/windows/README.md](lab-env/windows/README.md).
+
 ## How to use a lab
 1. Open the episode's `lab.md` and read the brief.
 2. Stand up its `environment/` as described.
