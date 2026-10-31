@@ -4,7 +4,7 @@
 Verifies every episode has the standard files + lab sections, rubric totals 100,
 README links resolve, and flags leftover placeholders. Exit code 1 if issues."""
 import os,re,sys
-REQ=["README.md","lab.md","environment/README.md","deliverable-template.md",
+REQ=["README.md","lab.md","deliverable-template.md",
      "example-deliverable.md","rubric.md","answer-key.md","evidence/.gitkeep","linkedin-post.md"]
 SECS=["## Cold open","## Your role & mission objectives","## Scope & rules of engagement",
       "## Environment setup","## Deliverable","## Rubric","## Framework mapping",

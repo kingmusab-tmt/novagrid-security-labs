@@ -13,7 +13,6 @@ that get an analyst promoted. Artifact: after-action report + board brief.
 
 ## Files
 - `lab.md` — the full lab (start here)
-- `environment/README.md` — how to run it (solo or with a group)
 - `environment/injects.md` — the ready-to-run tabletop scenario (the "kit")
 - `deliverable-template.md` · `example-deliverable.md` · `rubric.md` · `answer-key.md`
 - `evidence/` — your decision log, gap list, and finished documents

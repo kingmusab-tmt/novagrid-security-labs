@@ -13,6 +13,5 @@ report + IOCs.
 
 ## Files
 - `lab.md` — the full lab (start here)
-- `environment/README.md` — install Wireshark + get a real pcap (safely)
 - `deliverable-template.md` · `example-deliverable.md` · `rubric.md` · `answer-key.md`
 - `evidence/` — your screenshots, exported objects, IOC list

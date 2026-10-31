@@ -26,7 +26,12 @@
 
 ## Environment setup
 Use auth/web logs from your lab (the wallet portal access log / auth log), or a sample auth
-log. Optionally query them in **Splunk** (reuse the Ep13 instance). See `environment/README.md`.
+log. Optionally query them in **Splunk** (reuse the Ep13 instance).
+
+Use auth/web logs: the wallet portal access log and auth log from your lab, or a sample auth
+log you create (many accounts from a couple of IPs, mostly failures, a few successes).
+Optionally load them into the Ep13 Splunk instance and pivot there. No attack tooling is
+run — this is detection + planning on recorded data.
 
 ## Guided investigation
 1. **Define the attack.** Credential stuffing (known user:pass pairs, many accounts) vs brute

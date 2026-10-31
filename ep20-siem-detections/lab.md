@@ -30,9 +30,26 @@
 - **Defensive framing:** this is detection engineering — you're building the blue-team tripwires.
 
 ## Environment setup
-Reuse the **Ep13 Splunk + BOTSv1** instance (see `environment/README.md`). You will
+Reuse the **Ep13 Splunk + BOTSv1** instance. You will
 validate searches against `index=botsv1` (Aug 2016 data → *All time*), then save the good
 ones as **alerts** (Settings → Searches, reports, and alerts → New Alert).
+
+No new environment. Use the Splunk + **BOTSv1** instance you built in Episode 13 (its setup is in `../ep13-host-compromise/lab.md`).
+
+### Saving a detection as an alert
+1. Run and validate your SPL (time picker on **All time** — BOTSv1 is Aug 2016).
+2. **Save As → Alert**.
+3. Set **trigger** (e.g. "Number of Results > 0"), **schedule** (cron or real-time),
+   **severity**, and an **action** (log / email / webhook for the write-up).
+4. Note: in a real SOC you'd schedule these; on the historical BOTSv1 data you're proving
+   the *logic* fires on known-bad events, then documenting the schedule you'd use live.
+
+### Field-name note
+BOTSv1 parses web traffic under `sourcetype=stream:http` with fields like `src_ip`,
+`dest_ip`, `http_method`, `uri_path`, `http_user_agent`, `status`. Exact field names can
+vary by Splunk/app version — if a search returns nothing, run a bare
+`index=botsv1 sourcetype=stream:http | head 1` and read the real field names, then adjust.
+Validating and tuning your own SPL is part of the skill.
 
 ## Guided build
 Build five detections. For **each**, write the SPL, confirm it returns the known malicious

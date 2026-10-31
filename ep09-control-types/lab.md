@@ -21,7 +21,11 @@
 
 ## Environment setup
 No tools needed — this is analysis. Pull your controls from Episodes 1–8 (firewall, MFA,
-logging, hardening, backups, access review, auditd, policies). See `environment/README.md`.
+logging, hardening, backups, access review, auditd, policies).
+
+No lab tools. Source material = the controls you implemented in Episodes 1–8:
+asset inventory, password policy, server hardening (SSH/ufw/auditd), central logging, access
+review, data classification, MFA, backups/restore, plus policies. Classify them on paper.
 
 ## Guided investigation
 1. **Define the two axes.** Category (technical/managerial/operational/physical) vs type (preventive/deterrent/detective/corrective/compensating/directive).

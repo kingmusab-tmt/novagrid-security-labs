@@ -8,4 +8,4 @@ find weak protocols, ciphers and certificate problems, and write the fix. Artifa
 crypto-configuration assessment.
 
 ## Files
-`lab.md` · `environment/README.md` · `deliverable-template.md` · `example-deliverable.md` · `rubric.md` · `answer-key.md` · `evidence/`
+`lab.md` · `deliverable-template.md` · `example-deliverable.md` · `rubric.md` · `answer-key.md` · `evidence/`

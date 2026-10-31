@@ -27,7 +27,12 @@
 ## Environment setup
 Work from a **provided wireless survey** (an AP list with SSID/BSSID/channel/signal/auth) in
 `environment/survey.csv`. If you have your *own* test AP and adapter you may capture a survey
-with Kismet/airodump-ng — read-only, your own gear only. See `environment/README.md`.
+with Kismet/airodump-ng — read-only, your own gear only.
+
+Primary material: `survey.csv` (a wireless site survey) plus the authorised-AP list in the
+lab. Compare the two to find the impostor. No wireless attacking of any kind — assessment
+only. If you own a test AP + a monitor-mode adapter, you may capture your *own* survey with
+Kismet/airodump-ng (read-only), but it is not required.
 
 ## Guided investigation
 1. **Concepts.** Rogue AP (unauthorised AP on your network) vs evil twin (impostor copying a

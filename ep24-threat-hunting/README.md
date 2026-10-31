@@ -8,4 +8,4 @@ hypothesis, go looking in the data for Sable Finch's quieter activity, and turn 
 find into a new detection. Artifact: a threat-hunt report.
 
 ## Files
-`lab.md` · `environment/README.md` · `deliverable-template.md` · `example-deliverable.md` · `rubric.md` · `answer-key.md` · `evidence/`
+`lab.md` · `deliverable-template.md` · `example-deliverable.md` · `rubric.md` · `answer-key.md` · `evidence/`

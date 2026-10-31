@@ -9,4 +9,4 @@ retention, and build a few queries that answer the questions an analyst actually
 Artifact: a logging config + a sample "dashboard" of queries.
 
 ## Files
-`lab.md` · `environment/README.md` · `deliverable-template.md` · `example-deliverable.md` · `rubric.md` · `answer-key.md` · `evidence/`
+`lab.md` · `deliverable-template.md` · `example-deliverable.md` · `rubric.md` · `answer-key.md` · `evidence/`

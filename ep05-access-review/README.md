@@ -8,4 +8,4 @@ access review, map who-can-do-what against their role, and bring it back to leas
 privilege. Artifact: an access-review report.
 
 ## Files
-`lab.md` · `environment/README.md` · `deliverable-template.md` · `example-deliverable.md` · `rubric.md` · `answer-key.md` · `evidence/`
+`lab.md` · `deliverable-template.md` · `example-deliverable.md` · `rubric.md` · `answer-key.md` · `evidence/`

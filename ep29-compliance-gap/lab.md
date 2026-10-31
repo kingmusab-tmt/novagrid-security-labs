@@ -23,7 +23,11 @@
 - **In scope:** an assessment/documentation deliverable using the NovaGrid scenario.
 
 ## Environment setup
-No tools required. Draw on the controls and findings from Episodes 1–28. See `environment/README.md`.
+No tools required. Draw on the controls and findings from Episodes 1–28.
+
+No lab build. Use the NovaGrid scenario and the controls from Episodes 1–28 as your evidence
+base. References: PCI DSS (high-level requirement areas), NDPR (Nigeria Data Protection
+Regulation) and GDPR (for EU customers). Deliver a gap-analysis table + a one-page brief.
 
 ## Guided investigation
 1. **Applicability.** Map data types to laws: cardholder data → **PCI DSS**; customer PII → **NDPR** (and **GDPR** for EU residents).

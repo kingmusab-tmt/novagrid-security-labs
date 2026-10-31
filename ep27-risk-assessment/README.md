@@ -8,4 +8,4 @@ into a proper risk assessment: identify risks, size them (qualitatively and quan
 and decide how to treat each. Artifact: a risk register + treatment plan.
 
 ## Files
-`lab.md` · `environment/README.md` · `deliverable-template.md` · `example-deliverable.md` · `rubric.md` · `answer-key.md` · `evidence/`
+`lab.md` · `deliverable-template.md` · `example-deliverable.md` · `rubric.md` · `answer-key.md` · `evidence/`

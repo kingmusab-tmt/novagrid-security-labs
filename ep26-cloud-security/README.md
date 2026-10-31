@@ -8,4 +8,4 @@ network, encryption, logging, secrets — and be clear about what the provider s
 NovaGrid must. Artifact: a cloud security design.
 
 ## Files
-`lab.md` · `environment/README.md` · `deliverable-template.md` · `example-deliverable.md` · `rubric.md` · `answer-key.md` · `evidence/`
+`lab.md` · `deliverable-template.md` · `example-deliverable.md` · `rubric.md` · `answer-key.md` · `evidence/`

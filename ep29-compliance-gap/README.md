@@ -8,4 +8,4 @@ NovaGrid handles cardholder data and customer PII, so it answers to **PCI DSS** 
 on what to fix. Artifact: a compliance brief + gap analysis.
 
 ## Files
-`lab.md` · `environment/README.md` · `deliverable-template.md` · `example-deliverable.md` · `rubric.md` · `answer-key.md` · `evidence/`
+`lab.md` · `deliverable-template.md` · `example-deliverable.md` · `rubric.md` · `answer-key.md` · `evidence/`

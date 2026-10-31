@@ -29,14 +29,49 @@
 - **Defensive framing:** you are the responder reconstructing events from logs — analysis only.
 
 ## Environment setup
-Follow `environment/README.md` to install Splunk and load **BOTSv1**. Key points:
+Follow the setup below to install Splunk and load **BOTSv1**. Key points:
 - The data is from **August 2016** — set your time picker to *All time* (or Aug 2016) or you'll see nothing.
 - Everything lives in one index (e.g. `index=botsv1`). Start broad, then narrow by `sourcetype`.
 - Useful sourcetypes in BOTSv1 include `stream:http`, `suricata`, `fgt_utm` (FortiGate),
-  `iis`, `wineventlog`, `winregistry`, `xmlwineventlog`. Explore what's there:
+ `iis`, `wineventlog`, `winregistry`, `xmlwineventlog`. Explore what's there:
+ ```
+ index=botsv1 | stats count by sourcetype
+ ```
+
+You need a running Splunk with the **Boss of the SOC v1** dataset loaded. Do this once;
+it's reused in Episodes 15, 20 and 24.
+
+### 1. Install Splunk
+- On your analyst VM (or a dedicated 4 GB VM), install **Splunk Enterprise**.
+- Use the **free 60-day trial**, then it converts to the **Free** license — fine for labs.
+- Download: https://www.splunk.com/en_us/download/splunk-enterprise.html
+- Start it, log in at `http://localhost:8000`.
+
+### 2. Get BOTSv1
+- Repo: https://github.com/splunk/botsv1
+- Download the **dataset-only** package (the README links it; it is several GB).
+- Pre-download once and keep it on a USB/shared drive for bandwidth-limited setups.
+
+### 3. Load it as an app/index
+- Unpack to `$SPLUNK_HOME/etc/apps/` (the package installs as an app that defines
+  `index=botsv1`), then restart Splunk:
   ```
-  index=botsv1 | stats count by sourcetype
+  $SPLUNK_HOME/bin/splunk restart
   ```
+- Verify:
+  ```
+  index=botsv1 earliest=0 | stats count by sourcetype
+  ```
+  You should see dozens of sourcetypes and a large event count.
+
+### 4. Time range
+BOTSv1 data is from **August 2016**. Set the time picker to **All time** (or Aug 2016),
+or searches return nothing.
+
+### Tips
+- Install the free **Splunk Security Essentials** app for guided searches (optional).
+- Keep your own working SPL in `evidence/` as you go — those searches are part of the artifact.
+- No internet needed to search once the data is loaded (handy for low-bandwidth settings).
 
 ## Guided investigation
 Work the kill chain. At each stage, write the **SPL you ran**, the **answer**, and the

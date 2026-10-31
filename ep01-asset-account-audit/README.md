@@ -8,5 +8,5 @@ first job: enumerate what's actually running and who can log in, then flag the r
 Artifact: an asset inventory + a short findings memo.
 
 ## Files
-`lab.md` (start here) · `environment/README.md` · `deliverable-template.md` ·
+`lab.md` (start here) · `deliverable-template.md` ·
 `example-deliverable.md` · `rubric.md` · `answer-key.md` · `evidence/`

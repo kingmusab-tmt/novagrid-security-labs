@@ -12,7 +12,6 @@ attack telemetry, not toy logs. You'll produce an incident report + ATT&CK mappi
 
 ## Files
 - `lab.md` — the full lab (start here)
-- `environment/README.md` — install Splunk + load BOTSv1
 - `deliverable-template.md` · `example-deliverable.md` · `rubric.md` · `answer-key.md`
 - `evidence/` — your SPL queries and result screenshots
 

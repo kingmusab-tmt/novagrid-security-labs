@@ -8,4 +8,4 @@ attackers replaying username/password pairs leaked from *other* breaches. Detect
 logs and design the mitigations. Artifact: a detection + mitigation write-up.
 
 ## Files
-`lab.md` · `environment/README.md` · `deliverable-template.md` · `example-deliverable.md` · `rubric.md` · `answer-key.md` · `evidence/`
+`lab.md` · `deliverable-template.md` · `example-deliverable.md` · `rubric.md` · `answer-key.md` · `evidence/`

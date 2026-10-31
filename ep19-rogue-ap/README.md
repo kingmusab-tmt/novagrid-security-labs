@@ -8,4 +8,4 @@ stood up a rogue/evil-twin access point. Assess the wireless environment from a 
 the rogue, and design the defences. Artifact: a wireless assessment report.
 
 ## Files
-`lab.md` · `environment/README.md` · `deliverable-template.md` · `example-deliverable.md` · `rubric.md` · `answer-key.md` · `evidence/`
+`lab.md` · `deliverable-template.md` · `example-deliverable.md` · `rubric.md` · `answer-key.md` · `evidence/`

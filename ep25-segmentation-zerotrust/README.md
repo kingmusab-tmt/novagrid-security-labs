@@ -8,4 +8,4 @@ Redesign it: segment the crown jewels, apply zero-trust principles, and map the 
 Artifact: an architecture diagram + control mapping.
 
 ## Files
-`lab.md` · `environment/README.md` · `deliverable-template.md` · `example-deliverable.md` · `rubric.md` · `answer-key.md` · `evidence/`
+`lab.md` · `deliverable-template.md` · `example-deliverable.md` · `rubric.md` · `answer-key.md` · `evidence/`

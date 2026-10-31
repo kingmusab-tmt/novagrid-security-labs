@@ -26,7 +26,11 @@
 ## Environment setup
 No build required. Design provider-agnostically (AWS/Azure/GCP examples fine). Optionally
 relate to **BOTSv3** (cloud/AWS data) you may have from Episode 13's stretch. See
-`environment/README.md`.
+the setup below.
+
+No cloud account needed — this is a design. Keep it provider-agnostic with concrete examples
+(AWS IAM roles/Security Groups/KMS/CloudTrail, or Azure/GCP equivalents). If you did the
+Episode 13 BOTSv3 stretch, reuse that cloud context. Deliver a short design + a diagram.
 
 ## Guided investigation
 1. **Shared responsibility.** Split what the provider secures (hardware, hypervisor) vs NovaGrid (IAM, data, config).

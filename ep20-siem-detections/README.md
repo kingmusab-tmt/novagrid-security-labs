@@ -12,6 +12,5 @@ detection pack (SPL + logic + tuning + ATT&CK) — the kind of work a SOC specif
 
 ## Files
 - `lab.md` — the full lab (start here)
-- `environment/README.md` — reuse the Ep13 Splunk/BOTS setup + how to save alerts
 - `deliverable-template.md` · `example-deliverable.md` · `rubric.md` · `answer-key.md`
 - `evidence/` — your SPL, screenshots of each detection firing, saved-alert configs

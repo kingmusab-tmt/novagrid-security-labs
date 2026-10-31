@@ -21,14 +21,29 @@
 - **Out of scope:** scanning anything outside your lab subnet.
 
 ## Environment setup
-Use your analyst toolbox and the shared target stack (see `environment/README.md`). Tools used:
-`ip`, `ss`, `nmap`, `ps`, `dpkg`, `getent`, `sudo`, `chage`. On the Docker lab there is **no
-`systemctl`** (containers don't run systemd) — use `ps`/`ss` for services; `systemctl` and
-`lastlog` are available on the Vagrant VM if you use it.
 
-**Which host do I run things on?** Two shells, two jobs:
-- **`analyst`** (`docker compose exec analyst bash`) — your scanning toolbox. Use it **only** for Step 1 (nmap across the network).
-- **`wallet-api`** (`docker compose exec wallet-api bash`) — the server you're auditing. Run **Steps 2–4 here** (services, packages, accounts, sudo, files). The account/sudo/roster data lives only on this host — running those on `analyst` returns nothing.
+You use the shared NovaGrid lab (`lab-env`): an **analyst** toolbox plus three targets — the
+**wallet-api** server, the **logging** collector, and **legacy-billing**, a forgotten box
+nobody recorded. Everything in Episode 1 is **read-only enumeration** — you change nothing.
+The lab network is `172.28.0.0/24`.
+
+**1. Start the lab** (from the repo root):
+```bash
+cd lab-env && docker compose up -d --build
+bash scripts/check-lab.sh          # every service should say OK
+```
+(Full lab guide: [lab-env/README.md](../lab-env/README.md).)
+
+**2. Know which shell to use — two shells, two jobs:**
+- **`analyst`** → `docker compose exec analyst bash`. Your scanning toolbox. Use it **only for Step 1** (nmap across the network).
+- **`wallet-api`** → `docker compose exec wallet-api bash`. The server you're auditing. Run **Steps 2–4 here** (services, packages, accounts, sudo, files). The account/sudo/roster data lives only on this host — running those on `analyst` returns nothing.
+
+**Tools:** `ip`, `ss`, `nmap`, `ps`, `dpkg`, `getent`, `sudo`, `chage`. The Docker containers have
+**no `systemctl`** (no systemd) — use `ps`/`ss` for services; `systemctl` and `lastlog` only exist
+if you run the optional Vagrant VM.
+
+**Key reference files on wallet-api:** `/srv/hr/asset-register.csv` (the official inventory) and
+`/srv/hr/staff-roster.csv` (who should have access).
 
 ## Guided investigation
 1. **Map the network** (from the **analyst** toolbox — `docker compose exec analyst bash`). `ip addr` to see your own network, then `nmap -sn -n <your-lab-subnet>` to find live hosts

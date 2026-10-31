@@ -8,4 +8,4 @@ this. Rebuild the service, restore clean data, verify it, and run a disaster-rec
 against your RTO/RPO. Artifact: a recovery runbook + DR-test report.
 
 ## Files
-`lab.md` · `environment/README.md` · `deliverable-template.md` · `example-deliverable.md` · `rubric.md` · `answer-key.md` · `evidence/`
+`lab.md` · `deliverable-template.md` · `example-deliverable.md` · `rubric.md` · `answer-key.md` · `evidence/`

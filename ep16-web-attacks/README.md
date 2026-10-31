@@ -8,4 +8,4 @@ deliberately vulnerable copy you own, find and demonstrate **SQL injection** and
 **cross-site scripting**, then write the developer fix. Artifact: web-vuln findings + fixes.
 
 ## Files
-`lab.md` · `environment/README.md` · `deliverable-template.md` · `example-deliverable.md` · `rubric.md` · `answer-key.md` · `evidence/`
+`lab.md` · `deliverable-template.md` · `example-deliverable.md` · `rubric.md` · `answer-key.md` · `evidence/`

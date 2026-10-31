@@ -25,7 +25,11 @@
 
 ## Environment setup
 Reuse the Ep13 **Splunk/BOTS** instance and/or **Wazuh**/host logs. Use **MITRE ATT&CK** to
-pick techniques to hunt. See `environment/README.md`.
+pick techniques to hunt.
+
+Reuse the Ep13 Splunk + BOTSv1 data and/or Wazuh/host logs. Browse MITRE ATT&CK
+(attack.mitre.org) to choose techniques to hunt. Hunting is read-only analysis — you're
+searching existing data for things no alert flagged. Save your queries + results to evidence.
 
 ## Guided investigation
 1. **Hypothesis.** Pick an ATT&CK technique the campaign might use that you have *no* alert for

@@ -8,4 +8,4 @@ vulnerability scanner, make sense of the results, cut the false positives, and p
 what to fix by actual risk. Artifact: a vulnerability-scan report + prioritisation.
 
 ## Files
-`lab.md` · `environment/README.md` · `deliverable-template.md` · `example-deliverable.md` · `rubric.md` · `answer-key.md` · `evidence/`
+`lab.md` · `deliverable-template.md` · `example-deliverable.md` · `rubric.md` · `answer-key.md` · `evidence/`

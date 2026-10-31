@@ -13,7 +13,6 @@ Artifact: alert-triage shift report.
 
 ## Files
 - `lab.md` — the full lab (start here)
-- `environment/README.md` — the queue data + how to regenerate a unique one
 - `environment/data/alert-queue.csv` · `.jsonl` — your shift's alerts
 - `generator/generate_queue.py` — makes a fresh, seeded queue (instructor tool)
 - `deliverable-template.md` · `example-deliverable.md` · `rubric.md` · `answer-key.md`

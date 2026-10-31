@@ -24,7 +24,11 @@
 
 ## Environment setup
 No build required — this is architecture. Draw the diagram in Markdown/Mermaid or a tool of
-choice. See `environment/README.md`.
+choice.
+
+No lab build. Produce a diagram (Mermaid/ASCII/draw.io) and a control mapping. Base the
+design on the NovaGrid assets from earlier episodes (public site, wallet API, wallet DB/PII,
+logging/SIEM, admin/management, user LAN). Reference NIST SP 800-207 for zero trust.
 
 ## Guided investigation
 1. **Zone the network.** Group assets by sensitivity; the wallet DB (PII/cardholder) is the most protected zone.

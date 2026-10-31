@@ -8,4 +8,4 @@ a breach dump. Define NovaGrid's password standard (modern, not folklore) and an
 checklist, and apply the basics on the Linux VM. Artifact: password policy + IAM checklist.
 
 ## Files
-`lab.md` · `environment/README.md` · `deliverable-template.md` · `example-deliverable.md` · `rubric.md` · `answer-key.md` · `evidence/`
+`lab.md` · `deliverable-template.md` · `example-deliverable.md` · `rubric.md` · `answer-key.md` · `evidence/`

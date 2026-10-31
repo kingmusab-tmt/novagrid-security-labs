@@ -8,4 +8,4 @@ rollout — starting with admins and remote access — and prove it by enabling 
 lab VM's SSH. Artifact: an MFA deployment write-up with working evidence.
 
 ## Files
-`lab.md` · `environment/README.md` · `deliverable-template.md` · `example-deliverable.md` · `rubric.md` · `answer-key.md` · `evidence/`
+`lab.md` · `deliverable-template.md` · `example-deliverable.md` · `rubric.md` · `answer-key.md` · `evidence/`

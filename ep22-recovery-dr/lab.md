@@ -23,7 +23,11 @@
 - **In scope:** your lab. Restore into a rebuilt host; don't reintroduce the compromise.
 
 ## Environment setup
-The rebuilt wallet host/containers + your Ep8 backups. See `environment/README.md`.
+The rebuilt wallet host/containers + your Ep8 backups.
+
+Rebuild the wallet host/container from a clean base image; restore the Ep8 backup
+(`sha256sum -c` to verify). Keep the compromised host isolated until forensics (Ep23) is
+done. Time the rebuild+restore to measure RTO; note the backup age to measure RPO. Lab only.
 
 ## Guided investigation
 1. **Rebuild.** Stand up a clean host/container from a trusted image; apply patches + the Ep3 hardening.

@@ -27,7 +27,12 @@
 ## Environment setup
 A scanner — **Greenbone/OpenVAS** or **Nessus Essentials** (both free) — plus `nmap` with
 NSE. Targets: the wallet stack, or a known-vulnerable VM (e.g. an older Linux image / a
-vulnerable web app) so there are real findings. See `environment/README.md`.
+vulnerable web app) so there are real findings.
+
+Scanner: Greenbone Community Edition (OpenVAS) or Nessus Essentials (free, up to 16 IPs).
+Plus `nmap` (`-sV`, `--script vuln`). Targets must be **yours**: the wallet containers, or a
+deliberately vulnerable VM (e.g. an old Metasploitable/Linux image or a vulnerable web app
+in Docker) so the scan returns real findings to triage. Never scan systems you don't own.
 
 ## Guided investigation
 1. **Discover + scan.** `nmap -sV` for services/versions, then a full scanner run (authenticated if you can).

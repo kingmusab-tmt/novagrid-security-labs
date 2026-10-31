@@ -8,4 +8,4 @@ Season 1 and classify each by **category** and **functional type**, then find th
 Artifact: a security control inventory (matrix).
 
 ## Files
-`lab.md` · `environment/README.md` · `deliverable-template.md` · `example-deliverable.md` · `rubric.md` · `answer-key.md` · `evidence/`
+`lab.md` · `deliverable-template.md` · `example-deliverable.md` · `rubric.md` · `answer-key.md` · `evidence/`

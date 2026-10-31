@@ -21,7 +21,19 @@
 
 ## Environment setup
 Analyst VM. Demo uses `libpam-google-authenticator` (TOTP) + any authenticator app
-(Google Authenticator/Aegis/FreeOTP). See `environment/README.md`.
+(Google Authenticator/Aegis/FreeOTP).
+
+Analyst VM. Install: `sudo apt-get install -y libpam-google-authenticator`. Run
+`google-authenticator` as the user (save the scratch/recovery codes!). Add
+`auth required pam_google_authenticator.so` to `/etc/pam.d/sshd` and set
+`KbdInteractiveAuthentication yes` in `/etc/ssh/sshd_config`, then restart sshd.
+**Keep a second SSH session open** while testing so a misconfig can't lock you out.
+Any TOTP app works (Google Authenticator, Aegis, FreeOTP).
+
+### Start the lab
+- Start the lab from the repo root: `cd lab-env && docker compose up -d --build`, then `bash scripts/check-lab.sh`. Full guide: [lab-env/README.md](../../lab-env/README.md).
+- Target: wallet-api SSH. The TOTP module is preinstalled. Edit `/etc/pam.d/sshd` and set `KbdInteractiveAuthentication yes` in the SSH drop-in, then `lab-restart ssh`.
+- You can't lock yourself out: `docker compose exec wallet-api bash` always gets you back in as root.
 
 ## Guided investigation
 1. **Factors.** Something you **know** / **have** / **are** (+ location/behaviour). MFA = two *different* categories.

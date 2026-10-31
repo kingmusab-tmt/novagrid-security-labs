@@ -23,7 +23,10 @@
 - **In scope:** an assessment deliverable using a (fictional) vendor profile.
 
 ## Environment setup
-No tools required. Use the vendor profile in `environment/vendor-profile.md`. See `environment/README.md`.
+No tools required. Use the vendor profile in `environment/vendor-profile.md`.
+
+No lab build. Use `vendor-profile.md` as the vendor you're assessing. Produce the assessment
+as a document. References: SOC 2 (Type I vs II), ISO/IEC 27001, SIG/CAIQ questionnaires.
 
 ## Guided investigation
 1. **Due diligence.** Reputation, financial stability, breach history, where they operate (data residency).

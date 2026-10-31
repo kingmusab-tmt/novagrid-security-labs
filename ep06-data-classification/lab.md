@@ -22,7 +22,17 @@
 
 ## Environment setup
 Analyst VM with the lab's sample datasets. Tools: `grep -E`, `find`, simple regex. See
-`environment/README.md`.
+the setup below.
+
+Analyst VM with the lab's SAMPLE datasets (CSV/text). If none are present, create a tiny
+synthetic set (fake names, test emails, and test card numbers like 4111 1111 1111 1111).
+**Never use real personal data.** Redact matches before putting any result in the repo.
+Tools: `grep -rEI`, `find`. Regex is enough — no special software.
+
+### Start the lab
+- Start the lab from the repo root: `cd lab-env && docker compose up -d --build`, then `bash scripts/check-lab.sh`. Full guide: [lab-env/README.md](../../lab-env/README.md).
+- Look in `/srv/wallet/data/`, `/srv/wallet/exports/` and `/etc/wallet/` on wallet-api — and check what `http://172.28.0.10:8000/` exposes to the network.
+- All data is synthetic; card numbers are standard test numbers. Still redact anything you put in the repo.
 
 ## Guided investigation
 1. **Define the scheme.** Levels such as Public / Internal / Confidential / Restricted, each with examples and handling rules (who can access, encryption, retention).

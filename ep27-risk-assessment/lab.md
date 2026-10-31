@@ -23,7 +23,12 @@
 - **In scope:** a documentation/analysis deliverable using the NovaGrid scenario.
 
 ## Environment setup
-No tools required. Draw on Episodes 1–26 for assets, threats, and controls. See `environment/README.md`.
+No tools required. Draw on Episodes 1–26 for assets, threats, and controls.
+
+No lab build. Use the NovaGrid scenario (Episodes 1–26) for assets (wallet, PII, brand),
+threats (Sable Finch, ransomware, insider, vendor), vulnerabilities (flat network, weak TLS,
+etc.) and existing controls. A spreadsheet or Markdown table is enough. NIST SP 800-30 is a
+good reference for method.
 
 ## Guided investigation
 1. **Identify.** List top risks (e.g. wallet breach via phishing, ransomware, insider, vendor compromise, non-compliance).

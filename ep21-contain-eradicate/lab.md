@@ -27,7 +27,12 @@
 Your lab wallet host/containers (the Ep13 target). Tools: `docker network disconnect` / `ufw`
 / NIC down for isolation; `ps`, `ss`, `crontab -l`, and account tools (`getent`, `chage`, `usermod`).
 On the containers there's no `systemctl`, so stop a rogue service by killing its process (`pkill`)
-and removing its persistence; `systemctl` applies only if you run the Vagrant VM. See `environment/README.md`.
+and removing its persistence; `systemctl` applies only if you run the Vagrant VM.
+
+Use the Ep13 compromised lab host/containers. Isolation options: `docker network disconnect
+<net> <container>`, `ufw deny`/NIC down, or ACL. Review persistence: `crontab -l`, systemd
+units/timers, `~/.ssh/authorized_keys`, (Windows) Run keys/services. Preserve first
+(snapshot / triage copy) so Ep23 forensics still has evidence. Reversible on the lab.
 
 ## Guided investigation
 1. **Contain.** Isolate the host (pull it off the network / ACL it) while keeping it powered (RAM evidence).
