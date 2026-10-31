@@ -29,13 +29,14 @@ Use your analyst VM and the shared target stack (see `environment/README.md`). T
    - **Decision:** Which services are listening, and are any of them ones that shouldn't be exposed?
 2. **Inventory software/services.** `systemctl list-units --type=service --state=running` and `dpkg -l` (or `rpm -qa`).
    - **Decision:** Anything unexpected, unknown, or clearly outdated?
-3. **Enumerate accounts.** `getent passwd` (shells), `getent group sudo`, `sudo cat /etc/sudoers*`, `lastlog`.
-   - **Decision:** Which accounts are stale (never logged in), shared, or have sudo they don't need?
+3. **Enumerate accounts.** `getent passwd` (shells), `getent group sudo`, `sudo cat /etc/sudoers.d/*`, then `chage -l <user>` for password age and compare every account against `/srv/hr/staff-roster.csv` (who *should* have access).
+   - Note: on a freshly built lab `lastlog` shows everyone "Never logged in", so don't rely on it for staleness — use **password age (`chage -l`)** and the **roster** instead. An account on the box but *not* on the roster is your real red flag.
+   - **Decision:** Which accounts are orphaned (not on the roster), stale (old password, e.g. untouched since January), shared, or hold sudo they don't need?
 4. **Rate criticality.** Tag each asset (the wallet API is the crown jewel).
    - **Decision:** What's your criticality rating per asset, and why?
 
 ### Evidence checkpoints
-- [ ] `nmap -sn` + `ss -tulpn` output  - [ ] running-services + package list  - [ ] accounts + sudo + lastlog output  - [ ] the finished inventory table
+- [ ] `nmap -sn` + `ss -tulpn` output  - [ ] running-services + package list  - [ ] accounts + sudo + `chage -l` + roster comparison  - [ ] the finished inventory table
 
 ## Deliverable
 Fill `deliverable-template.md` → the **asset inventory** + **findings memo**.

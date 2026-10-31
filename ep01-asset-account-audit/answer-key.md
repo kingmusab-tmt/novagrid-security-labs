@@ -1,9 +1,9 @@
 # Instructor Answer Key — Episode 1
 > Values depend on each student's lab; grade the method.
 - Services: student must use `ss -tulpn`/`nmap` and distinguish localhost-only vs exposed.
-- Accounts: must check `getent passwd` shells, `sudo` group, `sudoers`, and `lastlog`.
+- Accounts: must check `getent passwd` shells, `sudo` group, `sudoers`, `chage -l` for password age, and the staff roster.
 - Classic finds to look for: a service account with a shell+sudo, a stale admin, an over-exposed port.
-- Verification: (1) counts exposed services, not just all ports; (2) identifies stale/over-privileged accounts via lastlog/sudoers; (3) names the wallet API as the critical asset.
+- Verification: (1) counts exposed services, not just all ports; (2) identifies stale/orphaned/over-privileged accounts via chage + sudoers + roster; (3) names the wallet API as the critical asset.
 
 ## Ground truth in the reference lab (lab-env)
 - Live hosts: 172.28.0.5 analyst · 172.28.0.10 wallet-api (22, 8000, 8080) · 172.28.0.20 logging (514) · 172.28.0.30 legacy-billing (22, 8081).
