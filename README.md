@@ -15,6 +15,7 @@ write-up, the evidence, and the framework mapping an employer can read.
 | # | Episode | Security+ domain | Status | Artifact |
 |---|---------|------------------|--------|----------|
 | 11 | [Phishing to the CFO](ep11-phishing-cfo/) | 2.0 Threats / 5.0 Awareness | ✅ built (pilot) | Phishing-analysis report + IOCs |
+| 12 | [Triage Suspicious Traffic (Wireshark)](ep12-traffic-triage/) | 4.0 Security Operations | ✅ built | Network-analysis report + IOCs |
 | 13 | [Host Compromise in Splunk](ep13-host-compromise/) | 4.0 Security Operations | ✅ built | Incident report + ATT&CK mapping |
 | 20 | [Author SIEM Detections](ep20-siem-detections/) | 4.0 Security Operations | ✅ built | Detection pack (SPL + ATT&CK) |
 
