@@ -52,7 +52,10 @@ The lab network is `172.28.0.0/24`.
 **1. Start the lab** (from the repo root):
 ```bash
 cd lab-env && docker compose up -d --build
-bash scripts/check-lab.sh          # every service should say OK
+bash scripts/check-lab.sh   # every service should say OK
+docker compose start        # start containers 
+docker compose stop         # stop containers once you are done
+docker compose ps           # check running containers services
 ```
 (Full lab guide: [lab-env/README.md](../lab-env/README.md).)
 
@@ -67,97 +70,262 @@ normal, non-container system (a regular VM or server).
 **Key reference files on wallet-api:** `/srv/hr/asset-register.csv` (the official inventory) and
 `/srv/hr/staff-roster.csv` (who should have access).
 
-## Guided investigation
+## Instructions
 
-Follow the steps in order. Each sub-step is one command; read the note, then answer the **Decision**.
+Work through each task **in order**. Every lettered step is one action: type the command exactly as
+shown, then compare what you see to the **Expected output** below it. If your output looks different,
+re-read the step before moving on. Save the files you're told to into the `evidence/` folder — those
+become your report.
 
-### Step 1 — Map the network *(from the analyst toolbox)*
+> Two shells: **Task 2–4 run on the `analyst` box** (your scanning toolbox); **Task 5–7 run on the
+> `wallet-api` server** (the machine you're auditing). Each task says which one you're on.
 
-**a.** Open a shell on the analyst box (your scanning toolbox):
+### Task 1 — Start the lab
+
+a. On your analyst VM, go to the `lab-env/` folder and start the lab:
+```bash
+cd lab-env
+docker compose up -d
+```
+
+b. Confirm every service came up:
+```bash
+bash scripts/check-lab.sh
+```
+Expected output:
+```
+NovaGrid lab health check
+  OK    wallet-api ssh           172.28.0.10:22
+  OK    wallet-api API           172.28.0.10:8080
+  OK    logging collector        172.28.0.20:514
+  OK    legacy-billing ssh       172.28.0.30:22
+  OK    legacy-billing admin     172.28.0.30:8081
+  NOTE  debug server 172.28.0.10:8000 is OPEN (a Season 1 finding — expected until you fix it)
+All core services up.
+```
+
+### Task 2 — Open the analyst shell and discover live hosts
+
+a. Open a shell on the analyst toolbox:
 ```bash
 docker compose exec analyst bash
 ```
+Your prompt changes to `root@analyst:/#`. You are now **inside the analyst machine**.
 
-**b.** Discover the live hosts and the services they expose:
+b. Sweep the lab network to find which hosts are alive:
 ```bash
-nmap -sV 172.28.0.0/24
+nmap -sn -n 172.28.0.0/24
 ```
-> **Question:** this scan takes a while to finish. Why do you think it's slow, and what could you
-> change to make it faster? *(Hint: a `/24` is 254 addresses and almost all are empty; think about
-> DNS lookups and timing. Faster: `nmap -sV -n -T4 172.28.0.0/24`, or once you know the live hosts,
-> scan only those.)*
+Expected output (the order of lines may differ):
+```
+Nmap scan report for 172.28.0.1
+Host is up (0.00001s latency).
+Nmap scan report for 172.28.0.5
+Host is up (0.00001s latency).
+Nmap scan report for 172.28.0.10
+Host is up (0.00001s latency).
+Nmap scan report for 172.28.0.20
+Host is up (0.00001s latency).
+Nmap scan report for 172.28.0.30
+Host is up (0.00001s latency).
+Nmap done: 256 IP addresses (5 hosts up) scanned in 2.XX seconds
+```
+Five addresses answer: `172.28.0.1` is the network **gateway** (not a NovaGrid host), `172.28.0.5` is
+**you** (the analyst box), and `172.28.0.10`, `.20`, `.30` are the three targets.
 
-**c.** Look at what a host is listening on, using the current host's own sockets:
+**Question 1:** The scan checked 256 addresses but only 5 answered. What makes a `/24` sweep slow, and
+what two flags would speed it up? *(Write your answer in your report.)*
+
+### Task 3 — Find each host's services *(still on analyst)*
+
+a. Scan the four hosts for the service ports:
 ```bash
-ss -tulpn
+nmap -n -Pn -p 22,514,8000,8080,8081 172.28.0.5 172.28.0.10 172.28.0.20 172.28.0.30
 ```
-> From the analyst box this shows almost nothing (it runs no services) — the `nmap` result above is
-> your network-wide view. You'll inventory the *server's* listening services in Step 2 on wallet-api.
+Expected output (trimmed — one block per host):
+```
+Nmap scan report for 172.28.0.5
+PORT     STATE  SERVICE
+22/tcp   closed ssh
+514/tcp  closed shell
+8000/tcp closed http-alt
+8080/tcp closed http-proxy
+8081/tcp closed blackice-icecap
 
-**Decision:** Which hosts are alive, which services are listening, and are any of them services that shouldn't be exposed?
+Nmap scan report for 172.28.0.10
+22/tcp   open   ssh
+514/tcp  closed shell
+8000/tcp open   http-alt
+8080/tcp open   http-proxy
+8081/tcp closed blackice-icecap
 
-### Step 2 — Inventory software & services *(on the wallet-api server)*
+Nmap scan report for 172.28.0.20
+514/tcp  open   shell
+(22, 8000, 8080, 8081 all closed)
 
-**a.** Leave the analyst shell:
+Nmap scan report for 172.28.0.30
+22/tcp   open   ssh
+8081/tcp open   blackice-icecap
+(514, 8000, 8080 all closed)
+```
+What this tells you:
+- **172.28.0.5 (you / analyst):** every port **closed** — it runs no services, it's only your toolbox.
+- **172.28.0.10 (wallet-api):** ssh (22), the wallet API (8080), **and a service on 8000 that shouldn't be there.**
+- **172.28.0.20 (logging):** **514/tcp** — the central syslog collector (note: TCP).
+- **172.28.0.30 (legacy-billing):** ssh (22) and an admin web page (8081).
+
+b. Save this scan to evidence. Highlight/copy the output and paste it into a file:
+```bash
+nmap -n -Pn -p 22,514,8000,8080,8081 172.28.0.10 172.28.0.20 172.28.0.30 > /tmp/nmap.txt
+cat /tmp/nmap.txt
+```
+(then copy `/tmp/nmap.txt` into your episode's `evidence/` folder as `01-nmap-services.txt`.)
+
+**Question 2:** Which service looks out of place, and on which host?
+
+### Task 4 — Investigate the suspicious port 8000 *(still on analyst)*
+
+a. Ask the mystery service on wallet-api what it is:
+```bash
+curl http://172.28.0.10:8000/
+```
+Expected output (an HTML directory listing — the key line is):
+```
+<a href="old_payments_backup.csv">old_payments_backup.csv</a>
+```
+This is a plain file server exposing **`old_payments_backup.csv`** to anyone on the network — an
+unprotected directory of old payment data. Record it as a data-exposure finding.
+
+**Question 3:** Why is an open directory listing of a file called `old_payments_backup` a serious problem?
+
+### Task 5 — Move to the server and inventory its services *(now on wallet-api)*
+
+a. Leave the analyst shell:
 ```bash
 exit
 ```
 
-**b.** Open a shell on the wallet-api server:
+b. Open a shell on the wallet-api server:
 ```bash
 docker compose exec wallet-api bash
 ```
+Your prompt now shows the wallet-api container. **Everything from here runs on the server you're auditing.**
 
-**c.** Inventory what's **running**, what's **listening**, and what's **installed**:
+c. List what the server is actually running and listening on:
 ```bash
-ps -ef            # running processes / services
-sudo ss -tulpn    # listening services + the process behind each port
-dpkg -l           # installed packages
+ss -tulpn
 ```
-> These containers have no `systemctl`. On a normal, non-container system (a regular VM or server)
-> you'd list running services with `systemctl list-units --type=service --state=running` instead —
-> the same information, just via systemd.
+Expected output (the lines that matter):
+```
+tcp   LISTEN 0 128  0.0.0.0:22    0.0.0.0:*  users:(("sshd",...))
+tcp   LISTEN 0 5    0.0.0.0:8080  0.0.0.0:*  users:(("python3",...))
+tcp   LISTEN 0 5    0.0.0.0:8000  0.0.0.0:*  users:(("python3",...))
+```
+This matches your scan: ssh, the wallet API (8080), and the stray file server (8000).
 
-**Decision:** Anything unexpected, unknown, or clearly outdated?
-
-### Step 3 — Enumerate accounts *(on wallet-api — you're still in its shell)*
-
-**a.** List the accounts and their login shells:
+d. See the installed software (it's a long list — skim it for anything odd):
 ```bash
-getent passwd
+dpkg -l | less
+```
+(press `q` to quit `less`.)
+
+### Task 6 — Audit the accounts *(on wallet-api)*
+
+a. List the human user accounts:
+```bash
+getent passwd | awk -F: '$3>=1000 && $3<65534 {print $1" ("$5")"}'
+```
+Expected output:
+```
+amara (Amara Okafor - SOC Lead)
+tunde (Tunde Bello - Sysadmin)
+chidi (Chidi Nwosu - CFO)
+svc-backup (Backup service account - owner tunde)
+webadmin (Web admin (2025 contractor))
+contractor (PayBridge integration contractor)
 ```
 
-**b.** See who holds administrator rights:
+b. See who holds administrator (sudo) rights:
 ```bash
 getent group sudo
+```
+Expected output:
+```
+sudo:x:27:amara,tunde,webadmin,contractor
+```
+
+c. Check for extra sudo rules:
+```bash
 sudo cat /etc/sudoers.d/*
 ```
+Expected output (the finding):
+```
+svc-backup ALL=(ALL) NOPASSWD: ALL
+```
+`svc-backup` can run **anything as root, with no password** — far more than a backup job needs.
 
-**c.** Check password age and compare every account against the staff roster:
+d. Check when `webadmin` last changed its password:
 ```bash
 chage -l webadmin
+```
+Expected (the key line):
+```
+Last password change					: Jan 10, 2026
+```
+That's stale — the password hasn't been touched in months.
+
+e. Compare the accounts against who *should* have access:
+```bash
 cat /srv/hr/staff-roster.csv
 ```
-> On a freshly built lab `lastlog` shows everyone "Never logged in", so judge staleness by **password
-> age (`chage -l`)** and the **roster**, not `lastlog`. An account on the box but *not* on the roster
-> is your red flag.
+Expected output:
+```
+username,full_name,role,status,notes
+amara,Amara Okafor,SOC Lead,active,
+tunde,Tunde Bello,Sysadmin,active,
+chidi,Chidi Nwosu,CFO,active,
+contractor,PayBridge Integration,Contractor,leaving 2026-10-31,contract ends today
+svc-backup,(service account),Backup job,active,owner tunde; needs only tar and rsync
+```
+Notice **`webadmin` is on the server but NOT on the roster** (an orphaned account), and **`contractor`
+is marked "leaving"** yet still has an account and sudo.
 
-**Decision:** Which accounts are orphaned (not on the roster), stale (old password), shared, or hold
-sudo they don't need?
+**Question 4:** List every problem account you found and say what's wrong with each (over-privileged,
+orphaned, stale, or leaver).
 
-### Step 4 — Rate criticality *(your analysis — no host needed)*
+### Task 7 — Compare live hosts to the official inventory *(on wallet-api)*
 
-**a.** Compare the live hosts from Step 1 against the official inventory:
+a. Read the asset register (the official list of NovaGrid's systems):
 ```bash
 cat /srv/hr/asset-register.csv
 ```
+Expected output:
+```
+hostname,ip,role,owner,criticality,approved_services
+wallet-api,172.28.0.10,Payment wallet API,tunde,Critical,ssh(22) wallet-api(8080)
+logging,172.28.0.20,Central log collector,amara,High,syslog(514)
+```
+b. Compare this with the live hosts from Task 2/3. The register lists only **wallet-api** and
+**logging** — but you found a third live host, **legacy-billing (172.28.0.30)**, with SSH and an admin
+page. It is an **unmanaged asset** nobody recorded.
 
-**b.** Tag each asset with a criticality rating; the wallet API is the crown jewel.
+**Question 5:** Which live host is missing from the register, and why is an unmanaged host dangerous?
 
-**Decision:** What's your criticality rating per asset, and why?
+### Task 8 — Rate criticality and write the report
+
+a. Tag each asset with a criticality rating: wallet-api is the **crown jewel** (customer funds + PII),
+legacy-billing is **high** (unmanaged + exposed), logging is **supporting**.
+
+b. Fill in `deliverable-template.md` with your **asset inventory** (host · IP · services · owner ·
+criticality) and a short **findings memo** naming: the unmanaged legacy host, the exposed `:8000`
+file server, `svc-backup`'s excess sudo, the orphaned `webadmin`, and the leaver `contractor`.
 
 ### Evidence checkpoints
-- [ ] `nmap -sn` + `ss -tulpn` output  - [ ] running-services + package list  - [ ] accounts + sudo + `chage -l` + roster comparison  - [ ] the finished inventory table
+Save these into `evidence/`:
+- [ ] `01-nmap-services.txt` — your Task 3 port scan
+- [ ] the `:8000` directory listing from Task 4
+- [ ] the accounts / sudo / `chage` / roster output from Task 6
+- [ ] your finished inventory table
 
 ## Commands explained
 
